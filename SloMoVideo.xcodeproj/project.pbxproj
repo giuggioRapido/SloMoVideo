@@ -1,0 +1,561 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DC1B126F1BBDC5CF00D5613F /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1B126E1BBDC5CF00D5613F /* Cell.m */; settings = {ASSET_TAGS = (); }; };
+		DC1B12721BBDE40C00D5613F /* PlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1B12711BBDE40C00D5613F /* PlayerView.m */; settings = {ASSET_TAGS = (); }; };
+		DC1B12791BBF109E00D5613F /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1B12781BBF109E00D5613F /* Video.m */; settings = {ASSET_TAGS = (); }; };
+		DC89CCF31BBC6036007970F1 /* videoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC89CCF21BBC6036007970F1 /* videoPlayerViewController.m */; settings = {ASSET_TAGS = (); }; };
+		DC89CCF61BBC6E61007970F1 /* VideoLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC89CCF51BBC6E61007970F1 /* VideoLibraryViewController.m */; settings = {ASSET_TAGS = (); }; };
+		DCF25C551BB3497800BC939B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C541BB3497800BC939B /* main.m */; };
+		DCF25C581BB3497800BC939B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C571BB3497800BC939B /* AppDelegate.m */; };
+		DCF25C5E1BB3497800BC939B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCF25C5C1BB3497800BC939B /* Main.storyboard */; };
+		DCF25C601BB3497800BC939B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCF25C5F1BB3497800BC939B /* Assets.xcassets */; };
+		DCF25C631BB3497800BC939B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCF25C611BB3497800BC939B /* LaunchScreen.storyboard */; };
+		DCF25C6E1BB3497800BC939B /* SloMoVideoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C6D1BB3497800BC939B /* SloMoVideoTests.m */; };
+		DCF25C791BB3497900BC939B /* SloMoVideoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C781BB3497900BC939B /* SloMoVideoUITests.m */; };
+		DCF25C881BB34ACE00BC939B /* PreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C871BB34ACE00BC939B /* PreviewView.m */; settings = {ASSET_TAGS = (); }; };
+		DCF25C8B1BB352D900BC939B /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C8A1BB352D900BC939B /* CameraViewController.m */; settings = {ASSET_TAGS = (); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DCF25C6A1BB3497800BC939B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCF25C481BB3497800BC939B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DCF25C4F1BB3497800BC939B;
+			remoteInfo = SloMoVideo;
+		};
+		DCF25C751BB3497900BC939B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCF25C481BB3497800BC939B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DCF25C4F1BB3497800BC939B;
+			remoteInfo = SloMoVideo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DC1B126D1BBDC5CF00D5613F /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell.h; sourceTree = "<group>"; };
+		DC1B126E1BBDC5CF00D5613F /* Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell.m; sourceTree = "<group>"; };
+		DC1B12701BBDE40C00D5613F /* PlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerView.h; sourceTree = "<group>"; };
+		DC1B12711BBDE40C00D5613F /* PlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerView.m; sourceTree = "<group>"; };
+		DC1B12771BBF109E00D5613F /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
+		DC1B12781BBF109E00D5613F /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
+		DC89CCF11BBC6036007970F1 /* videoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = videoPlayerViewController.h; sourceTree = "<group>"; };
+		DC89CCF21BBC6036007970F1 /* videoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = videoPlayerViewController.m; sourceTree = "<group>"; };
+		DC89CCF41BBC6E61007970F1 /* VideoLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoLibraryViewController.h; sourceTree = "<group>"; };
+		DC89CCF51BBC6E61007970F1 /* VideoLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoLibraryViewController.m; sourceTree = "<group>"; };
+		DCF25C501BB3497800BC939B /* SloMoVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SloMoVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCF25C541BB3497800BC939B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DCF25C561BB3497800BC939B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		DCF25C571BB3497800BC939B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		DCF25C5D1BB3497800BC939B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DCF25C5F1BB3497800BC939B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DCF25C621BB3497800BC939B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DCF25C641BB3497800BC939B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DCF25C691BB3497800BC939B /* SloMoVideoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SloMoVideoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCF25C6D1BB3497800BC939B /* SloMoVideoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SloMoVideoTests.m; sourceTree = "<group>"; };
+		DCF25C6F1BB3497900BC939B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DCF25C741BB3497900BC939B /* SloMoVideoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SloMoVideoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCF25C781BB3497900BC939B /* SloMoVideoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SloMoVideoUITests.m; sourceTree = "<group>"; };
+		DCF25C7A1BB3497900BC939B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DCF25C861BB34ACE00BC939B /* PreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewView.h; sourceTree = "<group>"; };
+		DCF25C871BB34ACE00BC939B /* PreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewView.m; sourceTree = "<group>"; };
+		DCF25C891BB352D900BC939B /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
+		DCF25C8A1BB352D900BC939B /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DCF25C4D1BB3497800BC939B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCF25C661BB3497800BC939B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCF25C711BB3497900BC939B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DCF25C471BB3497800BC939B = {
+			isa = PBXGroup;
+			children = (
+				DCF25C521BB3497800BC939B /* SloMoVideo */,
+				DCF25C6C1BB3497800BC939B /* SloMoVideoTests */,
+				DCF25C771BB3497900BC939B /* SloMoVideoUITests */,
+				DCF25C511BB3497800BC939B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DCF25C511BB3497800BC939B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DCF25C501BB3497800BC939B /* SloMoVideo.app */,
+				DCF25C691BB3497800BC939B /* SloMoVideoTests.xctest */,
+				DCF25C741BB3497900BC939B /* SloMoVideoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DCF25C521BB3497800BC939B /* SloMoVideo */ = {
+			isa = PBXGroup;
+			children = (
+				DCF25C561BB3497800BC939B /* AppDelegate.h */,
+				DCF25C571BB3497800BC939B /* AppDelegate.m */,
+				DCF25C861BB34ACE00BC939B /* PreviewView.h */,
+				DCF25C871BB34ACE00BC939B /* PreviewView.m */,
+				DCF25C891BB352D900BC939B /* CameraViewController.h */,
+				DCF25C8A1BB352D900BC939B /* CameraViewController.m */,
+				DC89CCF41BBC6E61007970F1 /* VideoLibraryViewController.h */,
+				DC89CCF51BBC6E61007970F1 /* VideoLibraryViewController.m */,
+				DC89CCF11BBC6036007970F1 /* videoPlayerViewController.h */,
+				DC89CCF21BBC6036007970F1 /* videoPlayerViewController.m */,
+				DC1B12771BBF109E00D5613F /* Video.h */,
+				DC1B12781BBF109E00D5613F /* Video.m */,
+				DC1B126D1BBDC5CF00D5613F /* Cell.h */,
+				DC1B126E1BBDC5CF00D5613F /* Cell.m */,
+				DC1B12701BBDE40C00D5613F /* PlayerView.h */,
+				DC1B12711BBDE40C00D5613F /* PlayerView.m */,
+				DCF25C5C1BB3497800BC939B /* Main.storyboard */,
+				DCF25C5F1BB3497800BC939B /* Assets.xcassets */,
+				DCF25C611BB3497800BC939B /* LaunchScreen.storyboard */,
+				DCF25C641BB3497800BC939B /* Info.plist */,
+				DCF25C531BB3497800BC939B /* Supporting Files */,
+			);
+			path = SloMoVideo;
+			sourceTree = "<group>";
+		};
+		DCF25C531BB3497800BC939B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DCF25C541BB3497800BC939B /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DCF25C6C1BB3497800BC939B /* SloMoVideoTests */ = {
+			isa = PBXGroup;
+			children = (
+				DCF25C6D1BB3497800BC939B /* SloMoVideoTests.m */,
+				DCF25C6F1BB3497900BC939B /* Info.plist */,
+			);
+			path = SloMoVideoTests;
+			sourceTree = "<group>";
+		};
+		DCF25C771BB3497900BC939B /* SloMoVideoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				DCF25C781BB3497900BC939B /* SloMoVideoUITests.m */,
+				DCF25C7A1BB3497900BC939B /* Info.plist */,
+			);
+			path = SloMoVideoUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DCF25C4F1BB3497800BC939B /* SloMoVideo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DCF25C7D1BB3497900BC939B /* Build configuration list for PBXNativeTarget "SloMoVideo" */;
+			buildPhases = (
+				DCF25C4C1BB3497800BC939B /* Sources */,
+				DCF25C4D1BB3497800BC939B /* Frameworks */,
+				DCF25C4E1BB3497800BC939B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SloMoVideo;
+			productName = SloMoVideo;
+			productReference = DCF25C501BB3497800BC939B /* SloMoVideo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DCF25C681BB3497800BC939B /* SloMoVideoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DCF25C801BB3497900BC939B /* Build configuration list for PBXNativeTarget "SloMoVideoTests" */;
+			buildPhases = (
+				DCF25C651BB3497800BC939B /* Sources */,
+				DCF25C661BB3497800BC939B /* Frameworks */,
+				DCF25C671BB3497800BC939B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DCF25C6B1BB3497800BC939B /* PBXTargetDependency */,
+			);
+			name = SloMoVideoTests;
+			productName = SloMoVideoTests;
+			productReference = DCF25C691BB3497800BC939B /* SloMoVideoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DCF25C731BB3497900BC939B /* SloMoVideoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DCF25C831BB3497900BC939B /* Build configuration list for PBXNativeTarget "SloMoVideoUITests" */;
+			buildPhases = (
+				DCF25C701BB3497900BC939B /* Sources */,
+				DCF25C711BB3497900BC939B /* Frameworks */,
+				DCF25C721BB3497900BC939B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DCF25C761BB3497900BC939B /* PBXTargetDependency */,
+			);
+			name = SloMoVideoUITests;
+			productName = SloMoVideoUITests;
+			productReference = DCF25C741BB3497900BC939B /* SloMoVideoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DCF25C481BB3497800BC939B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Prince Fungus";
+				TargetAttributes = {
+					DCF25C4F1BB3497800BC939B = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = LK75LRUFXF;
+					};
+					DCF25C681BB3497800BC939B = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = LK75LRUFXF;
+						TestTargetID = DCF25C4F1BB3497800BC939B;
+					};
+					DCF25C731BB3497900BC939B = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = LK75LRUFXF;
+						TestTargetID = DCF25C4F1BB3497800BC939B;
+					};
+				};
+			};
+			buildConfigurationList = DCF25C4B1BB3497800BC939B /* Build configuration list for PBXProject "SloMoVideo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DCF25C471BB3497800BC939B;
+			productRefGroup = DCF25C511BB3497800BC939B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DCF25C4F1BB3497800BC939B /* SloMoVideo */,
+				DCF25C681BB3497800BC939B /* SloMoVideoTests */,
+				DCF25C731BB3497900BC939B /* SloMoVideoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DCF25C4E1BB3497800BC939B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCF25C631BB3497800BC939B /* LaunchScreen.storyboard in Resources */,
+				DCF25C601BB3497800BC939B /* Assets.xcassets in Resources */,
+				DCF25C5E1BB3497800BC939B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCF25C671BB3497800BC939B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCF25C721BB3497900BC939B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DCF25C4C1BB3497800BC939B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC89CCF61BBC6E61007970F1 /* VideoLibraryViewController.m in Sources */,
+				DCF25C581BB3497800BC939B /* AppDelegate.m in Sources */,
+				DC89CCF31BBC6036007970F1 /* videoPlayerViewController.m in Sources */,
+				DC1B12791BBF109E00D5613F /* Video.m in Sources */,
+				DCF25C8B1BB352D900BC939B /* CameraViewController.m in Sources */,
+				DCF25C881BB34ACE00BC939B /* PreviewView.m in Sources */,
+				DCF25C551BB3497800BC939B /* main.m in Sources */,
+				DC1B126F1BBDC5CF00D5613F /* Cell.m in Sources */,
+				DC1B12721BBDE40C00D5613F /* PlayerView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCF25C651BB3497800BC939B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCF25C6E1BB3497800BC939B /* SloMoVideoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DCF25C701BB3497900BC939B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCF25C791BB3497900BC939B /* SloMoVideoUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DCF25C6B1BB3497800BC939B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DCF25C4F1BB3497800BC939B /* SloMoVideo */;
+			targetProxy = DCF25C6A1BB3497800BC939B /* PBXContainerItemProxy */;
+		};
+		DCF25C761BB3497900BC939B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DCF25C4F1BB3497800BC939B /* SloMoVideo */;
+			targetProxy = DCF25C751BB3497900BC939B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DCF25C5C1BB3497800BC939B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DCF25C5D1BB3497800BC939B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		DCF25C611BB3497800BC939B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DCF25C621BB3497800BC939B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DCF25C7B1BB3497900BC939B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		DCF25C7C1BB3497900BC939B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DCF25C7E1BB3497900BC939B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SloMoVideo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.princefungus.SloMoVideo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		DCF25C7F1BB3497900BC939B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SloMoVideo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.princefungus.SloMoVideo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		DCF25C811BB3497900BC939B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SloMoVideoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.princefungus.SloMoVideoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SloMoVideo.app/SloMoVideo";
+			};
+			name = Debug;
+		};
+		DCF25C821BB3497900BC939B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SloMoVideoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.princefungus.SloMoVideoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SloMoVideo.app/SloMoVideo";
+			};
+			name = Release;
+		};
+		DCF25C841BB3497900BC939B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SloMoVideoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.princefungus.SloMoVideoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = SloMoVideo;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		DCF25C851BB3497900BC939B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SloMoVideoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.princefungus.SloMoVideoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = SloMoVideo;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DCF25C4B1BB3497800BC939B /* Build configuration list for PBXProject "SloMoVideo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCF25C7B1BB3497900BC939B /* Debug */,
+				DCF25C7C1BB3497900BC939B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DCF25C7D1BB3497900BC939B /* Build configuration list for PBXNativeTarget "SloMoVideo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCF25C7E1BB3497900BC939B /* Debug */,
+				DCF25C7F1BB3497900BC939B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DCF25C801BB3497900BC939B /* Build configuration list for PBXNativeTarget "SloMoVideoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCF25C811BB3497900BC939B /* Debug */,
+				DCF25C821BB3497900BC939B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DCF25C831BB3497900BC939B /* Build configuration list for PBXNativeTarget "SloMoVideoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCF25C841BB3497900BC939B /* Debug */,
+				DCF25C851BB3497900BC939B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DCF25C481BB3497800BC939B /* Project object */;
+}

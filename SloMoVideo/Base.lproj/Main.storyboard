@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="amU-Sz-fJt">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+    </dependencies>
+    <scenes>
+        <!--Camera View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="CameraViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="PreviewView">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cG7-Sp-LKe" userLabel="Record Button">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="101-2Z-Kzb"/>
+                                    <constraint firstAttribute="height" constant="60" id="E9i-VW-1eN"/>
+                                </constraints>
+                                <state key="normal" image="Record Button"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="101-2Z-Kzb"/>
+                                        <exclude reference="E9i-VW-1eN"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="101-2Z-Kzb"/>
+                                        <include reference="E9i-VW-1eN"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="startRecording:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5yF-G0-g8Q"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SloMo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v0u-oD-dFX">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Js-zA-4hc">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <animations/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Off">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="toggleSloMo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eMe-Yq-lee"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pra-q2-dmL">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="49" id="0C0-JH-o8T"/>
+                                    <constraint firstAttribute="height" constant="37" id="0tw-Q4-wIU"/>
+                                </constraints>
+                                <state key="normal" title="Library Button" image="Library"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="0C0-JH-o8T"/>
+                                        <exclude reference="0tw-Q4-wIU"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="0C0-JH-o8T"/>
+                                        <include reference="0tw-Q4-wIU"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="showVideoLibrary:" destination="BYZ-38-t0r" eventType="touchUpInside" id="53u-LQ-Jak"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="5Js-zA-4hc" firstAttribute="leading" secondItem="v0u-oD-dFX" secondAttribute="trailing" constant="8" id="300-k0-iRT"/>
+                            <constraint firstItem="cG7-Sp-LKe" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="C2F-1p-Zxq"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="5Js-zA-4hc" secondAttribute="bottom" constant="15" id="CkD-hn-G5L"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="cG7-Sp-LKe" secondAttribute="bottom" constant="8" id="G3e-Is-Q1d"/>
+                            <constraint firstItem="v0u-oD-dFX" firstAttribute="leading" secondItem="cG7-Sp-LKe" secondAttribute="trailing" constant="24" id="MQO-gg-r81"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Pra-q2-dmL" secondAttribute="bottom" constant="12" id="QIP-ew-S8r"/>
+                            <constraint firstItem="cG7-Sp-LKe" firstAttribute="leading" secondItem="Pra-q2-dmL" secondAttribute="trailing" constant="54" id="RYt-Nr-Yfz"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="v0u-oD-dFX" secondAttribute="bottom" constant="20" id="bao-KD-rEe"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="cG7-Sp-LKe"/>
+                                <exclude reference="v0u-oD-dFX"/>
+                                <exclude reference="5Js-zA-4hc"/>
+                                <exclude reference="Pra-q2-dmL"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="CkD-hn-G5L"/>
+                                <exclude reference="G3e-Is-Q1d"/>
+                                <exclude reference="QIP-ew-S8r"/>
+                                <exclude reference="bao-KD-rEe"/>
+                                <exclude reference="300-k0-iRT"/>
+                                <exclude reference="C2F-1p-Zxq"/>
+                                <exclude reference="RYt-Nr-Yfz"/>
+                                <exclude reference="MQO-gg-r81"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="cG7-Sp-LKe"/>
+                                <include reference="v0u-oD-dFX"/>
+                                <include reference="5Js-zA-4hc"/>
+                                <include reference="Pra-q2-dmL"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="CkD-hn-G5L"/>
+                                <include reference="G3e-Is-Q1d"/>
+                                <include reference="QIP-ew-S8r"/>
+                                <include reference="bao-KD-rEe"/>
+                                <include reference="300-k0-iRT"/>
+                                <include reference="C2F-1p-Zxq"/>
+                                <include reference="RYt-Nr-Yfz"/>
+                                <include reference="MQO-gg-r81"/>
+                            </mask>
+                        </variation>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="e2d-oH-CUt" appends="YES" id="LlH-Lj-jKq"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" id="197-v0-X06"/>
+                    <connections>
+                        <outlet property="libraryButton" destination="Pra-q2-dmL" id="Y8Y-S2-p9c"/>
+                        <outlet property="previewView" destination="8bC-Xf-vdC" id="pzq-wc-J68"/>
+                        <outlet property="recordButton" destination="cG7-Sp-LKe" id="cGa-18-w1Q"/>
+                        <outlet property="sloMoIsLabel" destination="v0u-oD-dFX" id="8tl-Pn-Zuc"/>
+                        <outlet property="sloMoToggle" destination="5Js-zA-4hc" id="xly-8i-VRY"/>
+                        <segue destination="EUu-DT-voX" kind="show" identifier="segueToLibrary" id="1ID-Wl-hNc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="e2d-oH-CUt">
+                    <connections>
+                        <action selector="stopRecording:" destination="BYZ-38-t0r" id="PcI-VI-OwL"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1282.5" y="384"/>
+        </scene>
+        <!--Video Library View Controller-->
+        <scene sceneID="iRs-kx-U0P">
+            <objects>
+                <collectionViewController id="EUu-DT-voX" customClass="VideoLibraryViewController" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="6qM-6b-xFS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" red="1" green="0.98586492859999997" blue="0.97088136739999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="Ove-S6-6dB">
+                            <size key="itemSize" width="100" height="100"/>
+                            <size key="headerReferenceSize" width="0.0" height="5"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="nFN-Pm-D83" customClass="Cell">
+                                <rect key="frame" x="5" y="69" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dxx-VT-D1a">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <animations/>
+                                            <color key="backgroundColor" red="0.95194128789999999" green="0.37803438090000002" blue="0.52085510509999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                            </variation>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ue5-KL-xFr">
+                                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                            <animations/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.35000000000000003" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" red="1" green="0.98586492859999997" blue="0.97088136739999997" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="0.0" y="85" width="100" height="15"/>
+                                            </variation>
+                                        </label>
+                                    </subviews>
+                                    <animations/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <animations/>
+                                <color key="backgroundColor" red="0.33360341310000002" green="0.69965277780000001" blue="0.4479580802" alpha="1" colorSpace="calibratedRGB"/>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="Dxx-VT-D1a"/>
+                                        <exclude reference="Ue5-KL-xFr"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="subviews">
+                                        <include reference="Dxx-VT-D1a"/>
+                                        <include reference="Ue5-KL-xFr"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <outlet property="durationLabel" destination="Ue5-KL-xFr" id="oee-26-wrp"/>
+                                    <outlet property="imageView" destination="Dxx-VT-D1a" id="XnN-Md-wDD"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="29B-TJ-qOU">
+                            <rect key="frame" x="0.0" y="64" width="600" height="5"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <animations/>
+                        </collectionReusableView>
+                        <connections>
+                            <outlet property="dataSource" destination="EUu-DT-voX" id="EDY-Fx-ykJ"/>
+                            <outlet property="delegate" destination="EUu-DT-voX" id="HqT-9F-mvz"/>
+                        </connections>
+                    </collectionView>
+                    <connections>
+                        <segue destination="4e1-t6-nbD" kind="show" identifier="segueToPlayer" id="0pr-4b-PTN"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P8R-3b-FaY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2047.5" y="384"/>
+        </scene>
+        <!--Video Player View Controller-->
+        <scene sceneID="thx-km-ckB">
+            <objects>
+                <viewController id="4e1-t6-nbD" customClass="videoPlayerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3Np-Pp-z2v"/>
+                        <viewControllerLayoutGuide type="bottom" id="fyZ-ud-9hW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="10N-HD-Xym">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cad-t1-tuH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2854.5" y="384"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="a2Q-qd-ae1">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="amU-Sz-fJt" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="HQF-lU-lTB">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Q5b-BY-VA0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BbN-xs-IHm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="364.5" y="384"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Library" width="164" height="124"/>
+        <image name="Record Button" width="76" height="76"/>
+    </resources>
+</document>
