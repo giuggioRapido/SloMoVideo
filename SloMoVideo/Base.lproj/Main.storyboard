@@ -258,7 +258,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GwR-Dv-KfL">
+                            <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GwR-Dv-KfL" userLabel="Toolbar">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -276,37 +276,116 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sJJ-db-bZ3" userLabel="Play">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="Czy-YC-aFR"/>
+                                    <constraint firstAttribute="height" constant="33" id="wew-2d-PIJ"/>
+                                </constraints>
+                                <state key="normal" image="Play"/>
+                                <state key="selected" image="Pause"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Czy-YC-aFR"/>
+                                        <exclude reference="wew-2d-PIJ"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="Czy-YC-aFR"/>
+                                        <include reference="wew-2d-PIJ"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="pressPlay:" destination="4e1-t6-nbD" eventType="touchUpInside" id="7B9-Pw-bL9"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LRT-yD-Zbm">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="48" id="fRC-Wi-IIG"/>
+                                    <constraint firstAttribute="height" constant="33" id="rLc-Zt-hpe"/>
+                                </constraints>
+                                <state key="normal" title="1x">
+                                    <color key="titleColor" red="1" green="0.98586492859999997" blue="0.97088136739999997" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <state key="selected" title="Done"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="fRC-Wi-IIG"/>
+                                        <exclude reference="rLc-Zt-hpe"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="fRC-Wi-IIG"/>
+                                        <include reference="rLc-Zt-hpe"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="changePlaybackSpeed:" destination="4e1-t6-nbD" eventType="touchUpInside" id="wH1-yN-G8t"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="GwR-Dv-KfL" secondAttribute="trailing" constant="-20" id="5zQ-hg-n1E"/>
+                            <constraint firstItem="LRT-yD-Zbm" firstAttribute="centerY" secondItem="GwR-Dv-KfL" secondAttribute="centerY" id="Bbb-Ap-ADm"/>
                             <constraint firstItem="fyZ-ud-9hW" firstAttribute="top" secondItem="GwR-Dv-KfL" secondAttribute="bottom" id="Hq4-lK-WE5"/>
                             <constraint firstItem="GwR-Dv-KfL" firstAttribute="leading" secondItem="10N-HD-Xym" secondAttribute="leadingMargin" constant="-20" id="SEN-Df-p7l"/>
+                            <constraint firstItem="fyZ-ud-9hW" firstAttribute="top" secondItem="sJJ-db-bZ3" secondAttribute="bottom" constant="12" id="bmI-T1-yWR"/>
+                            <constraint firstItem="sJJ-db-bZ3" firstAttribute="centerX" secondItem="10N-HD-Xym" secondAttribute="centerX" id="x3n-bb-FUu"/>
+                            <constraint firstItem="LRT-yD-Zbm" firstAttribute="leading" secondItem="10N-HD-Xym" secondAttribute="leadingMargin" constant="11" id="zML-CB-eSH"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="GwR-Dv-KfL"/>
+                                <exclude reference="sJJ-db-bZ3"/>
+                                <exclude reference="LRT-yD-Zbm"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="Hq4-lK-WE5"/>
                                 <exclude reference="5zQ-hg-n1E"/>
                                 <exclude reference="SEN-Df-p7l"/>
+                                <exclude reference="Bbb-Ap-ADm"/>
+                                <exclude reference="zML-CB-eSH"/>
+                                <exclude reference="x3n-bb-FUu"/>
+                                <exclude reference="Hq4-lK-WE5"/>
+                                <exclude reference="bmI-T1-yWR"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="GwR-Dv-KfL"/>
+                                <include reference="sJJ-db-bZ3"/>
+                                <include reference="LRT-yD-Zbm"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="Hq4-lK-WE5"/>
                                 <include reference="5zQ-hg-n1E"/>
                                 <include reference="SEN-Df-p7l"/>
+                                <include reference="Bbb-Ap-ADm"/>
+                                <include reference="zML-CB-eSH"/>
+                                <include reference="x3n-bb-FUu"/>
+                                <include reference="Hq4-lK-WE5"/>
+                                <include reference="bmI-T1-yWR"/>
                             </mask>
                         </variation>
                     </view>
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="PlayButton" destination="sJJ-db-bZ3" id="Wec-Cd-Xqd"/>
+                        <outlet property="speedButton" destination="LRT-yD-Zbm" id="Bev-mx-X0N"/>
+                        <outlet property="toolbar" destination="GwR-Dv-KfL" id="Sra-G1-jQ3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cad-t1-tuH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -334,6 +413,8 @@
     </scenes>
     <resources>
         <image name="Lighter Library" width="162" height="123"/>
+        <image name="Pause" width="52" height="76"/>
+        <image name="Play" width="63" height="60"/>
         <image name="Record Button" width="76" height="76"/>
     </resources>
 </document>

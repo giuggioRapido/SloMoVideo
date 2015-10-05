@@ -23,37 +23,7 @@
     
     self.navigationController.navigationBarHidden = NO;
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
-
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath = [paths objectAtIndex:0];
-    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:NULL];
-    
-    for (int count = 0; count < (int)[directoryContent count]; count++)
-    {
-        //NSLog(@"File %d: %@", (count + 1), [directoryContent objectAtIndex:count]);
-        NSString *videoPath = [documentsPath stringByAppendingPathComponent:[directoryContent objectAtIndex:count]];
-
-        Video *video = [[Video alloc]init];
-        video.path = [NSURL fileURLWithPath:videoPath];
-        video.asset = [AVURLAsset assetWithURL:video.path];
-        
-        AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc]
-                                                 initWithAsset:video.asset];
-        
-        Float64 durationSeconds = CMTimeGetSeconds(video.asset.duration);
-        CMTime midpoint = CMTimeMakeWithSeconds(durationSeconds/2.0, 600);
-        
-        NSError *error;
-        CMTime actualTime;
-        CGImageRef halfWayImage = [imageGenerator copyCGImageAtTime:midpoint
-                                                         actualTime:&actualTime error:&error];
-        //NSLog(@"err = %@, imageRef = %@", error, halfWayImage);
-        UIImage *thumbnailImage = [[UIImage alloc] initWithCGImage:halfWayImage];
-        
-        video.thumbnail = thumbnailImage;
-        
-        [self.videos addObject:video];
-    }
+    [self pullDocumentsContents];
 }
 
 
@@ -89,10 +59,49 @@
     return cell;
 }
 
+#pragma mark Segue
+
 - (void)prepareForSegue:(UIStoryboardSegue * _Nonnull)segue sender:(id _Nullable)sender
 {
     videoPlayerViewController *vc = segue.destinationViewController;
     vc.videoToPlay = self.videoToPlay;
+}
+
+#pragma mark Custom methods
+
+-(void) pullDocumentsContents
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:NULL];
+    
+    for (int count = 0; count < (int)[directoryContent count]; count++)
+    {
+        //NSLog(@"File %d: %@", (count + 1), [directoryContent objectAtIndex:count]);
+        NSString *videoPath = [documentsPath stringByAppendingPathComponent:[directoryContent objectAtIndex:count]];
+        
+        Video *video = [[Video alloc]init];
+        video.path = [NSURL fileURLWithPath:videoPath];
+        video.asset = [AVURLAsset assetWithURL:video.path];
+        
+        AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc]
+                                                 initWithAsset:video.asset];
+        
+        Float64 durationSeconds = CMTimeGetSeconds(video.asset.duration);
+        CMTime midpoint = CMTimeMakeWithSeconds(durationSeconds/2.0, 600);
+        
+        NSError *error;
+        CMTime actualTime;
+        CGImageRef halfWayImage = [imageGenerator copyCGImageAtTime:midpoint
+                                                         actualTime:&actualTime error:&error];
+        //NSLog(@"err = %@, imageRef = %@", error, halfWayImage);
+        UIImage *thumbnailImage = [[UIImage alloc] initWithCGImage:halfWayImage];
+        
+        video.thumbnail = thumbnailImage;
+        
+        [self.videos addObject:video];
+    }
+
 }
 
 @end
