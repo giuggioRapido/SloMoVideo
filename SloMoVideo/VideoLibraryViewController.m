@@ -22,7 +22,8 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = NO;
-    
+    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
     NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:NULL];

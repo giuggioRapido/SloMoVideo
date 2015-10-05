@@ -18,7 +18,9 @@
 -(void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+   
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+
     self.playerItem = [AVPlayerItem playerItemWithAsset:self.videoToPlay.asset];
     self.player = [[AVPlayer alloc] initWithPlayerItem:self.playerItem];
     
