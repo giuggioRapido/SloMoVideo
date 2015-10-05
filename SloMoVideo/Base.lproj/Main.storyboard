@@ -70,7 +70,7 @@
                                     <constraint firstAttribute="width" constant="49" id="0C0-JH-o8T"/>
                                     <constraint firstAttribute="height" constant="37" id="0tw-Q4-wIU"/>
                                 </constraints>
-                                <state key="normal" title="Library Button" image="Library"/>
+                                <state key="normal" title="Library Button" image="Lighter Library"/>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="0C0-JH-o8T"/>
@@ -284,7 +284,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Library" width="164" height="124"/>
+        <image name="Lighter Library" width="162" height="123"/>
         <image name="Record Button" width="76" height="76"/>
     </resources>
 </document>
