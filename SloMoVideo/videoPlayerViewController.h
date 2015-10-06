@@ -20,7 +20,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *PlayButton;
 @property (weak, nonatomic) IBOutlet UIView *toolbar;
 @property (weak, nonatomic) IBOutlet UIButton *speedButton;
-@property (nonatomic) NSArray *playbackSpeeds;
+@property (nonatomic) NSArray *playbackSpeedStrings;
+
 @property (weak, nonatomic) IBOutlet UIButton *trashButton;
 
 @end

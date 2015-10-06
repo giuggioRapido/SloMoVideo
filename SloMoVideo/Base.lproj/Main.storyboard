@@ -361,6 +361,7 @@
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="h3A-uN-96X" firstAttribute="centerY" secondItem="GwR-Dv-KfL" secondAttribute="centerY" id="4fN-WW-L4c"/>
                             <constraint firstAttribute="trailingMargin" secondItem="GwR-Dv-KfL" secondAttribute="trailing" constant="-20" id="5zQ-hg-n1E"/>
@@ -410,6 +411,9 @@
                                 <include reference="SEN-Df-p7l"/>
                             </mask>
                         </variation>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Nl9-cZ-ZOL" appends="YES" id="NEc-NP-rDU"/>
+                        </connections>
                     </view>
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -421,6 +425,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cad-t1-tuH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Nl9-cZ-ZOL">
+                    <connections>
+                        <action selector="tapScreen:" destination="4e1-t6-nbD" id="UgC-hx-glZ"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2854.5" y="384"/>
         </scene>
