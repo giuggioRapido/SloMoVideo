@@ -71,10 +71,14 @@
 
 -(void) pullDocumentsContents
 {
+    // Clear videos array, which will be repopulated in loop below. At bottom of method, reloadData is called on the collection view to update it in case video has been deleted in the player view controller
+    
+    [self.videos removeAllObjects];
+    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
     NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:NULL];
-    
+    NSLog(@"%lu", (unsigned long)directoryContent.count);
     for (int count = 0; count < (int)[directoryContent count]; count++)
     {
         //NSLog(@"File %d: %@", (count + 1), [directoryContent objectAtIndex:count]);
@@ -82,6 +86,7 @@
         
         Video *video = [[Video alloc]init];
         video.path = [NSURL fileURLWithPath:videoPath];
+        video.stringPath = videoPath;
         video.asset = [AVURLAsset assetWithURL:video.path];
         
         AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc]
@@ -101,7 +106,8 @@
         
         [self.videos addObject:video];
     }
-
+    
+    [self.collectionView reloadData];
 }
 
 @end

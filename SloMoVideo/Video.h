@@ -14,7 +14,7 @@
 @property (nonatomic) NSURL *path;
 @property (nonatomic) AVURLAsset *asset;
 @property (nonatomic) UIImage *thumbnail;
-@property NSString *duration;
-
+@property (nonatomic) NSString *duration;
+@property (nonatomic) NSString *stringPath;
 
 @end

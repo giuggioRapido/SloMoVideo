@@ -3,6 +3,17 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "-[VideoLibraryViewController collectionView:numberOfItemsInSection:]:VideoLibraryViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.videos.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__39-[CameraViewController startRecording:]_block_invoke:CameraViewController.m">
+      </ContextState>
+      <ContextState
          contextName = "-[videoPlayerViewController viewWillAppear:]:videoPlayerViewController.m">
          <PersistentStrings>
             <PersistentString
@@ -15,12 +26,6 @@
                value = "self.view.playerLayer.player">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "__39-[CameraViewController startRecording:]_block_invoke:CameraViewController.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[VideoLibraryViewController collectionView:numberOfItemsInSection:]:VideoLibraryViewController.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

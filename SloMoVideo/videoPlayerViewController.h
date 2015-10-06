@@ -11,7 +11,7 @@
 #import "PlayerView.h"
 #import "Video.h"
 
-@interface videoPlayerViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>
+@interface videoPlayerViewController : UIViewController
 
 @property (nonatomic) AVPlayer *player;
 @property AVPlayerItem *playerItem;
@@ -21,4 +21,6 @@
 @property (weak, nonatomic) IBOutlet UIView *toolbar;
 @property (weak, nonatomic) IBOutlet UIButton *speedButton;
 @property (nonatomic) NSArray *playbackSpeeds;
+@property (weak, nonatomic) IBOutlet UIButton *trashButton;
+
 @end

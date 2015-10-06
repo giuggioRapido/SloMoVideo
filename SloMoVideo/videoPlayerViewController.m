@@ -32,13 +32,16 @@
     self.playerItem = [AVPlayerItem playerItemWithAsset:self.videoToPlay.asset];
     self.player = [[AVPlayer alloc] initWithPlayerItem:self.playerItem];
     
-    AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
-    playerLayer.frame = self.view.frame;
-    [self.view.layer addSublayer:playerLayer];
+    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+    self.playerLayer.frame = self.view.frame;
+    self.playerLayer.videoGravity = AVLayerVideoGravityResize;
+    [self.view.layer addSublayer:self.playerLayer];
     
     self.player.actionAtItemEnd = AVPlayerActionAtItemEndPause;
-    NSLog(@"%i", self.playerItem.canPlaySlowForward);
+    // NSLog(@"%i", self.playerItem.canPlaySlowForward);
     // [self.player seekToTime:kCMTimeZero];
+    
+    // NSLog (@"%@", NSStringFromCGRect(self.playerLayer.videoRect));
 }
 
 
@@ -77,6 +80,24 @@
         currentSpeedIndex++;
         [self.speedButton setTitle:self.playbackSpeeds[currentSpeedIndex] forState:UIControlStateNormal];
     }
+}
+
+- (IBAction)deleteVideo:(id)sender
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *filePath = self.videoToPlay.stringPath;
+    NSError *error = nil;
+    
+    
+    if (![fileManager removeItemAtPath:filePath error:&error]) {
+        NSLog(@"[Error] %@ (%@)", error, filePath);
+    } else {
+        NSLog(@"Video deleted");
+    }
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    
 }
 
 

@@ -334,15 +334,41 @@
                                     <action selector="changePlaybackSpeed:" destination="4e1-t6-nbD" eventType="touchUpInside" id="wH1-yN-G8t"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h3A-uN-96X" userLabel="Trash">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="9Pw-EX-XTN"/>
+                                    <constraint firstAttribute="width" constant="28" id="Izm-MN-ZXg"/>
+                                </constraints>
+                                <state key="normal" image="Trash"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="9Pw-EX-XTN"/>
+                                        <exclude reference="Izm-MN-ZXg"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="9Pw-EX-XTN"/>
+                                        <include reference="Izm-MN-ZXg"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="deleteVideo:" destination="4e1-t6-nbD" eventType="touchUpInside" id="E9R-ye-XSR"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="h3A-uN-96X" firstAttribute="centerY" secondItem="GwR-Dv-KfL" secondAttribute="centerY" id="4fN-WW-L4c"/>
                             <constraint firstAttribute="trailingMargin" secondItem="GwR-Dv-KfL" secondAttribute="trailing" constant="-20" id="5zQ-hg-n1E"/>
                             <constraint firstItem="LRT-yD-Zbm" firstAttribute="centerY" secondItem="GwR-Dv-KfL" secondAttribute="centerY" id="Bbb-Ap-ADm"/>
                             <constraint firstItem="fyZ-ud-9hW" firstAttribute="top" secondItem="GwR-Dv-KfL" secondAttribute="bottom" id="Hq4-lK-WE5"/>
                             <constraint firstItem="GwR-Dv-KfL" firstAttribute="leading" secondItem="10N-HD-Xym" secondAttribute="leadingMargin" constant="-20" id="SEN-Df-p7l"/>
                             <constraint firstItem="fyZ-ud-9hW" firstAttribute="top" secondItem="sJJ-db-bZ3" secondAttribute="bottom" constant="12" id="bmI-T1-yWR"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="h3A-uN-96X" secondAttribute="trailing" id="bud-By-R8O"/>
                             <constraint firstItem="sJJ-db-bZ3" firstAttribute="centerX" secondItem="10N-HD-Xym" secondAttribute="centerX" id="x3n-bb-FUu"/>
                             <constraint firstItem="LRT-yD-Zbm" firstAttribute="leading" secondItem="10N-HD-Xym" secondAttribute="leadingMargin" constant="11" id="zML-CB-eSH"/>
                         </constraints>
@@ -351,15 +377,18 @@
                                 <exclude reference="GwR-Dv-KfL"/>
                                 <exclude reference="sJJ-db-bZ3"/>
                                 <exclude reference="LRT-yD-Zbm"/>
+                                <exclude reference="h3A-uN-96X"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="5zQ-hg-n1E"/>
-                                <exclude reference="SEN-Df-p7l"/>
-                                <exclude reference="Bbb-Ap-ADm"/>
-                                <exclude reference="zML-CB-eSH"/>
-                                <exclude reference="x3n-bb-FUu"/>
                                 <exclude reference="Hq4-lK-WE5"/>
                                 <exclude reference="bmI-T1-yWR"/>
+                                <exclude reference="Bbb-Ap-ADm"/>
+                                <exclude reference="zML-CB-eSH"/>
+                                <exclude reference="4fN-WW-L4c"/>
+                                <exclude reference="bud-By-R8O"/>
+                                <exclude reference="x3n-bb-FUu"/>
+                                <exclude reference="5zQ-hg-n1E"/>
+                                <exclude reference="SEN-Df-p7l"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -367,15 +396,18 @@
                                 <include reference="GwR-Dv-KfL"/>
                                 <include reference="sJJ-db-bZ3"/>
                                 <include reference="LRT-yD-Zbm"/>
+                                <include reference="h3A-uN-96X"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="5zQ-hg-n1E"/>
-                                <include reference="SEN-Df-p7l"/>
-                                <include reference="Bbb-Ap-ADm"/>
-                                <include reference="zML-CB-eSH"/>
-                                <include reference="x3n-bb-FUu"/>
                                 <include reference="Hq4-lK-WE5"/>
                                 <include reference="bmI-T1-yWR"/>
+                                <include reference="Bbb-Ap-ADm"/>
+                                <include reference="zML-CB-eSH"/>
+                                <include reference="4fN-WW-L4c"/>
+                                <include reference="bud-By-R8O"/>
+                                <include reference="x3n-bb-FUu"/>
+                                <include reference="5zQ-hg-n1E"/>
+                                <include reference="SEN-Df-p7l"/>
                             </mask>
                         </variation>
                     </view>
@@ -385,6 +417,7 @@
                         <outlet property="PlayButton" destination="sJJ-db-bZ3" id="Wec-Cd-Xqd"/>
                         <outlet property="speedButton" destination="LRT-yD-Zbm" id="Bev-mx-X0N"/>
                         <outlet property="toolbar" destination="GwR-Dv-KfL" id="Sra-G1-jQ3"/>
+                        <outlet property="trashButton" destination="h3A-uN-96X" id="chA-C9-EXi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cad-t1-tuH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -416,5 +449,6 @@
         <image name="Pause" width="52" height="76"/>
         <image name="Play" width="63" height="60"/>
         <image name="Record Button" width="76" height="76"/>
+        <image name="Trash" width="77" height="121"/>
     </resources>
 </document>
