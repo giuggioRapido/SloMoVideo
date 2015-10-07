@@ -86,7 +86,11 @@
     NSString *documentsPath = [paths objectAtIndex:0];
     NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:NULL];
     NSLog(@"%lu", (unsigned long)directoryContent.count);
-    for (int count = 0; count < (int)[directoryContent count]; count++)
+    
+    /// The following two for statements change the direction in which the iterate through the documents contents.
+    /// Ultimately this changes whether thumbnails are listed in newest->oldest or vice versa.
+    //    for (int count = 0; count < (int)[directoryContent count]; count++)
+    for (int count = (int)directoryContent.count - 1; count >= 0; count--)
     {
         //    NSLog(@"File %d: %@", (count + 1), [directoryContent objectAtIndex:count]);
         NSString *videoPath = [documentsPath stringByAppendingPathComponent:[directoryContent objectAtIndex:count]];
