@@ -31,7 +31,7 @@
     {
         case AVAuthorizationStatusAuthorized:
         {
-            // The user has previously granted access to the camera.
+            /// The user has previously granted access to the camera.
             break;
         }
             
