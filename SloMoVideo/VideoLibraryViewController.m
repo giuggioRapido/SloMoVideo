@@ -13,6 +13,7 @@
 -(void) viewDidLoad
 {
     [super viewDidLoad];
+    
     self.navigationItem.title = @"Library";
     self.videos = [[NSMutableArray alloc] init];
 }
@@ -23,17 +24,14 @@
     
     self.navigationController.navigationBarHidden = NO;
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+    
+    /// Call pullDocumentsContents every time view appears to ensure the collection view is up to date
+    /// (both in terms of new videos and deleted videos)
+    
     [self pullDocumentsContents];
 }
 
 
-#pragma mark UICollectionViewDelegate
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    self.videoToPlay = [self.videos objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"segueToPlayer" sender:self];
-}
 
 #pragma mark UICollectionViewDataSource
 
@@ -50,13 +48,21 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     Cell *cell = (Cell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-   
+    
     Video *currentVideo = [self.videos objectAtIndex:indexPath.row];
     
     cell.durationLabel.text = currentVideo.duration;
     cell.imageView.image = currentVideo.thumbnail;
     
     return cell;
+}
+
+#pragma mark UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.videoToPlay = [self.videos objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"segueToPlayer" sender:self];
 }
 
 #pragma mark Segue
@@ -71,7 +77,8 @@
 
 -(void) pullDocumentsContents
 {
-    // Clear videos array, which will be repopulated in loop below. At bottom of method, reloadData is called on the collection view to update it in case video has been deleted in the player view controller
+    /// Clear videos array, which will be repopulated in loop below. At bottom of method, reloadData is called on the
+    /// collection view to update it in case video has been deleted in the player view controller
     
     [self.videos removeAllObjects];
     
@@ -81,7 +88,7 @@
     NSLog(@"%lu", (unsigned long)directoryContent.count);
     for (int count = 0; count < (int)[directoryContent count]; count++)
     {
-        //NSLog(@"File %d: %@", (count + 1), [directoryContent objectAtIndex:count]);
+        //    NSLog(@"File %d: %@", (count + 1), [directoryContent objectAtIndex:count]);
         NSString *videoPath = [documentsPath stringByAppendingPathComponent:[directoryContent objectAtIndex:count]];
         
         Video *video = [[Video alloc]init];
@@ -99,7 +106,7 @@
         CMTime actualTime;
         CGImageRef halfWayImage = [imageGenerator copyCGImageAtTime:midpoint
                                                          actualTime:&actualTime error:&error];
-        //NSLog(@"err = %@, imageRef = %@", error, halfWayImage);
+        //        NSLog(@"err = %@, imageRef = %@", error, halfWayImage);
         UIImage *thumbnailImage = [[UIImage alloc] initWithCGImage:halfWayImage];
         
         video.thumbnail = thumbnailImage;

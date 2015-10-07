@@ -15,18 +15,18 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"Camera";
-
-    // Create the AVCaptureSession.
+    
+    /// Create the AVCaptureSession.
     self.session = [[AVCaptureSession alloc] init];
    	
-    // Setup the preview view.
+    /// Setup the preview view.
     self.previewView.session = self.session;
     
-    // Communicate with the session and other session objects on this queue.
+    /// Communicate with the session and other session objects on this queue.
     self.sessionQueue = dispatch_queue_create( "session queue", DISPATCH_QUEUE_SERIAL );
     
-    // Check video authorization status. Video access is required and audio access is optional.
-    // If audio access is denied, audio is not recorded during movie recording.
+    /// Check video authorization status. Video access is required and audio access is optional.
+    /// If audio access is denied, audio is not recorded during movie recording.
     switch ( [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] )
     {
         case AVAuthorizationStatusAuthorized:
@@ -37,10 +37,10 @@
             
         case AVAuthorizationStatusNotDetermined:
         {
-            // The user has not yet been presented with the option to grant video access.
-            // We suspend the session queue to delay session setup until the access request has completed to avoid
-            // asking the user for audio access if video access is denied.
-            // Note that audio access will be implicitly requested when we create an AVCaptureDeviceInput for audio during session setup.
+            /// The user has not yet been presented with the option to grant video access.
+            /// We suspend the session queue to delay session setup until the access request has completed to avoid
+            /// asking the user for audio access if video access is denied.
+            /// Note that audio access will be implicitly requested when we create an AVCaptureDeviceInput for audio during session setup.
             dispatch_suspend( self.sessionQueue );
             
             [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^( BOOL granted ) {
@@ -54,17 +54,17 @@
             
         default:
         {
-            // The user has previously denied access.
+            /// The user has previously denied access.
             self.setupResult = AVCamSetupResultCameraNotAuthorized;
             break;
         }
     }
     
-    // Setup the capture session.
-    // In general it is not safe to mutate an AVCaptureSession or any of its inputs, outputs, or connections from multiple threads at the same time.
-    // Why not do all of this on the main queue?
-    // Because -[AVCaptureSession startRunning] is a blocking call which can take a long time. We dispatch session setup to the sessionQueue
-    // so that the main queue isn't blocked, which keeps the UI responsive.
+    /// Setup the capture session.
+    /// In general it is not safe to mutate an AVCaptureSession or any of its inputs, outputs, or connections from multiple threads at the same time.
+    /// Why not do all of this on the main queue?
+    /// Because -[AVCaptureSession startRunning] is a blocking call which can take a long time. We dispatch session setup to the sessionQueue
+    /// so that the main queue isn't blocked, which keeps the UI responsive.
     dispatch_async( self.sessionQueue, ^{
         if ( self.setupResult != AVCamSetupResultSuccess ) {
             return;
@@ -73,11 +73,11 @@
         self.backgroundRecordingID = UIBackgroundTaskInvalid;
         NSError *error = nil;
         
-        // Follow line uses a method to select specified device
+        /// Following line uses a method to select specified device
         //        AVCaptureDevice *videoDevice = [CameraViewController deviceWithMediaType:AVMediaTypeVideo preferringPosition:AVCaptureDevicePositionBack];
         
         AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-        // Save the default format
+        /// Save the default format
         self.defaultFormat = videoDevice.activeFormat;
         self.defaultVideoMaxFrameDuration = videoDevice.activeVideoMaxFrameDuration;
         AVCaptureDeviceInput *videoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
@@ -93,12 +93,12 @@
             self.videoDeviceInput = videoDeviceInput;
             
             dispatch_async( dispatch_get_main_queue(), ^{
-                // Why are we dispatching this to the main queue?
-                // Because AVCaptureVideoPreviewLayer is the backing layer for AAPLPreviewView and UIView
-                // can only be manipulated on the main thread.
+                /// Why are we dispatching this to the main queue?
+                /// Because AVCaptureVideoPreviewLayer is the backing layer for AAPLPreviewView and UIView
+                /// can only be manipulated on the main thread.
                 
-                // Use the status bar orientation as the initial video orientation. Subsequent orientation changes are handled by
-                // -[viewWillTransitionToSize:withTransitionCoordinator:].
+                /// Use the status bar orientation as the initial video orientation. Subsequent orientation changes are handled by
+                /// -[viewWillTransitionToSize:withTransitionCoordinator:].
                 UIInterfaceOrientation statusBarOrientation = [UIApplication sharedApplication].statusBarOrientation;
                 AVCaptureVideoOrientation initialVideoOrientation = AVCaptureVideoOrientationPortrait;
                 if ( statusBarOrientation != UIInterfaceOrientationUnknown ) {
@@ -128,7 +128,7 @@
             NSLog( @"Could not add audio device input to the session" );
         }
         
-        // Create AVCaptureMovieFileOutput object
+        /// Create AVCaptureMovieFileOutput object
         AVCaptureMovieFileOutput *movieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
         if ( [self.session canAddOutput:movieFileOutput] ) {
             [self.session addOutput:movieFileOutput];
@@ -152,13 +152,13 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = YES;
-
+    
     dispatch_async( self.sessionQueue, ^{
         switch ( self.setupResult )
         {
             case AVCamSetupResultSuccess:
             {
-                // Only start the session running if setup succeeded.
+                /// Only start the session running if setup succeeded.
                 [self.session startRunning];
                 self.sessionRunning = self.session.isRunning;
                 break;
@@ -171,7 +171,7 @@
                     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"OK", @"Alert OK button" ) style:UIAlertActionStyleCancel handler:nil];
                     [alertController addAction:cancelAction];
                     
-                    // Provide quick access to Settings.
+                    /// Provide quick access to Settings.
                     UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"Settings", @"Alert button to open Settings" ) style:UIAlertActionStyleDefault handler:^( UIAlertAction *action ) {
                         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
                     }];
@@ -212,20 +212,20 @@
 {
     dispatch_async( self.sessionQueue, ^{
         if ( [UIDevice currentDevice].isMultitaskingSupported ) {
-            // Setup background task. This is needed because the -[captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:]
-            // callback is not received until AVCam returns to the foreground unless you request background execution time.
-            // This also ensures that there will be time to write the file to the photo library when AVCam is backgrounded.
-            // To conclude this background execution, -endBackgroundTask is called in
-            // -[captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:] after the recorded file has been saved.
+            /// Setup background task. This is needed because the -[captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:]
+            /// callback is not received until AVCam returns to the foreground unless you request background execution time.
+            /// This also ensures that there will be time to write the file to the photo library when AVCam is backgrounded.
+            /// To conclude this background execution, -endBackgroundTask is called in
+            /// -[captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:] after the recorded file has been saved.
             self.backgroundRecordingID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
         }
         
-        // Update the orientation on the movie file output video connection before starting recording.
+        /// Update the orientation on the movie file output video connection before starting recording.
         AVCaptureConnection *connection = [self.movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
         AVCaptureVideoPreviewLayer *previewLayer = (AVCaptureVideoPreviewLayer *)self.previewView.layer;
         connection.videoOrientation = previewLayer.connection.videoOrientation;
         
-        // Create file name from date
+        /// Create file name from date
         NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
         NSString* fileName = [NSString stringWithFormat:@"%@.mov",[formatter stringFromDate:[NSDate date]]];
@@ -240,8 +240,8 @@
 
 - (IBAction)stopRecording:(id)sender
 {
-    // This method is called when the user double taps anywhere on the screen.
-    // Only stop recording if we're currently recording.
+    /// This method is called when the user double taps anywhere on the screen.
+    /// Only stop recording if we're currently recording.
     if (self.movieFileOutput.isRecording) {
         [self.movieFileOutput stopRecording];
     }
@@ -250,14 +250,14 @@
 - (IBAction)toggleSloMo:(id)sender
 {
     if ([self.sloMoToggle.titleLabel.text isEqualToString:@"Off"]) {
-        // Code here is for activating Slo-Mo
+        /// Code here is for activating Slo-Mo
         [self.sloMoToggle setTitle:@"On" forState:UIControlStateNormal];
         self.sloMoToggle.backgroundColor = self.view.tintColor;
         
         [self increaseFPS];
     }
     else {
-        // Code here is for normal capture speed
+        /// Code here is for normal capture speed
         [self.sloMoToggle setTitle:@"Off" forState:UIControlStateNormal];
         self.sloMoToggle.backgroundColor = [UIColor darkGrayColor];
         
@@ -297,7 +297,7 @@
 {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
-    // Note that the app delegate controls the device orientation notifications required to use the device orientation.
+    /// Note that the app delegate controls the device orientation notifications required to use the device orientation.
     UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
     if ( UIDeviceOrientationIsPortrait( deviceOrientation ) || UIDeviceOrientationIsLandscape( deviceOrientation ) ) {
         AVCaptureVideoPreviewLayer *previewLayer = (AVCaptureVideoPreviewLayer *)self.previewView.layer;
@@ -309,12 +309,12 @@
 
 + (AVCaptureDevice *)deviceWithMediaType:(NSString *)mediaType preferringPosition:(AVCaptureDevicePosition)position
 {
-    // devicesWithMediaType returns array of devices that support the passed in mediaType.
-    // In the case of video, front and back cameras are the devices.
+    /// devicesWithMediaType returns array of devices that support the passed in mediaType.
+    /// In the case of video, front and back cameras are the devices.
     NSArray *devices = [AVCaptureDevice devicesWithMediaType:mediaType];
     AVCaptureDevice *captureDevice = devices.firstObject;
     
-    // Check the passed in position against the devices and return desired device.
+    /// Check the passed in position against the devices and return desired device.
     for ( AVCaptureDevice *device in devices ) {
         if ( device.position == position ) {
             captureDevice = device;
@@ -359,7 +359,7 @@
     if (self.session.isRunning) {
         [self.session stopRunning];
     }
-   
+    
     AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     [videoDevice lockForConfiguration:nil];
     videoDevice.activeFormat = self.defaultFormat;
@@ -374,7 +374,7 @@
 #pragma mark File Output Recording Delegate
 - (void)captureOutput:(AVCaptureFileOutput *)captureOutput didStartRecordingToOutputFileAtURL:(NSURL *)fileURL fromConnections:(NSArray *)connections
 {
-    // Hide the record button and color border to indicate that camera is recording
+    /// Hide the record button and color border to indicate that camera is recording
     dispatch_async( dispatch_get_main_queue(), ^{
         [self hideUI];
         
@@ -386,13 +386,13 @@
 
 - (void)captureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error
 {
-    // Note that currentBackgroundRecordingID is used to end the background task associated with this recording.
-    // This allows a new recording to be started, associated with a new UIBackgroundTaskIdentifier, once the movie file output's isRecording property
-    // is back to NO — which happens sometime after this method returns.
-    // Note: Since we use a unique file path for each recording, a new recording will not overwrite a recording currently being saved.
+    /// Note that currentBackgroundRecordingID is used to end the background task associated with this recording.
+    /// This allows a new recording to be started, associated with a new UIBackgroundTaskIdentifier, once the movie file output's isRecording property
+    /// is back to NO — which happens sometime after this method returns.
+    /// Note: Since we use a unique file path for each recording, a new recording will not overwrite a recording currently being saved.
     UIBackgroundTaskIdentifier currentBackgroundRecordingID = self.backgroundRecordingID;
     self.backgroundRecordingID = UIBackgroundTaskInvalid;
-        
+    
     BOOL success = YES;
     
     if ( error ) {
@@ -403,7 +403,7 @@
         NSLog(@"file saved");
     }
     
-    // Unhide the record button and get rid of recording border
+    /// Unhide the record button and get rid of recording border
     dispatch_async( dispatch_get_main_queue(), ^{
         [self unhideUI];
         self.previewView.layer.borderColor = nil;
