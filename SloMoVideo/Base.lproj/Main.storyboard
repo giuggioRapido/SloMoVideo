@@ -42,29 +42,6 @@
                                     <action selector="startRecording:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5yF-G0-g8Q"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SloMo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v0u-oD-dFX">
-                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Js-zA-4hc">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <animations/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Off">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="toggleSloMo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eMe-Yq-lee"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pra-q2-dmL">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
@@ -89,54 +66,81 @@
                                     <action selector="showVideoLibrary:" destination="BYZ-38-t0r" eventType="touchUpInside" id="53u-LQ-Jak"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Js-zA-4hc">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <animations/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="gQN-ig-76e"/>
+                                    <constraint firstAttribute="width" constant="85" id="jC3-RU-sBE"/>
+                                </constraints>
+                                <state key="normal" title="SloMo Off">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" title="SloMo On">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="gQN-ig-76e"/>
+                                        <exclude reference="jC3-RU-sBE"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="gQN-ig-76e"/>
+                                        <include reference="jC3-RU-sBE"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="toggleSloMo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eMe-Yq-lee"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="5Js-zA-4hc" firstAttribute="leading" secondItem="v0u-oD-dFX" secondAttribute="trailing" constant="8" id="300-k0-iRT"/>
                             <constraint firstItem="cG7-Sp-LKe" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="C2F-1p-Zxq"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="5Js-zA-4hc" secondAttribute="bottom" constant="15" id="CkD-hn-G5L"/>
+                            <constraint firstItem="5Js-zA-4hc" firstAttribute="leading" secondItem="cG7-Sp-LKe" secondAttribute="trailing" constant="26" id="FON-1L-6wE"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="cG7-Sp-LKe" secondAttribute="bottom" constant="8" id="G3e-Is-Q1d"/>
-                            <constraint firstItem="v0u-oD-dFX" firstAttribute="leading" secondItem="cG7-Sp-LKe" secondAttribute="trailing" constant="24" id="MQO-gg-r81"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Pra-q2-dmL" secondAttribute="bottom" constant="12" id="QIP-ew-S8r"/>
                             <constraint firstItem="cG7-Sp-LKe" firstAttribute="leading" secondItem="Pra-q2-dmL" secondAttribute="trailing" constant="54" id="RYt-Nr-Yfz"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="v0u-oD-dFX" secondAttribute="bottom" constant="20" id="bao-KD-rEe"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="cG7-Sp-LKe"/>
-                                <exclude reference="v0u-oD-dFX"/>
-                                <exclude reference="5Js-zA-4hc"/>
                                 <exclude reference="Pra-q2-dmL"/>
+                                <exclude reference="5Js-zA-4hc"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="CkD-hn-G5L"/>
                                 <exclude reference="G3e-Is-Q1d"/>
                                 <exclude reference="QIP-ew-S8r"/>
-                                <exclude reference="bao-KD-rEe"/>
-                                <exclude reference="300-k0-iRT"/>
+                                <exclude reference="FON-1L-6wE"/>
                                 <exclude reference="C2F-1p-Zxq"/>
                                 <exclude reference="RYt-Nr-Yfz"/>
-                                <exclude reference="MQO-gg-r81"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="cG7-Sp-LKe"/>
-                                <include reference="v0u-oD-dFX"/>
-                                <include reference="5Js-zA-4hc"/>
                                 <include reference="Pra-q2-dmL"/>
+                                <include reference="5Js-zA-4hc"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="CkD-hn-G5L"/>
                                 <include reference="G3e-Is-Q1d"/>
                                 <include reference="QIP-ew-S8r"/>
-                                <include reference="bao-KD-rEe"/>
-                                <include reference="300-k0-iRT"/>
+                                <include reference="FON-1L-6wE"/>
                                 <include reference="C2F-1p-Zxq"/>
                                 <include reference="RYt-Nr-Yfz"/>
-                                <include reference="MQO-gg-r81"/>
                             </mask>
                         </variation>
                         <connections>
@@ -148,7 +152,6 @@
                         <outlet property="libraryButton" destination="Pra-q2-dmL" id="Y8Y-S2-p9c"/>
                         <outlet property="previewView" destination="8bC-Xf-vdC" id="pzq-wc-J68"/>
                         <outlet property="recordButton" destination="cG7-Sp-LKe" id="cGa-18-w1Q"/>
-                        <outlet property="sloMoIsLabel" destination="v0u-oD-dFX" id="8tl-Pn-Zuc"/>
                         <outlet property="sloMoToggle" destination="5Js-zA-4hc" id="xly-8i-VRY"/>
                         <segue destination="EUu-DT-voX" kind="show" identifier="segueToLibrary" id="1ID-Wl-hNc"/>
                     </connections>

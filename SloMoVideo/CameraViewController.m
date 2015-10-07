@@ -77,12 +77,13 @@
         //        AVCaptureDevice *videoDevice = [CameraViewController deviceWithMediaType:AVMediaTypeVideo preferringPosition:AVCaptureDevicePositionBack];
         
         AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+        
         /// Save the default format
         self.defaultFormat = videoDevice.activeFormat;
         self.defaultVideoMaxFrameDuration = videoDevice.activeVideoMaxFrameDuration;
         AVCaptureDeviceInput *videoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
         
-        if ( ! videoDeviceInput ) {
+        if (!videoDeviceInput) {
             NSLog( @"Could not create video device input: %@", error );
         }
         
@@ -166,8 +167,8 @@
             case AVCamSetupResultCameraNotAuthorized:
             {
                 dispatch_async( dispatch_get_main_queue(), ^{
-                    NSString *message = NSLocalizedString( @"AVCam doesn't have permission to use the camera, please change privacy settings", @"Alert message when the user has denied access to the camera" );
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"AVCam" message:message preferredStyle:UIAlertControllerStyleAlert];
+                    NSString *message = NSLocalizedString( @"SloMoVideo doesn't have permission to use the camera, please change privacy settings", @"Alert message when the user has denied access to the camera" );
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"SloMoVideo" message:message preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"OK", @"Alert OK button" ) style:UIAlertActionStyleCancel handler:nil];
                     [alertController addAction:cancelAction];
                     
@@ -213,8 +214,8 @@
     dispatch_async( self.sessionQueue, ^{
         if ( [UIDevice currentDevice].isMultitaskingSupported ) {
             /// Setup background task. This is needed because the -[captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:]
-            /// callback is not received until AVCam returns to the foreground unless you request background execution time.
-            /// This also ensures that there will be time to write the file to the photo library when AVCam is backgrounded.
+            /// callback is not received until app returns to the foreground unless you request background execution time.
+            /// This also ensures that there will be time to write the file to the photo library when app is backgrounded.
             /// To conclude this background execution, -endBackgroundTask is called in
             /// -[captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:] after the recorded file has been saved.
             self.backgroundRecordingID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
@@ -230,7 +231,7 @@
         [formatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
         NSString* fileName = [NSString stringWithFormat:@"%@.mov",[formatter stringFromDate:[NSDate date]]];
         
-        // Start recording to Documents directory.
+        /// Start recording to Documents directory.
         NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
         NSString *filePath = [documentsPath stringByAppendingPathComponent:fileName];
         
@@ -242,6 +243,7 @@
 {
     /// This method is called when the user double taps anywhere on the screen.
     /// Only stop recording if we're currently recording.
+    
     if (self.movieFileOutput.isRecording) {
         [self.movieFileOutput stopRecording];
     }
@@ -249,19 +251,23 @@
 
 - (IBAction)toggleSloMo:(id)sender
 {
-    if ([self.sloMoToggle.titleLabel.text isEqualToString:@"Off"]) {
-        /// Code here is for activating Slo-Mo
-        [self.sloMoToggle setTitle:@"On" forState:UIControlStateNormal];
-        self.sloMoToggle.backgroundColor = self.view.tintColor;
-        
-        [self increaseFPS];
-    }
-    else {
-        /// Code here is for normal capture speed
-        [self.sloMoToggle setTitle:@"Off" forState:UIControlStateNormal];
+    /// When button is selected, it is in the high FPS state. Background color needs to be set separately, however, since
+    /// 'selected' doesn't allow for different BG color
+    
+    if (self.sloMoToggle.selected) {
+        /// Code here is for default FPS
+        self.sloMoToggle.selected = NO;
         self.sloMoToggle.backgroundColor = [UIColor darkGrayColor];
         
         [self returnFPSToDefault];
+        
+    }
+    else {
+        /// Code here is for activating high FPS
+        self.sloMoToggle.selected = YES;
+        self.sloMoToggle.backgroundColor = self.view.tintColor;
+        
+        [self increaseFPS];
     }
 }
 
@@ -272,18 +278,36 @@
 
 -(void) hideUI
 {
-    self.recordButton.hidden = YES;
-    self.sloMoIsLabel.hidden = YES;
-    self.sloMoToggle.hidden = YES;
-    self.libraryButton.hidden = YES;
+    /// Top code animates, bottom is instant hide/show
+
+    for (UIView *subview in self.view.subviews) {
+        [UIView animateWithDuration:0.3 animations:^() {
+            subview.alpha = 0.0;
+        }];
+    }
+    
+    //    self.navigationController.navigationBarHidden = YES;
+    //
+    //        for (UIView *subview in self.view.subviews) {
+    //            subview.hidden = YES;
+    //        }
 }
 
 -(void) unhideUI
 {
-    self.recordButton.hidden = NO;
-    self.sloMoIsLabel.hidden = NO;
-    self.sloMoToggle.hidden = NO;
-    self.libraryButton.hidden = NO;
+    /// Top code animates, bottom is instant hide/show
+
+    for (UIView *subview in self.view.subviews) {
+        [UIView animateWithDuration:0.3 animations:^() {
+            subview.alpha = 1;
+        }];
+    }
+    
+    //    self.navigationController.navigationBarHidden = NO;
+    //
+    //    for (UIView *subview in self.view.subviews) {
+    //        subview.hidden = NO;
+    //    }
 }
 
 #pragma mark Orientation

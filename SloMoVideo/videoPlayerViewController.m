@@ -45,6 +45,7 @@ static int videoPlayerViewControllerKVOContext = 0;
     
     self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
     self.playerLayer.frame = self.view.frame;
+    
     self.playerLayer.videoGravity = AVLayerVideoGravityResize;
     
     [self.view.layer addSublayer:self.playerLayer];
@@ -172,7 +173,7 @@ static int videoPlayerViewControllerKVOContext = 0;
 
 -(void) unhideUI
 {
-    /// Top code animates, bottom is instant hide/show
+    /// Top code animates, bottom is instant hide/show. In the animated code, we need separate logic for the toolbar since we want the alpha to only increase to 0.6, not 1.
     
     [UIView animateWithDuration:0.3 animations:^() {
         self.navigationController.navigationBar.alpha = 1;
