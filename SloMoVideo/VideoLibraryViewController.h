@@ -10,6 +10,7 @@
 #import "Cell.h"
 #import "Video.h"
 #import "videoPlayerViewController.h"
+#import "UIImage+Resize.h"
 
 @interface VideoLibraryViewController : UICollectionViewController
 

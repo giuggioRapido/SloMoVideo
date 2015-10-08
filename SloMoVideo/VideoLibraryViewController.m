@@ -10,6 +10,7 @@
 
 @implementation VideoLibraryViewController
 
+
 -(void) viewDidLoad
 {
     [super viewDidLoad];
@@ -27,7 +28,6 @@
     
     /// Call pullDocumentsContents every time view appears to ensure the collection view is up to date
     /// (both in terms of new videos and deleted videos)
-    
     [self pullDocumentsContents];
 }
 
@@ -85,14 +85,12 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
     NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:NULL];
-    NSLog(@"%lu", (unsigned long)directoryContent.count);
     
     /// The following two for statements change the direction in which the iterate through the documents contents.
     /// Ultimately this changes whether thumbnails are listed in newest->oldest or vice versa.
     //    for (int count = 0; count < (int)[directoryContent count]; count++)
     for (int count = (int)directoryContent.count - 1; count >= 0; count--)
     {
-        //    NSLog(@"File %d: %@", (count + 1), [directoryContent objectAtIndex:count]);
         NSString *videoPath = [documentsPath stringByAppendingPathComponent:[directoryContent objectAtIndex:count]];
         
         Video *video = [[Video alloc]init];
@@ -100,6 +98,7 @@
         video.stringPath = videoPath;
         video.asset = [AVURLAsset assetWithURL:video.path];
         
+        /// Generate thumbnails
         AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc]
                                                  initWithAsset:video.asset];
         
@@ -111,9 +110,16 @@
         CGImageRef halfWayImage = [imageGenerator copyCGImageAtTime:midpoint
                                                          actualTime:&actualTime error:&error];
         //        NSLog(@"err = %@, imageRef = %@", error, halfWayImage);
-        UIImage *thumbnailImage = [[UIImage alloc] initWithCGImage:halfWayImage];
         
-        video.thumbnail = thumbnailImage;
+        /// Orientation needs to be changed because (for some reason) if not done, the thumbnails come out rotated 90 deg
+        UIImage *unresizedImage = [[UIImage alloc] initWithCGImage:halfWayImage
+                                                             scale:1.0
+                                                       orientation:UIImageOrientationRight];
+        
+        /// Resize the image and assign to video thumbnail
+        video.thumbnail = [unresizedImage resizedImageWithScaleFactor:0.1];
+        
+        //        NSLog(@"size of thumbnail at creation: %@", NSStringFromCGSize (video.thumbnail.size));
         
         [self.videos addObject:video];
     }

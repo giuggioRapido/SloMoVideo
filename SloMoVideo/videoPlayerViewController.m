@@ -62,10 +62,10 @@ static int videoPlayerViewControllerKVOContext = 0;
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [super viewDidDisappear:animated];
-    
     [self.player pause];
     [self removeObserver:self forKeyPath:@"self.player.rate" context:&videoPlayerViewControllerKVOContext];
+
+    [super viewDidDisappear:animated];
 }
 
 #pragma mark IBAction

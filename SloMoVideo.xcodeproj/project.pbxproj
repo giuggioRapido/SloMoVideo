@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		DC1B126F1BBDC5CF00D5613F /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1B126E1BBDC5CF00D5613F /* Cell.m */; settings = {ASSET_TAGS = (); }; };
-		DC1B12721BBDE40C00D5613F /* PlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1B12711BBDE40C00D5613F /* PlayerView.m */; settings = {ASSET_TAGS = (); }; };
 		DC1B12791BBF109E00D5613F /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1B12781BBF109E00D5613F /* Video.m */; settings = {ASSET_TAGS = (); }; };
+		DC6D03241BC5E92600CA6A5F /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6D03231BC5E92600CA6A5F /* UIImage+Resize.m */; settings = {ASSET_TAGS = (); }; };
 		DC89CCF31BBC6036007970F1 /* videoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC89CCF21BBC6036007970F1 /* videoPlayerViewController.m */; settings = {ASSET_TAGS = (); }; };
 		DC89CCF61BBC6E61007970F1 /* VideoLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC89CCF51BBC6E61007970F1 /* VideoLibraryViewController.m */; settings = {ASSET_TAGS = (); }; };
 		DCF25C551BB3497800BC939B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C541BB3497800BC939B /* main.m */; };
@@ -43,10 +43,10 @@
 /* Begin PBXFileReference section */
 		DC1B126D1BBDC5CF00D5613F /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell.h; sourceTree = "<group>"; };
 		DC1B126E1BBDC5CF00D5613F /* Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell.m; sourceTree = "<group>"; };
-		DC1B12701BBDE40C00D5613F /* PlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerView.h; sourceTree = "<group>"; };
-		DC1B12711BBDE40C00D5613F /* PlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerView.m; sourceTree = "<group>"; };
 		DC1B12771BBF109E00D5613F /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
 		DC1B12781BBF109E00D5613F /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
+		DC6D03221BC5E92600CA6A5F /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
+		DC6D03231BC5E92600CA6A5F /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		DC89CCF11BBC6036007970F1 /* videoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = videoPlayerViewController.h; sourceTree = "<group>"; };
 		DC89CCF21BBC6036007970F1 /* videoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = videoPlayerViewController.m; sourceTree = "<group>"; };
 		DC89CCF41BBC6E61007970F1 /* VideoLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoLibraryViewController.h; sourceTree = "<group>"; };
@@ -133,8 +133,8 @@
 				DC1B12781BBF109E00D5613F /* Video.m */,
 				DC1B126D1BBDC5CF00D5613F /* Cell.h */,
 				DC1B126E1BBDC5CF00D5613F /* Cell.m */,
-				DC1B12701BBDE40C00D5613F /* PlayerView.h */,
-				DC1B12711BBDE40C00D5613F /* PlayerView.m */,
+				DC6D03221BC5E92600CA6A5F /* UIImage+Resize.h */,
+				DC6D03231BC5E92600CA6A5F /* UIImage+Resize.m */,
 				DCF25C5C1BB3497800BC939B /* Main.storyboard */,
 				DCF25C5F1BB3497800BC939B /* Assets.xcassets */,
 				DCF25C611BB3497800BC939B /* LaunchScreen.storyboard */,
@@ -311,7 +311,7 @@
 				DCF25C881BB34ACE00BC939B /* PreviewView.m in Sources */,
 				DCF25C551BB3497800BC939B /* main.m in Sources */,
 				DC1B126F1BBDC5CF00D5613F /* Cell.m in Sources */,
-				DC1B12721BBDE40C00D5613F /* PlayerView.m in Sources */,
+				DC6D03241BC5E92600CA6A5F /* UIImage+Resize.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
