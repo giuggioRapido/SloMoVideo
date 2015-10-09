@@ -274,40 +274,60 @@
 - (IBAction)showVideoLibrary:(id)sender
 {
     [self performSegueWithIdentifier:@"segueToLibrary" sender:sender];
+    //[self.navigationController pushViewController:self.navigationController.viewControllers[1] animated:YES];
 }
 
--(void) hideUI
+-(void) displayRecordingUI
 {
-    /// Top code animates, bottom is instant hide/show
-
-    for (UIView *subview in self.view.subviews) {
-        [UIView animateWithDuration:0.3 animations:^() {
-            subview.alpha = 0.0;
-        }];
-    }
+    /// Things that should disappear:
+    UIColor *borderColor = [UIColor colorWithRed:206.0/255.0 green:63.0/255.0 blue:63.0/255.0 alpha:1.0];
+    self.previewView.layer.borderColor = borderColor.CGColor;
+    self.previewView.layer.borderWidth = 3.0f;
     
-    //    self.navigationController.navigationBarHidden = YES;
-    //
-    //        for (UIView *subview in self.view.subviews) {
-    //            subview.hidden = YES;
-    //        }
+    [UIView animateWithDuration:0.3 animations:^() {
+        self.recordButton.alpha = 0.0;
+        self.sloMoToggle.alpha = 0.0;
+        self.libraryButton.alpha = 0.0;
+    }];
+    
+    [UIView animateWithDuration:0.3 animations:^() {
+        self.toolbar.alpha = 0.0;
+    }];
+    
+    /// Things that should appear:
+    //    [UIView animateWithDuration:0.3 animations:^() {
+    //        self.redToolbar.alpha = 0.6;
+    //    }];
+    
+    [UIView animateWithDuration:0.3 animations:^() {
+        self.doubleTapLabel.alpha = 1.0;
+    }];
 }
 
--(void) unhideUI
+-(void) displayViewFinderUI
 {
-    /// Top code animates, bottom is instant hide/show
-
-    for (UIView *subview in self.view.subviews) {
-        [UIView animateWithDuration:0.3 animations:^() {
-            subview.alpha = 1;
-        }];
-    }
+    /// Things that should appear:
+    [UIView animateWithDuration:0.3 animations:^() {
+        self.recordButton.alpha = 1.0;
+        self.sloMoToggle.alpha = 1.0;
+        self.libraryButton.alpha = 1.0;
+    }];
     
-    //    self.navigationController.navigationBarHidden = NO;
-    //
-    //    for (UIView *subview in self.view.subviews) {
-    //        subview.hidden = NO;
-    //    }
+    [UIView animateWithDuration:0.3 animations:^() {
+        self.toolbar.alpha = 0.6;
+    }];
+    
+    /// Things that should disappear:
+    self.previewView.layer.borderColor = nil;
+    self.previewView.layer.borderWidth = 0;
+    
+    //    [UIView animateWithDuration:0.3 animations:^() {
+    //        self.redToolbar.alpha = 0.0;
+    //    }];
+    
+    [UIView animateWithDuration:0.3 animations:^() {
+        self.doubleTapLabel.alpha = 0.0;
+    }];
 }
 
 #pragma mark Orientation
@@ -400,11 +420,7 @@
 {
     /// Hide the record button and color border to indicate that camera is recording
     dispatch_async( dispatch_get_main_queue(), ^{
-        [self hideUI];
-        
-        UIColor *borderColor = [UIColor colorWithRed:206.0/255.0 green:63.0/255.0 blue:63.0/255.0 alpha:1.0];
-        self.previewView.layer.borderColor = borderColor.CGColor;
-        self.previewView.layer.borderWidth = 3.0f;
+        [self displayRecordingUI];
     });
 }
 
@@ -429,10 +445,7 @@
     
     /// Unhide the record button and get rid of recording border
     dispatch_async( dispatch_get_main_queue(), ^{
-        [self unhideUI];
-        self.previewView.layer.borderColor = nil;
-        self.previewView.layer.borderWidth = 0;
-        
+        [self displayViewFinderUI];
     });
 }
 

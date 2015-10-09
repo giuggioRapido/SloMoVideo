@@ -23,14 +23,22 @@
 {
     [super viewWillAppear:animated];
     
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:NULL];
+    
+    if (self.videos.count != directoryContent.count) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            [self pullDocumentsContents];
+        });
+    }
+    
     self.navigationController.navigationBarHidden = NO;
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
     
-    /// Call pullDocumentsContents every time view appears to ensure the collection view is up to date
-    /// (both in terms of new videos and deleted videos)
-    [self pullDocumentsContents];
+   // NSLog(@"%lu", (unsigned long)self.directoryContent.count);
+    
 }
-
 
 
 #pragma mark UICollectionViewDataSource
@@ -103,28 +111,51 @@
                                                  initWithAsset:video.asset];
         
         Float64 durationSeconds = CMTimeGetSeconds(video.asset.duration);
-        CMTime midpoint = CMTimeMakeWithSeconds(durationSeconds/2.0, 600);
+        
+        CMTime startpoint = CMTimeMakeWithSeconds(0.0, 600);
+        //        CMTime midpoint = CMTimeMakeWithSeconds(durationSeconds/2.0, 600);
         
         NSError *error;
         CMTime actualTime;
-        CGImageRef halfWayImage = [imageGenerator copyCGImageAtTime:midpoint
-                                                         actualTime:&actualTime error:&error];
-        //        NSLog(@"err = %@, imageRef = %@", error, halfWayImage);
         
-        /// Orientation needs to be changed because (for some reason) if not done, the thumbnails come out rotated 90 deg
-        UIImage *unresizedImage = [[UIImage alloc] initWithCGImage:halfWayImage
-                                                             scale:1.0
-                                                       orientation:UIImageOrientationRight];
+        AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef image, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
+            if (result != AVAssetImageGeneratorSucceeded) {
+                NSLog(@"couldn't generate thumbnail, error:%@", error);
+            }
+            UIImage *unresizedImage = [[UIImage alloc] initWithCGImage:image
+                                                                 scale:1.0
+                                                           orientation:UIImageOrientationRight];
+            
+            video.thumbnail = [unresizedImage resizedImageWithScaleFactor:0.1];
+            
+            [self.videos addObject:video];
+            
+            if (self.videos.count == directoryContent.count) {
+                dispatch_async( dispatch_get_main_queue(), ^{
+                    [self.collectionView reloadData];
+                } );
+            }
+            
+        };
         
-        /// Resize the image and assign to video thumbnail
-        video.thumbnail = [unresizedImage resizedImageWithScaleFactor:0.1];
+        [imageGenerator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:startpoint]] completionHandler:handler];
         
-        //        NSLog(@"size of thumbnail at creation: %@", NSStringFromCGSize (video.thumbnail.size));
         
-        [self.videos addObject:video];
+        //        /// Pass in either startpoint or midpoint depending on where you want the thumbnail to come from
+        //        CGImageRef halfWayImage = [imageGenerator copyCGImageAtTime:startpoint
+        //                                                         actualTime:&actualTime error:&error];
+        //
+        //        /// Orientation needs to be changed because (for some reason) if not done, the thumbnails come out rotated 90 deg
+        //        UIImage *unresizedImage = [[UIImage alloc] initWithCGImage:halfWayImage
+        //                                                             scale:1.0
+        //                                                       orientation:UIImageOrientationRight];
+        //
+        //        /// Resize the image and assign to video thumbnail
+        //        video.thumbnail = [unresizedImage resizedImageWithScaleFactor:0.1];
+        //
+        //        [self.videos addObject:video];
     }
     
-    [self.collectionView reloadData];
 }
 
 @end

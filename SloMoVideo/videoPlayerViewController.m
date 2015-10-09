@@ -63,6 +63,7 @@ static int videoPlayerViewControllerKVOContext = 0;
 - (void)viewDidDisappear:(BOOL)animated
 {
     [self.player pause];
+    
     [self removeObserver:self forKeyPath:@"self.player.rate" context:&videoPlayerViewControllerKVOContext];
 
     [super viewDidDisappear:animated];
@@ -121,7 +122,6 @@ static int videoPlayerViewControllerKVOContext = 0;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *filePath = self.videoToPlay.stringPath;
     NSError *error = nil;
-    
     
     if (![fileManager removeItemAtPath:filePath error:&error]) {
         NSLog(@"[Error] %@ (%@)", error, filePath);
@@ -209,6 +209,7 @@ static int videoPlayerViewControllerKVOContext = 0;
     if ([keyPath isEqualToString:@"self.player.rate"]) {
         
         self.PlayButton.selected = (self.player.rate != 0) ? YES : NO;
+       
         if (self.player.rate != 0) {
             [self hideUI];
         } else {

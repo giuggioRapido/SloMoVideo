@@ -16,5 +16,4 @@
 
 @property (nonatomic) NSMutableArray *videos;
 @property (nonatomic) Video *videoToPlay;
-
 @end
