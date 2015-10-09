@@ -25,7 +25,6 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
 @property (weak, nonatomic) IBOutlet UIButton *sloMoToggle;
 @property (weak, nonatomic) IBOutlet UIButton *libraryButton;
 @property (weak, nonatomic) IBOutlet UIView *toolbar;
-@property (weak, nonatomic) IBOutlet UIView *redToolbar;
 @property (weak, nonatomic) IBOutlet UILabel *doubleTapLabel;
 
 

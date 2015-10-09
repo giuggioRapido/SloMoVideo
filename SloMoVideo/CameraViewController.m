@@ -295,13 +295,16 @@
     }];
     
     /// Things that should appear:
-    //    [UIView animateWithDuration:0.3 animations:^() {
-    //        self.redToolbar.alpha = 0.6;
-    //    }];
-    
     [UIView animateWithDuration:0.3 animations:^() {
         self.doubleTapLabel.alpha = 1.0;
     }];
+    
+    /// And then re-hide the double tap tip after a delay
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.3 animations:^() {
+            self.doubleTapLabel.alpha = 0.0;
+        }];
+    });
 }
 
 -(void) displayViewFinderUI
@@ -320,10 +323,6 @@
     /// Things that should disappear:
     self.previewView.layer.borderColor = nil;
     self.previewView.layer.borderWidth = 0;
-    
-    //    [UIView animateWithDuration:0.3 animations:^() {
-    //        self.redToolbar.alpha = 0.0;
-    //    }];
     
     [UIView animateWithDuration:0.3 animations:^() {
         self.doubleTapLabel.alpha = 0.0;
