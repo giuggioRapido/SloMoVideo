@@ -170,14 +170,6 @@
                                 <exclude reference="6WJ-LF-nUo"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="cjo-Wa-T0K"/>
-                                <exclude reference="fYp-6w-lEf"/>
-                                <exclude reference="C2F-1p-Zxq"/>
-                                <exclude reference="RYt-Nr-Yfz"/>
-                                <exclude reference="HJ9-rA-FfO"/>
-                                <exclude reference="gjX-4W-OGU"/>
-                                <exclude reference="oAo-dH-e9Y"/>
-                                <exclude reference="FON-1L-6wE"/>
                                 <exclude reference="071-eC-D8N"/>
                                 <exclude reference="BR4-eN-egG"/>
                                 <exclude reference="CkD-hn-G5L"/>
@@ -185,6 +177,14 @@
                                 <exclude reference="QIP-ew-S8r"/>
                                 <exclude reference="r1F-sb-iXe"/>
                                 <exclude reference="tA5-Eh-7s3"/>
+                                <exclude reference="FON-1L-6wE"/>
+                                <exclude reference="C2F-1p-Zxq"/>
+                                <exclude reference="RYt-Nr-Yfz"/>
+                                <exclude reference="HJ9-rA-FfO"/>
+                                <exclude reference="gjX-4W-OGU"/>
+                                <exclude reference="oAo-dH-e9Y"/>
+                                <exclude reference="cjo-Wa-T0K"/>
+                                <exclude reference="fYp-6w-lEf"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -196,14 +196,6 @@
                                 <include reference="6WJ-LF-nUo"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="cjo-Wa-T0K"/>
-                                <include reference="fYp-6w-lEf"/>
-                                <include reference="C2F-1p-Zxq"/>
-                                <include reference="RYt-Nr-Yfz"/>
-                                <include reference="HJ9-rA-FfO"/>
-                                <include reference="gjX-4W-OGU"/>
-                                <exclude reference="oAo-dH-e9Y"/>
-                                <include reference="FON-1L-6wE"/>
                                 <include reference="071-eC-D8N"/>
                                 <exclude reference="BR4-eN-egG"/>
                                 <include reference="CkD-hn-G5L"/>
@@ -211,6 +203,14 @@
                                 <include reference="QIP-ew-S8r"/>
                                 <exclude reference="r1F-sb-iXe"/>
                                 <include reference="tA5-Eh-7s3"/>
+                                <include reference="FON-1L-6wE"/>
+                                <include reference="C2F-1p-Zxq"/>
+                                <include reference="RYt-Nr-Yfz"/>
+                                <include reference="HJ9-rA-FfO"/>
+                                <include reference="gjX-4W-OGU"/>
+                                <exclude reference="oAo-dH-e9Y"/>
+                                <include reference="cjo-Wa-T0K"/>
+                                <include reference="fYp-6w-lEf"/>
                             </mask>
                         </variation>
                         <connections>

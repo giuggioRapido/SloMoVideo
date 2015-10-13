@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 @import AVFoundation;
 #import "Video.h"
+#import "Model.h"
 
 @interface videoPlayerViewController : UIViewController
 

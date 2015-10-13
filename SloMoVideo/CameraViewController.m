@@ -15,7 +15,7 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"Camera";
-    
+
     /// Create the AVCaptureSession.
     self.session = [[AVCaptureSession alloc] init];
    	
@@ -256,18 +256,17 @@
     
     if (self.sloMoToggle.selected) {
         /// Code here is for default FPS
+        [self returnFPSToDefault];
         self.sloMoToggle.selected = NO;
         self.sloMoToggle.backgroundColor = [UIColor darkGrayColor];
         
-        [self returnFPSToDefault];
         
     }
     else {
         /// Code here is for activating high FPS
+        [self increaseFPS];
         self.sloMoToggle.selected = YES;
         self.sloMoToggle.backgroundColor = self.view.tintColor;
-        
-        [self increaseFPS];
     }
 }
 
@@ -387,14 +386,17 @@
     
     if (selectedFormat) {
         if ([videoDevice lockForConfiguration:nil]) {
-            NSLog(@"selected format:%@", selectedFormat);
+            //            NSLog(@"selected format:%@", selectedFormat);
             videoDevice.activeFormat = selectedFormat;
             videoDevice.activeVideoMinFrameDuration = CMTimeMake(1, (int32_t)60.0);
             videoDevice.activeVideoMaxFrameDuration = CMTimeMake(1, (int32_t)60.0);
             [videoDevice unlockForConfiguration];
         }
     }
-    if (!self.session.isRunning) [self.session startRunning];
+    
+    if (!self.session.isRunning) {
+        [self.session startRunning];
+    }
 }
 
 -(void) returnFPSToDefault
@@ -440,9 +442,10 @@
     }
     if ( success ) {
         NSLog(@"file saved");
+        [[Model sharedModel] pullMostRecentFile];
     }
     
-    /// Unhide the record button and get rid of recording border
+    /// Revert to view finder UI
     dispatch_async( dispatch_get_main_queue(), ^{
         [self displayViewFinderUI];
     });

@@ -10,34 +10,35 @@
 
 @implementation VideoLibraryViewController
 
-
 -(void) viewDidLoad
 {
     [super viewDidLoad];
     
     self.navigationItem.title = @"Library";
-    self.videos = [[NSMutableArray alloc] init];
+
+    self.videos = [[Model sharedModel] videos];
+    self.model = [Model sharedModel];
 }
 
 -(void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath = [paths objectAtIndex:0];
-    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:NULL];
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentsPath = [paths objectAtIndex:0];
+//    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:NULL];
+//    
+//    if (self.videos.count != directoryContent.count) {
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+//            //[self pullDocumentsContents];
+//            [[Model sharedModel] pullVideosFromDocuments];
+//        });
+//    }
     
-    if (self.videos.count != directoryContent.count) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            [self pullDocumentsContents];
-        });
-    }
-    
+    [[Model sharedModel] addObserver:self forKeyPath:@"self.videosCountForKVO" options:NSKeyValueObservingOptionNew context:nil];
+
     self.navigationController.navigationBarHidden = NO;
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
-    
-   // NSLog(@"%lu", (unsigned long)self.directoryContent.count);
-    
 }
 
 
@@ -81,81 +82,8 @@
     vc.videoToPlay = self.videoToPlay;
 }
 
-#pragma mark Custom methods
-
--(void) pullDocumentsContents
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    /// Clear videos array, which will be repopulated in loop below. At bottom of method, reloadData is called on the
-    /// collection view to update it in case video has been deleted in the player view controller
-    
-    [self.videos removeAllObjects];
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath = [paths objectAtIndex:0];
-    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:NULL];
-    
-    /// The following two for statements change the direction in which the iterate through the documents contents.
-    /// Ultimately this changes whether thumbnails are listed in newest->oldest or vice versa.
-    //    for (int count = 0; count < (int)[directoryContent count]; count++)
-    for (int count = (int)directoryContent.count - 1; count >= 0; count--)
-    {
-        NSString *videoPath = [documentsPath stringByAppendingPathComponent:[directoryContent objectAtIndex:count]];
-        
-        Video *video = [[Video alloc]init];
-        video.path = [NSURL fileURLWithPath:videoPath];
-        video.stringPath = videoPath;
-        video.asset = [AVURLAsset assetWithURL:video.path];
-        
-        /// Generate thumbnails
-        AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc]
-                                                 initWithAsset:video.asset];
-        
-        Float64 durationSeconds = CMTimeGetSeconds(video.asset.duration);
-        
-        CMTime startpoint = CMTimeMakeWithSeconds(0.0, 600);
-        //        CMTime midpoint = CMTimeMakeWithSeconds(durationSeconds/2.0, 600);
-        
-        NSError *error;
-        CMTime actualTime;
-        
-        AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef image, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
-            if (result != AVAssetImageGeneratorSucceeded) {
-                NSLog(@"couldn't generate thumbnail, error:%@", error);
-            }
-            UIImage *unresizedImage = [[UIImage alloc] initWithCGImage:image
-                                                                 scale:1.0
-                                                           orientation:UIImageOrientationRight];
-            
-            video.thumbnail = [unresizedImage resizedImageWithScaleFactor:0.1];
-            
-            [self.videos addObject:video];
-            
-            if (self.videos.count == directoryContent.count) {
-                dispatch_async( dispatch_get_main_queue(), ^{
-                    [self.collectionView reloadData];
-                } );
-            }
-            
-        };
-        
-        [imageGenerator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:startpoint]] completionHandler:handler];
-        
-        
-        //        /// Pass in either startpoint or midpoint depending on where you want the thumbnail to come from
-        //        CGImageRef halfWayImage = [imageGenerator copyCGImageAtTime:startpoint
-        //                                                         actualTime:&actualTime error:&error];
-        //
-        //        /// Orientation needs to be changed because (for some reason) if not done, the thumbnails come out rotated 90 deg
-        //        UIImage *unresizedImage = [[UIImage alloc] initWithCGImage:halfWayImage
-        //                                                             scale:1.0
-        //                                                       orientation:UIImageOrientationRight];
-        //
-        //        /// Resize the image and assign to video thumbnail
-        //        video.thumbnail = [unresizedImage resizedImageWithScaleFactor:0.1];
-        //
-        //        [self.videos addObject:video];
-    }
-    
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "Model.h"
 
 @interface AppDelegate ()
 
@@ -20,7 +21,8 @@
     
     // Inform the device that we want to use the device orientation.
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    
+    [[Model sharedModel] initialPullFromDocuments];
+
     return YES;
 }
 

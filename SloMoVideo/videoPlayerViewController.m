@@ -27,6 +27,7 @@ static int videoPlayerViewControllerKVOContext = 0;
     playbackSpeeds[0] = 1.0;
     playbackSpeeds[1] = 2.0;
     playbackSpeeds[2] = 0.5;
+    
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -119,6 +120,8 @@ static int videoPlayerViewControllerKVOContext = 0;
 
 - (IBAction)deleteVideo:(id)sender
 {
+    [[[Model sharedModel] videos] removeObject:self.videoToPlay];
+    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *filePath = self.videoToPlay.stringPath;
     NSError *error = nil;
