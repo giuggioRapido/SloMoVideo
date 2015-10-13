@@ -30,10 +30,6 @@
     }
 }
 
-- (NSUInteger) videosCountForKVO
-{
-    return self.videos.count;
-}
 
 -(void) initialPullFromDocuments
 {
@@ -53,49 +49,9 @@
         video.path = [NSURL fileURLWithPath:videoPath];
         video.asset = [AVURLAsset assetWithURL:video.path];
         
-        /// Generate thumbnails
-        AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc]
-                                                 initWithAsset:video.asset];
-        
-        Float64 durationSeconds = CMTimeGetSeconds(video.asset.duration);
-        
-        CMTime startpoint = CMTimeMakeWithSeconds(0.0, 600);
-        //        CMTime midpoint = CMTimeMakeWithSeconds(durationSeconds/2.0, 600);
-        
-        NSError *error;
-        CMTime actualTime;
-        
-        AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef image, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
-            if (result != AVAssetImageGeneratorSucceeded) {
-                NSLog(@"couldn't generate thumbnail, error:%@", error);
-            }
-            
-            UIImage *unresizedImage = [[UIImage alloc] initWithCGImage:image
-                                                                 scale:1.0
-                                                           orientation:UIImageOrientationRight];
-            
-            video.thumbnail = [unresizedImage resizedImageWithScaleFactor:0.1];
-            
-            
-        };
-        
-        [imageGenerator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:startpoint]] completionHandler:handler];
+        [video createThumbnail];
         
         [self.videos addObject:video];
-        
-        //        /// Pass in either startpoint or midpoint depending on where you want the thumbnail to come from
-        //        CGImageRef halfWayImage = [imageGenerator copyCGImageAtTime:startpoint
-        //                                                         actualTime:&actualTime error:&error];
-        //
-        //        /// Orientation needs to be changed because (for some reason) if not done, the thumbnails come out rotated 90 deg
-        //        UIImage *unresizedImage = [[UIImage alloc] initWithCGImage:halfWayImage
-        //                                                             scale:1.0
-        //                                                       orientation:UIImageOrientationRight];
-        //
-        //        /// Resize the image and assign to video thumbnail
-        //        video.thumbnail = [unresizedImage resizedImageWithScaleFactor:0.1];
-        //
-        //        [self.videos addObject:video];
     }
 }
 
@@ -113,37 +69,12 @@
     video.path = [NSURL fileURLWithPath:videoPath];
     video.asset = [AVURLAsset assetWithURL:video.path];
     
-    /// Generate thumbnails
-    AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc]
-                                             initWithAsset:video.asset];
-    
-    Float64 durationSeconds = CMTimeGetSeconds(video.asset.duration);
-    
-    CMTime startpoint = CMTimeMakeWithSeconds(0.0, 600);
-    //        CMTime midpoint = CMTimeMakeWithSeconds(durationSeconds/2.0, 600);
-    
-    NSError *error;
-    CMTime actualTime;
-    
-    AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef image, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
-        if (result != AVAssetImageGeneratorSucceeded) {
-            NSLog(@"couldn't generate thumbnail, error:%@", error);
-        }
-        
-        UIImage *unresizedImage = [[UIImage alloc] initWithCGImage:image
-                                                             scale:1.0
-                                                       orientation:UIImageOrientationRight];
-        
-        video.thumbnail = [unresizedImage resizedImageWithScaleFactor:0.1];
-        
-    };
-    
-    [imageGenerator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:startpoint]] completionHandler:handler];
+    [video createThumbnail];
     
     /// Because we want the videos array to be newest->oldest, we insert video at index 0. If we want it the other way,
     /// just simply call addObject.
     [self.videos insertObject:video atIndex:0];
-    //[self.videos addObject:video];
+    //    [self.videos addObject:video];
 }
 
 

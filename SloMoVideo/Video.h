@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 @import AVFoundation;
+@import UIKit;
+#import "UIImage+Resize.h"
 
 @interface Video : NSObject
 
@@ -16,5 +18,7 @@
 @property (nonatomic) UIImage *thumbnail;
 @property (nonatomic) NSString *duration;
 @property (nonatomic) NSString *stringPath;
+
+- (void) createThumbnail;
 
 @end

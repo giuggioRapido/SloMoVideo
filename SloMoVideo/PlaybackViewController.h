@@ -1,5 +1,5 @@
 //
-//  videoPlayerViewController.h
+//  PlaybackViewController.h
 //  SloMoVideo
 //
 //  Created by Chris on 9/30/15.
@@ -11,7 +11,7 @@
 #import "Video.h"
 #import "MediaLibrary.h"
 
-@interface videoPlayerViewController : UIViewController
+@interface PlaybackViewController : UIViewController
 
 @property (nonatomic) AVPlayer *player;
 @property AVPlayerItem *playerItem;

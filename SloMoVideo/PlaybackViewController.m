@@ -1,46 +1,45 @@
 //
-//  videoPlayerViewController.m
+//  PlaybackViewController.m
 //  SloMoVideo
 //
 //  Created by Chris on 9/30/15.
 //  Copyright © 2015 Prince Fungus. All rights reserved.
 //
 
-#import "videoPlayerViewController.h"
+#import "PlaybackViewController.h"
 
-@implementation videoPlayerViewController
+@implementation PlaybackViewController
 
 int currentSpeedIndex;
 float playbackSpeeds[3];
-static int videoPlayerViewControllerKVOContext = 0;
+static int PlaybackViewControllerKVOContext = 0;
 
 
 -(void) viewDidLoad
 {
     [super viewDidLoad];
     
-    /// These arrays are coordinated with the currentSpeedIndex to synchronize the playback speed button's title with the
-    /// actual desired speed integer.
+    /// These arrays are coordinated with the currentSpeedIndex to synchronize the playback speed button's title
+    /// with the actual desired speed integer.
     
     self.playbackSpeedStrings = [NSArray arrayWithObjects:@"1x", @"2x", @"0.5x", nil];
     
     playbackSpeeds[0] = 1.0;
     playbackSpeeds[1] = 2.0;
     playbackSpeeds[2] = 0.5;
-    
 }
 
 -(void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    /// Reset playback speed to 1x whenever view appears and set button title appropriately.
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     
+    /// Reset playback speed to 1x whenever view appears and set button title appropriately.
     currentSpeedIndex = 0;
     [self.speedButton setTitle:self.playbackSpeedStrings[currentSpeedIndex] forState:UIControlStateNormal];
     
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-    
+    /// Create/ configure the AVPlayer
     self.playerItem = [AVPlayerItem playerItemWithAsset:self.videoToPlay.asset];
     self.player = [[AVPlayer alloc] initWithPlayerItem:self.playerItem];
     
@@ -51,8 +50,8 @@ static int videoPlayerViewControllerKVOContext = 0;
     
     [self.view.layer addSublayer:self.playerLayer];
     
-    [self addObserver:self forKeyPath:@"self.player.rate" options:NSKeyValueObservingOptionNew context:&videoPlayerViewControllerKVOContext];
-    
+    /// Add observation of player.rate so that the controller can respond to changes in playback
+    [self addObserver:self forKeyPath:@"self.player.rate" options:NSKeyValueObservingOptionNew context:&PlaybackViewControllerKVOContext];
     
     //     NSLog(@"%i", self.playerItem.canPlaySlowForward);
     //     [self.player seekToTime:kCMTimeZero];
@@ -63,9 +62,11 @@ static int videoPlayerViewControllerKVOContext = 0;
 
 - (void)viewDidDisappear:(BOOL)animated
 {
+    /// When view disappears, pause plaback and remove observers
+    
     [self.player pause];
     
-    [self removeObserver:self forKeyPath:@"self.player.rate" context:&videoPlayerViewControllerKVOContext];
+    [self removeObserver:self forKeyPath:@"self.player.rate" context:&PlaybackViewControllerKVOContext];
     
     [super viewDidDisappear:animated];
 }
@@ -74,9 +75,14 @@ static int videoPlayerViewControllerKVOContext = 0;
 
 - (IBAction)pressPlay:(id)sender
 {
-    if (self.player.rate != 0){
+    /// If video is playing (player.rate != 0), pause the video.
+    /// Else if it's paused, play video at currently selected playback speed.
+    /// If the video is at end and user pressed play, start video from beginning.
+    
+    if (self.player.rate != 0) {
         [self.player pause];
-    } else {
+    }
+    else {
         if (CMTIME_COMPARE_INLINE(self.player.currentTime, ==, self.playerItem.duration)) {
             [self.player seekToTime:kCMTimeZero];
         }
@@ -120,6 +126,10 @@ static int videoPlayerViewControllerKVOContext = 0;
 
 - (IBAction)deleteVideo:(id)sender
 {
+    /// When video is deleted, remove the video from DAO's array and trip bool which will be used in Library VC
+    /// to determine if the collection view should be reloaded.
+    /// Then delete the original file from Documents.
+    
     [[[MediaLibrary sharedLibrary] videos] removeObject:self.videoToPlay];
     
     [[MediaLibrary sharedLibrary] setVideoWasDeleted: YES];

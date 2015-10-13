@@ -11,7 +11,7 @@
 		DC1B12791BBF109E00D5613F /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1B12781BBF109E00D5613F /* Video.m */; settings = {ASSET_TAGS = (); }; };
 		DC2251BD1BC8828300FC430F /* MediaLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2251BC1BC8828300FC430F /* MediaLibrary.m */; settings = {ASSET_TAGS = (); }; };
 		DC6D03241BC5E92600CA6A5F /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6D03231BC5E92600CA6A5F /* UIImage+Resize.m */; settings = {ASSET_TAGS = (); }; };
-		DC89CCF31BBC6036007970F1 /* videoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC89CCF21BBC6036007970F1 /* videoPlayerViewController.m */; settings = {ASSET_TAGS = (); }; };
+		DC89CCF31BBC6036007970F1 /* PlaybackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC89CCF21BBC6036007970F1 /* PlaybackViewController.m */; settings = {ASSET_TAGS = (); }; };
 		DC89CCF61BBC6E61007970F1 /* VideoLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC89CCF51BBC6E61007970F1 /* VideoLibraryViewController.m */; settings = {ASSET_TAGS = (); }; };
 		DCF25C551BB3497800BC939B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C541BB3497800BC939B /* main.m */; };
 		DCF25C581BB3497800BC939B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C571BB3497800BC939B /* AppDelegate.m */; };
@@ -50,8 +50,8 @@
 		DC2251BC1BC8828300FC430F /* MediaLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaLibrary.m; sourceTree = "<group>"; };
 		DC6D03221BC5E92600CA6A5F /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		DC6D03231BC5E92600CA6A5F /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		DC89CCF11BBC6036007970F1 /* videoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = videoPlayerViewController.h; sourceTree = "<group>"; };
-		DC89CCF21BBC6036007970F1 /* videoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = videoPlayerViewController.m; sourceTree = "<group>"; };
+		DC89CCF11BBC6036007970F1 /* PlaybackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaybackViewController.h; sourceTree = "<group>"; };
+		DC89CCF21BBC6036007970F1 /* PlaybackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaybackViewController.m; sourceTree = "<group>"; };
 		DC89CCF41BBC6E61007970F1 /* VideoLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoLibraryViewController.h; sourceTree = "<group>"; };
 		DC89CCF51BBC6E61007970F1 /* VideoLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoLibraryViewController.m; sourceTree = "<group>"; };
 		DCF25C501BB3497800BC939B /* SloMoVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SloMoVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,6 +99,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC57B3EA1BCDAE9A007EB94B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DCF25C861BB34ACE00BC939B /* PreviewView.h */,
+				DCF25C871BB34ACE00BC939B /* PreviewView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		DC57B3EB1BCDAEA4007EB94B /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DCF25C891BB352D900BC939B /* CameraViewController.h */,
+				DCF25C8A1BB352D900BC939B /* CameraViewController.m */,
+				DC89CCF41BBC6E61007970F1 /* VideoLibraryViewController.h */,
+				DC89CCF51BBC6E61007970F1 /* VideoLibraryViewController.m */,
+				DC89CCF11BBC6036007970F1 /* PlaybackViewController.h */,
+				DC89CCF21BBC6036007970F1 /* PlaybackViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		DC57B3EC1BCDAF03007EB94B /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				DC6D03221BC5E92600CA6A5F /* UIImage+Resize.h */,
+				DC6D03231BC5E92600CA6A5F /* UIImage+Resize.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		DC57B3ED1BCDAF91007EB94B /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				DC2251BB1BC8828300FC430F /* MediaLibrary.h */,
+				DC2251BC1BC8828300FC430F /* MediaLibrary.m */,
+				DC1B12771BBF109E00D5613F /* Video.h */,
+				DC1B12781BBF109E00D5613F /* Video.m */,
+				DC1B126D1BBDC5CF00D5613F /* Cell.h */,
+				DC1B126E1BBDC5CF00D5613F /* Cell.m */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
 		DCF25C471BB3497800BC939B = {
 			isa = PBXGroup;
 			children = (
@@ -124,22 +168,10 @@
 			children = (
 				DCF25C561BB3497800BC939B /* AppDelegate.h */,
 				DCF25C571BB3497800BC939B /* AppDelegate.m */,
-				DCF25C861BB34ACE00BC939B /* PreviewView.h */,
-				DCF25C871BB34ACE00BC939B /* PreviewView.m */,
-				DCF25C891BB352D900BC939B /* CameraViewController.h */,
-				DCF25C8A1BB352D900BC939B /* CameraViewController.m */,
-				DC89CCF41BBC6E61007970F1 /* VideoLibraryViewController.h */,
-				DC89CCF51BBC6E61007970F1 /* VideoLibraryViewController.m */,
-				DC89CCF11BBC6036007970F1 /* videoPlayerViewController.h */,
-				DC89CCF21BBC6036007970F1 /* videoPlayerViewController.m */,
-				DC2251BB1BC8828300FC430F /* MediaLibrary.h */,
-				DC2251BC1BC8828300FC430F /* MediaLibrary.m */,
-				DC1B12771BBF109E00D5613F /* Video.h */,
-				DC1B12781BBF109E00D5613F /* Video.m */,
-				DC1B126D1BBDC5CF00D5613F /* Cell.h */,
-				DC1B126E1BBDC5CF00D5613F /* Cell.m */,
-				DC6D03221BC5E92600CA6A5F /* UIImage+Resize.h */,
-				DC6D03231BC5E92600CA6A5F /* UIImage+Resize.m */,
+				DC57B3EA1BCDAE9A007EB94B /* Views */,
+				DC57B3EB1BCDAEA4007EB94B /* View Controllers */,
+				DC57B3ED1BCDAF91007EB94B /* Other */,
+				DC57B3EC1BCDAF03007EB94B /* Categories */,
 				DCF25C5C1BB3497800BC939B /* Main.storyboard */,
 				DCF25C5F1BB3497800BC939B /* Assets.xcassets */,
 				DCF25C611BB3497800BC939B /* LaunchScreen.storyboard */,
@@ -310,7 +342,7 @@
 			files = (
 				DC89CCF61BBC6E61007970F1 /* VideoLibraryViewController.m in Sources */,
 				DCF25C581BB3497800BC939B /* AppDelegate.m in Sources */,
-				DC89CCF31BBC6036007970F1 /* videoPlayerViewController.m in Sources */,
+				DC89CCF31BBC6036007970F1 /* PlaybackViewController.m in Sources */,
 				DC1B12791BBF109E00D5613F /* Video.m in Sources */,
 				DCF25C8B1BB352D900BC939B /* CameraViewController.m in Sources */,
 				DCF25C881BB34ACE00BC939B /* PreviewView.m in Sources */,

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Cell.h"
 #import "Video.h"
-#import "videoPlayerViewController.h"
+#import "PlaybackViewController.h"
 #import "UIImage+Resize.h"
 #import "MediaLibrary.h"
 

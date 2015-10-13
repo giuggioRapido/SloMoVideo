@@ -17,7 +17,6 @@
     self.navigationItem.title = @"Library";
     
     self.videos = [[MediaLibrary sharedLibrary] videos];
-    //    self.videos = [[[MediaLibrary sharedLibrary] videos]copy];
     // self.MediaLibrary = [MediaLibrary sharedLibrary];
 }
 
@@ -25,23 +24,13 @@
 {
     [super viewWillAppear:animated];
 
-    //    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    //    NSString *documentsPath = [paths objectAtIndex:0];
-    //    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:NULL];
-    //
-    //    if (self.videos.count != directoryContent.count) {
-    //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-    //            //[self pullDocumentsContents];
-    //            [[MediaLibrary sharedLibrary] pullVideosFromDocuments];
-    //        });
-    //    }
-    
-    
     self.navigationController.navigationBarHidden = NO;
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
     
+    /// If video was deleted in the Playback VC, reload collection view to reflect the deletion.
     if ([[MediaLibrary sharedLibrary] videoWasDeleted] == YES)
     {
+        [[MediaLibrary sharedLibrary] setVideoWasDeleted: NO];
         [self.collectionView reloadData];
     }
 }
@@ -75,6 +64,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    /// Store the video at selected indexpath for use in segue.
     self.videoToPlay = [self.videos objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"segueToPlayer" sender:self];
 }
@@ -83,7 +73,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue * _Nonnull)segue sender:(id _Nullable)sender
 {
-    videoPlayerViewController *vc = segue.destinationViewController;
+    /// Pass selected video to Playback VC.
+    PlaybackViewController *vc = segue.destinationViewController;
     vc.videoToPlay = self.videoToPlay;
 }
 
