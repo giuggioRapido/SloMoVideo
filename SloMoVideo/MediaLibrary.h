@@ -1,5 +1,5 @@
 //
-//  Model.h
+//  MediaLibrary.h
 //  SloMoVideo
 //
 //  Created by Chris on 10/9/15.
@@ -12,12 +12,12 @@
 @import UIKit;
 #import "UIImage+Resize.h"
 
-@interface Model : NSObject
+@interface MediaLibrary : NSObject
 
-@property(strong, nonatomic) NSMutableArray *videos;
-@property (nonatomic) NSUInteger videosCountForKVO;
+@property (strong, nonatomic) NSMutableArray *videos;
+@property (nonatomic, readwrite) BOOL videoWasDeleted;
 
-+ (id)sharedModel;
++ (id)sharedLibrary;
 - (void) initialPullFromDocuments;
 - (void) pullMostRecentFile;
 

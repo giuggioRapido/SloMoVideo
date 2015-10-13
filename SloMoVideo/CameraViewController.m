@@ -442,7 +442,7 @@
     }
     if ( success ) {
         NSLog(@"file saved");
-        [[Model sharedModel] pullMostRecentFile];
+        [[MediaLibrary sharedLibrary] pullMostRecentFile];
     }
     
     /// Revert to view finder UI

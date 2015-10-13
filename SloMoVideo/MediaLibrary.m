@@ -1,23 +1,23 @@
 //
-//  Model.m
+//  MediaLibrary.m
 //  SloMoVideo
 //
 //  Created by Chris on 10/9/15.
 //  Copyright © 2015 Prince Fungus. All rights reserved.
 //
 
-#import "Model.h"
+#import "MediaLibrary.h"
 
-@implementation Model
+@implementation MediaLibrary
 
-+(id)sharedModel
++(id)sharedLibrary
 {
-    static Model *sharedModel = nil;
+    static MediaLibrary *sharedLibrary = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedModel = [[self alloc] init];
+        sharedLibrary = [[self alloc] init];
     });
-    return sharedModel;
+    return sharedLibrary;
 }
 
 - (id)init
@@ -76,12 +76,12 @@
             
             video.thumbnail = [unresizedImage resizedImageWithScaleFactor:0.1];
             
-            [self.videos addObject:video];
             
         };
         
         [imageGenerator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:startpoint]] completionHandler:handler];
         
+        [self.videos addObject:video];
         
         //        /// Pass in either startpoint or midpoint depending on where you want the thumbnail to come from
         //        CGImageRef halfWayImage = [imageGenerator copyCGImageAtTime:startpoint
@@ -136,14 +136,14 @@
         
         video.thumbnail = [unresizedImage resizedImageWithScaleFactor:0.1];
         
-        /// Because we want the videos array to be newest->oldest, we insert video at index 0. If we want it the other way,
-        /// just simply call addObject.
-        [self.videos insertObject:video atIndex:0];
-        //[self.videos addObject:video];
     };
     
     [imageGenerator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:startpoint]] completionHandler:handler];
     
+    /// Because we want the videos array to be newest->oldest, we insert video at index 0. If we want it the other way,
+    /// just simply call addObject.
+    [self.videos insertObject:video atIndex:0];
+    //[self.videos addObject:video];
 }
 
 

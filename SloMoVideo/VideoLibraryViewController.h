@@ -11,13 +11,13 @@
 #import "Video.h"
 #import "videoPlayerViewController.h"
 #import "UIImage+Resize.h"
-#import "Model.h"
+#import "MediaLibrary.h"
 
 
 @interface VideoLibraryViewController : UICollectionViewController
 
 @property (nonatomic) NSMutableArray *videos;
 @property (nonatomic) Video *videoToPlay;
-@property (nonatomic) Model *model;
+@property (nonatomic) MediaLibrary *MediaLibrary;
 
 @end

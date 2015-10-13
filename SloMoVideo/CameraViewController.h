@@ -10,7 +10,7 @@
 #import "PreviewView.h"
 @import Photos;
 @import AVFoundation;
-#import "Model.h"
+#import "MediaLibrary.h"
 
 @interface CameraViewController : UIViewController <AVCaptureFileOutputRecordingDelegate>
 

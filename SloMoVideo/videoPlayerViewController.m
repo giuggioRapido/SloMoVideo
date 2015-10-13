@@ -66,7 +66,7 @@ static int videoPlayerViewControllerKVOContext = 0;
     [self.player pause];
     
     [self removeObserver:self forKeyPath:@"self.player.rate" context:&videoPlayerViewControllerKVOContext];
-
+    
     [super viewDidDisappear:animated];
 }
 
@@ -120,7 +120,9 @@ static int videoPlayerViewControllerKVOContext = 0;
 
 - (IBAction)deleteVideo:(id)sender
 {
-    [[[Model sharedModel] videos] removeObject:self.videoToPlay];
+    [[[MediaLibrary sharedLibrary] videos] removeObject:self.videoToPlay];
+    
+    [[MediaLibrary sharedLibrary] setVideoWasDeleted: YES];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *filePath = self.videoToPlay.stringPath;
@@ -212,7 +214,7 @@ static int videoPlayerViewControllerKVOContext = 0;
     if ([keyPath isEqualToString:@"self.player.rate"]) {
         
         self.PlayButton.selected = (self.player.rate != 0) ? YES : NO;
-       
+        
         if (self.player.rate != 0) {
             [self hideUI];
         } else {

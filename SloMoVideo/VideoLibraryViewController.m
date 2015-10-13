@@ -15,30 +15,35 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"Library";
-
-    self.videos = [[Model sharedModel] videos];
-    self.model = [Model sharedModel];
+    
+    self.videos = [[MediaLibrary sharedLibrary] videos];
+    //    self.videos = [[[MediaLibrary sharedLibrary] videos]copy];
+    // self.MediaLibrary = [MediaLibrary sharedLibrary];
 }
 
 -(void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *documentsPath = [paths objectAtIndex:0];
-//    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:NULL];
-//    
-//    if (self.videos.count != directoryContent.count) {
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-//            //[self pullDocumentsContents];
-//            [[Model sharedModel] pullVideosFromDocuments];
-//        });
-//    }
-    
-    [[Model sharedModel] addObserver:self forKeyPath:@"self.videosCountForKVO" options:NSKeyValueObservingOptionNew context:nil];
 
+    //    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    //    NSString *documentsPath = [paths objectAtIndex:0];
+    //    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:NULL];
+    //
+    //    if (self.videos.count != directoryContent.count) {
+    //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+    //            //[self pullDocumentsContents];
+    //            [[MediaLibrary sharedLibrary] pullVideosFromDocuments];
+    //        });
+    //    }
+    
+    
     self.navigationController.navigationBarHidden = NO;
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+    
+    if ([[MediaLibrary sharedLibrary] videoWasDeleted] == YES)
+    {
+        [self.collectionView reloadData];
+    }
 }
 
 
@@ -82,8 +87,5 @@
     vc.videoToPlay = self.videoToPlay;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-}
 
 @end
