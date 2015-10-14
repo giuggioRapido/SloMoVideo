@@ -8,6 +8,13 @@
 
 #import "VideoLibraryViewController.h"
 
+@interface VideoLibraryViewController()
+
+@property (nonatomic, strong) NSMutableArray *videos;
+@property (nonatomic, strong) Video *videoToPlay;
+
+@end
+
 @implementation VideoLibraryViewController
 
 -(void) viewDidLoad

@@ -8,6 +8,42 @@
 
 #import "CameraViewController.h"
 
+typedef NS_ENUM(NSInteger, AVCamSetupResult)
+{
+    AVCamSetupResultSuccess,
+    AVCamSetupResultCameraNotAuthorized,
+    AVCamSetupResultSessionConfigurationFailed
+};
+
+
+@interface CameraViewController()
+
+// UI
+@property (weak, nonatomic) IBOutlet PreviewView *previewView;
+@property (weak, nonatomic) IBOutlet UIButton *recordButton;
+@property (weak, nonatomic) IBOutlet UIButton *sloMoToggle;
+@property (weak, nonatomic) IBOutlet UIButton *libraryButton;
+@property (weak, nonatomic) IBOutlet UIView *toolbar;
+@property (weak, nonatomic) IBOutlet UILabel *doubleTapLabel;
+
+
+// Session management.
+@property (strong, nonatomic) AVCaptureSession *session;
+@property (strong, nonatomic) dispatch_queue_t sessionQueue;
+@property (strong, nonatomic) AVCaptureDeviceInput *videoDeviceInput;
+@property (strong, nonatomic) AVCaptureMovieFileOutput *movieFileOutput;
+@property (strong, nonatomic) AVCaptureDeviceFormat *defaultFormat;
+@property (nonatomic) CMTime defaultVideoMaxFrameDuration;
+
+
+// Utilities.
+@property (nonatomic) AVCamSetupResult setupResult;
+@property (nonatomic, getter=isSessionRunning) BOOL sessionRunning;
+@property (nonatomic) UIBackgroundTaskIdentifier backgroundRecordingID;
+
+
+@end
+
 @implementation CameraViewController
 
 - (void)viewDidLoad

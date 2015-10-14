@@ -7,6 +7,23 @@
 //
 
 #import "PlaybackViewController.h"
+#import "PlayerView.h"
+
+@interface PlaybackViewController()
+
+@property (nonatomic, strong) AVPlayer *player;
+@property AVPlayerItem *playerItem;
+@property AVPlayerLayer *playerLayer;
+@property (nonatomic, strong) NSArray *playbackSpeedStrings;
+@property (nonatomic) BOOL UIHidden;
+
+/// UI
+@property (weak, nonatomic) IBOutlet UIButton *PlayButton;
+@property (weak, nonatomic) IBOutlet UIView *toolbar;
+@property (weak, nonatomic) IBOutlet UIButton *speedButton;
+@property (weak, nonatomic) IBOutlet UIButton *trashButton;
+
+@end
 
 @implementation PlaybackViewController
 
@@ -41,11 +58,11 @@ static int PlaybackViewControllerKVOContext = 0;
     
     /// Create/ configure the AVPlayer
     self.playerItem = [AVPlayerItem playerItemWithAsset:self.videoToPlay.asset];
+    
     self.player = [[AVPlayer alloc] initWithPlayerItem:self.playerItem];
     
     self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
     self.playerLayer.frame = self.view.frame;
-    
     self.playerLayer.videoGravity = AVLayerVideoGravityResize;
     
     [self.view.layer addSublayer:self.playerLayer];
@@ -170,7 +187,7 @@ static int PlaybackViewControllerKVOContext = 0;
     /// Top code animates, bottom is instant hide/show
     /// UIisHidden is used in conjuction with setNeedsStatusBarAppearanceUpdate to hide/show the status bar
 
-    self.UIisHidden = YES;
+    self.UIHidden = YES;
     
     [UIView animateWithDuration:0.3 animations:^() {
         [self setNeedsStatusBarAppearanceUpdate];
@@ -196,7 +213,7 @@ static int PlaybackViewControllerKVOContext = 0;
     /// toolbar since we want the alpha to only increase to 0.6, not 1.
     /// UIisHidden is used in conjuction with setNeedsStatusBarAppearanceUpdate to hide/show the status bar
     
-    self.UIisHidden = NO;
+    self.UIHidden = NO;
 
     [UIView animateWithDuration:0.3 animations:^() {
         [self setNeedsStatusBarAppearanceUpdate];
@@ -245,7 +262,7 @@ static int PlaybackViewControllerKVOContext = 0;
 
 -(BOOL)prefersStatusBarHidden
 {
-    if (self.UIisHidden) {
+    if (self.UIHidden) {
         return YES;
     }
     else {
