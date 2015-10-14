@@ -63,10 +63,10 @@ static int PlaybackViewControllerKVOContext = 0;
     self.player = [[AVPlayer alloc] initWithPlayerItem:self.playerItem];
     
     self.playerView.playerLayer.player = self.player;
-    
-//    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
-//    self.playerLayer.frame = self.view.frame;
-//    self.playerLayer.videoGravity = AVLayerVideoGravityResize;
+    self.playerView.playerLayer.videoGravity =AVLayerVideoGravityResizeAspect;
+    //    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+    //    self.playerLayer.frame = self.view.frame;
+    //    self.playerLayer.videoGravity = AVLayerVideoGravityResize;
     
     //[self.view.layer addSublayer:self.playerLayer];
     
@@ -189,7 +189,7 @@ static int PlaybackViewControllerKVOContext = 0;
 {
     /// Top code animates, bottom is instant hide/show
     /// UIisHidden is used in conjuction with setNeedsStatusBarAppearanceUpdate to hide/show the status bar
-
+    
     self.UIHidden = YES;
     
     [UIView animateWithDuration:0.3 animations:^() {
@@ -198,9 +198,11 @@ static int PlaybackViewControllerKVOContext = 0;
     }];
     
     for (UIView *subview in self.view.subviews) {
-        [UIView animateWithDuration:0.3 animations:^() {
-            subview.alpha = 0.0;
-        }];
+        if (subview.tag == 1) {
+            [UIView animateWithDuration:0.3 animations:^() {
+                subview.alpha = 0.0;
+            }];
+        }
     }
     
     //    self.navigationController.navigationBarHidden = YES;
@@ -217,7 +219,7 @@ static int PlaybackViewControllerKVOContext = 0;
     /// UIisHidden is used in conjuction with setNeedsStatusBarAppearanceUpdate to hide/show the status bar
     
     self.UIHidden = NO;
-
+    
     [UIView animateWithDuration:0.3 animations:^() {
         [self setNeedsStatusBarAppearanceUpdate];
         self.navigationController.navigationBar.alpha = 1;
@@ -235,8 +237,8 @@ static int PlaybackViewControllerKVOContext = 0;
             }];
         }
     }
-
-
+    
+    
     //    self.navigationController.navigationBarHidden = NO;
     //
     //    for (UIView *subview in self.view.subviews) {
