@@ -352,7 +352,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     }];
     
     [UIView animateWithDuration:0.3 animations:^() {
-        self.toolbar.alpha = 0.6;
+        self.toolbar.alpha = 0.5;
     }];
     
     /// Things that should disappear:

@@ -63,7 +63,8 @@ static int PlaybackViewControllerKVOContext = 0;
     self.player = [[AVPlayer alloc] initWithPlayerItem:self.playerItem];
     
     self.playerView.playerLayer.player = self.player;
-    self.playerView.playerLayer.videoGravity =AVLayerVideoGravityResizeAspect;
+    //self.playerView.playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
+    
     //    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
     //    self.playerLayer.frame = self.view.frame;
     //    self.playerLayer.videoGravity = AVLayerVideoGravityResize;
