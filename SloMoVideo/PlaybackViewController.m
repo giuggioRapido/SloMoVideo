@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIView *toolbar;
 @property (weak, nonatomic) IBOutlet UIButton *speedButton;
 @property (weak, nonatomic) IBOutlet UIButton *trashButton;
+@property (weak, nonatomic) IBOutlet PlayerView *playerView;
 
 @end
 
@@ -61,11 +62,13 @@ static int PlaybackViewControllerKVOContext = 0;
     
     self.player = [[AVPlayer alloc] initWithPlayerItem:self.playerItem];
     
-    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
-    self.playerLayer.frame = self.view.frame;
-    self.playerLayer.videoGravity = AVLayerVideoGravityResize;
+    self.playerView.playerLayer.player = self.player;
     
-    [self.view.layer addSublayer:self.playerLayer];
+//    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+//    self.playerLayer.frame = self.view.frame;
+//    self.playerLayer.videoGravity = AVLayerVideoGravityResize;
+    
+    //[self.view.layer addSublayer:self.playerLayer];
     
     /// Add observation of player.rate so that the controller can respond to changes in playback
     [self addObserver:self forKeyPath:@"self.player.rate" options:NSKeyValueObservingOptionNew context:&PlaybackViewControllerKVOContext];
