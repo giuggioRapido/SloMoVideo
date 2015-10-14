@@ -168,8 +168,12 @@ static int PlaybackViewControllerKVOContext = 0;
 -(void) hideUI
 {
     /// Top code animates, bottom is instant hide/show
+    /// UIisHidden is used in conjuction with setNeedsStatusBarAppearanceUpdate to hide/show the status bar
+
+    self.UIisHidden = YES;
     
     [UIView animateWithDuration:0.3 animations:^() {
+        [self setNeedsStatusBarAppearanceUpdate];
         self.navigationController.navigationBar.alpha = 0.0;
     }];
     
@@ -188,9 +192,14 @@ static int PlaybackViewControllerKVOContext = 0;
 
 -(void) unhideUI
 {
-    /// Top code animates, bottom is instant hide/show. In the animated code, we need separate logic for the toolbar since we want the alpha to only increase to 0.6, not 1.
+    /// Top code animates, bottom is instant hide/show. In the animated code, we need separate logic for the
+    /// toolbar since we want the alpha to only increase to 0.6, not 1.
+    /// UIisHidden is used in conjuction with setNeedsStatusBarAppearanceUpdate to hide/show the status bar
     
+    self.UIisHidden = NO;
+
     [UIView animateWithDuration:0.3 animations:^() {
+        [self setNeedsStatusBarAppearanceUpdate];
         self.navigationController.navigationBar.alpha = 1;
     }];
     
@@ -206,7 +215,8 @@ static int PlaybackViewControllerKVOContext = 0;
             }];
         }
     }
-    
+
+
     //    self.navigationController.navigationBarHidden = NO;
     //
     //    for (UIView *subview in self.view.subviews) {
@@ -233,6 +243,15 @@ static int PlaybackViewControllerKVOContext = 0;
     }
 }
 
+-(BOOL)prefersStatusBarHidden
+{
+    if (self.UIisHidden) {
+        return YES;
+    }
+    else {
+        return NO;
+    }
+}
 
 
 

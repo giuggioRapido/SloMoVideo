@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSMutableArray *videos;
 @property (nonatomic, readwrite) BOOL videoWasDeleted;
 
+
 + (id)sharedLibrary;
 - (void) initialPullFromDocuments;
 - (void) pullMostRecentFile;

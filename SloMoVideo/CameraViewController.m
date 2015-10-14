@@ -10,7 +10,7 @@
 
 @implementation CameraViewController
 
--(void) viewDidLoad
+- (void)viewDidLoad
 {
     [super viewDidLoad];
     
@@ -23,7 +23,7 @@
     self.previewView.session = self.session;
     
     /// Communicate with the session and other session objects on this queue.
-    self.sessionQueue = dispatch_queue_create( "session queue", DISPATCH_QUEUE_SERIAL );
+    self.sessionQueue = dispatch_queue_create("session queue", DISPATCH_QUEUE_SERIAL);
     
     /// Check video authorization status. Video access is required and audio access is optional.
     /// If audio access is denied, audio is not recorded during movie recording.
@@ -65,8 +65,8 @@
     /// Why not do all of this on the main queue?
     /// Because -[AVCaptureSession startRunning] is a blocking call which can take a long time. We dispatch session setup to the sessionQueue
     /// so that the main queue isn't blocked, which keeps the UI responsive.
-    dispatch_async( self.sessionQueue, ^{
-        if ( self.setupResult != AVCamSetupResultSuccess ) {
+    dispatch_async (self.sessionQueue, ^{
+        if (self.setupResult != AVCamSetupResultSuccess) {
             return;
         }
         
@@ -89,7 +89,7 @@
         
         [self.session beginConfiguration];
         
-        if ( [self.session canAddInput:videoDeviceInput] ) {
+        if ([self.session canAddInput:videoDeviceInput]) {
             [self.session addInput:videoDeviceInput];
             self.videoDeviceInput = videoDeviceInput;
             
@@ -111,22 +111,22 @@
             });
         }
         else {
-            NSLog( @"Could not add video device input to the session" );
+            NSLog(@"Could not add video device input to the session");
             self.setupResult = AVCamSetupResultSessionConfigurationFailed;
         }
         
         AVCaptureDevice *audioDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
         AVCaptureDeviceInput *audioDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:&error];
         
-        if ( ! audioDeviceInput ) {
-            NSLog( @"Could not create audio device input: %@", error );
+        if (!audioDeviceInput) {
+            NSLog(@"Could not create audio device input: %@", error);
         }
         
-        if ( [self.session canAddInput:audioDeviceInput] ) {
+        if ([self.session canAddInput:audioDeviceInput]) {
             [self.session addInput:audioDeviceInput];
         }
         else {
-            NSLog( @"Could not add audio device input to the session" );
+            NSLog(@"Could not add audio device input to the session");
         }
         
         /// Create AVCaptureMovieFileOutput object
@@ -140,7 +140,7 @@
             self.movieFileOutput = movieFileOutput;
         }
         else {
-            NSLog( @"Could not add movie file output to the session" );
+            NSLog(@"Could not add movie file output to the session");
             self.setupResult = AVCamSetupResultSessionConfigurationFailed;
         }
         
@@ -155,7 +155,7 @@
     self.navigationController.navigationBarHidden = YES;
     
     dispatch_async( self.sessionQueue, ^{
-        switch ( self.setupResult )
+        switch (self.setupResult)
         {
             case AVCamSetupResultSuccess:
             {
@@ -166,14 +166,14 @@
             }
             case AVCamSetupResultCameraNotAuthorized:
             {
-                dispatch_async( dispatch_get_main_queue(), ^{
-                    NSString *message = NSLocalizedString( @"SloMoVideo doesn't have permission to use the camera, please change privacy settings", @"Alert message when the user has denied access to the camera" );
+                dispatch_async (dispatch_get_main_queue(), ^{
+                    NSString *message = NSLocalizedString(@"SloMoVideo doesn't have permission to use the camera, please change privacy settings", @"Alert message when the user has denied access to the camera");
                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"SloMoVideo" message:message preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"OK", @"Alert OK button" ) style:UIAlertActionStyleCancel handler:nil];
+                    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"Alert OK button") style:UIAlertActionStyleCancel handler:nil];
                     [alertController addAction:cancelAction];
                     
                     /// Provide quick access to Settings.
-                    UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"Settings", @"Alert button to open Settings" ) style:UIAlertActionStyleDefault handler:^( UIAlertAction *action ) {
+                    UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Settings", @"Alert button to open Settings") style:UIAlertActionStyleDefault handler:^( UIAlertAction *action) {
                         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
                     }];
                     [alertController addAction:settingsAction];
@@ -183,10 +183,10 @@
             }
             case AVCamSetupResultSessionConfigurationFailed:
             {
-                dispatch_async( dispatch_get_main_queue(), ^{
-                    NSString *message = NSLocalizedString( @"Unable to capture media", @"Alert message when something goes wrong during capture session configuration" );
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSString *message = NSLocalizedString( @"Unable to capture media", @"Alert message when something goes wrong during capture session configuration");
                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"AVCam" message:message preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"OK", @"Alert OK button" ) style:UIAlertActionStyleCancel handler:nil];
+                    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"Alert OK button") style:UIAlertActionStyleCancel handler:nil];
                     [alertController addAction:cancelAction];
                     [self presentViewController:alertController animated:YES completion:nil];
                 } );
@@ -199,7 +199,7 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     dispatch_async( self.sessionQueue, ^{
-        if ( self.setupResult == AVCamSetupResultSuccess ) {
+        if (self.setupResult == AVCamSetupResultSuccess) {
             [self.session stopRunning];
         }
     } );
@@ -211,8 +211,8 @@
 
 - (IBAction)startRecording:(id)sender
 {
-    dispatch_async( self.sessionQueue, ^{
-        if ( [UIDevice currentDevice].isMultitaskingSupported ) {
+    dispatch_async (self.sessionQueue, ^{
+        if ([UIDevice currentDevice].isMultitaskingSupported) {
             /// Setup background task. This is needed because the -[captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:]
             /// callback is not received until app returns to the foreground unless you request background execution time.
             /// This also ensures that there will be time to write the file to the photo library when app is backgrounded.
@@ -276,7 +276,7 @@
     //[self.navigationController pushViewController:self.navigationController.viewControllers[1] animated:YES];
 }
 
--(void) displayRecordingUI
+- (void)displayRecordingUI
 {
     /// Things that should disappear:
     UIColor *borderColor = [UIColor colorWithRed:206.0/255.0 green:63.0/255.0 blue:63.0/255.0 alpha:1.0];
@@ -306,7 +306,7 @@
     });
 }
 
--(void) displayViewFinderUI
+- (void)displayViewFinderUI
 {
     /// Things that should appear:
     [UIView animateWithDuration:0.3 animations:^() {
@@ -357,8 +357,8 @@
     AVCaptureDevice *captureDevice = devices.firstObject;
     
     /// Check the passed in position against the devices and return desired device.
-    for ( AVCaptureDevice *device in devices ) {
-        if ( device.position == position ) {
+    for (AVCaptureDevice *device in devices) {
+        if (device.position == position) {
             captureDevice = device;
             break;
         }
@@ -366,9 +366,9 @@
     return captureDevice;
 }
 
--(void) increaseFPS
+- (void)increaseFPS
 {
-    if (self.session.isRunning){
+    if (self.session.isRunning) {
         [self.session stopRunning];
     }
     
@@ -399,7 +399,7 @@
     }
 }
 
--(void) returnFPSToDefault
+- (void)returnFPSToDefault
 {
     if (self.session.isRunning) {
         [self.session stopRunning];
@@ -420,7 +420,7 @@
 - (void)captureOutput:(AVCaptureFileOutput *)captureOutput didStartRecordingToOutputFileAtURL:(NSURL *)fileURL fromConnections:(NSArray *)connections
 {
     /// Hide the record button and color border to indicate that camera is recording
-    dispatch_async( dispatch_get_main_queue(), ^{
+    dispatch_async (dispatch_get_main_queue(), ^{
         [self displayRecordingUI];
     });
 }
@@ -446,9 +446,14 @@
     }
     
     /// Revert to view finder UI
-    dispatch_async( dispatch_get_main_queue(), ^{
+    dispatch_async (dispatch_get_main_queue(), ^{
         [self displayViewFinderUI];
     });
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
 }
 
 @end

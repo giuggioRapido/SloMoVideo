@@ -12,7 +12,7 @@
 
 @synthesize duration = _duration;
 
-- (NSString*) duration
+- (NSString*)duration
 {
     CMTime durationV = self.asset.duration;
     NSUInteger dTotalSeconds = CMTimeGetSeconds(durationV);
@@ -26,12 +26,12 @@
     return _duration;
 }
 
-- (void) setDuration:(NSString *)duration
+- (void)setDuration:(NSString *)duration
 {
     _duration = duration;
 }
 
-- (void) createThumbnail
+- (void)createThumbnail
 {
     AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc]
                                              initWithAsset:self.asset];

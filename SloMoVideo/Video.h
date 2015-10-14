@@ -19,6 +19,6 @@
 @property (nonatomic) NSString *duration;
 @property (nonatomic) NSString *stringPath;
 
-- (void) createThumbnail;
+- (void)createThumbnail;
 
 @end

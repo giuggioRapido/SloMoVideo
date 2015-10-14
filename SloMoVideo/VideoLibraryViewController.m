@@ -17,7 +17,6 @@
     self.navigationItem.title = @"Library";
     
     self.videos = [[MediaLibrary sharedLibrary] videos];
-    // self.MediaLibrary = [MediaLibrary sharedLibrary];
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -28,8 +27,7 @@
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
     
     /// If video was deleted in the Playback VC, reload collection view to reflect the deletion.
-    if ([[MediaLibrary sharedLibrary] videoWasDeleted] == YES)
-    {
+    if ([[MediaLibrary sharedLibrary] videoWasDeleted] == YES) {
         [[MediaLibrary sharedLibrary] setVideoWasDeleted: NO];
         [self.collectionView reloadData];
     }

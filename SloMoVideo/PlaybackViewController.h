@@ -17,11 +17,14 @@
 @property AVPlayerItem *playerItem;
 @property AVPlayerLayer *playerLayer;
 @property (nonatomic) Video *videoToPlay;
+@property (nonatomic) NSArray *playbackSpeedStrings;
+@property (nonatomic) BOOL UIisHidden;
+
+/// UI
 @property (weak, nonatomic) IBOutlet UIButton *PlayButton;
 @property (weak, nonatomic) IBOutlet UIView *toolbar;
 @property (weak, nonatomic) IBOutlet UIButton *speedButton;
-@property (nonatomic) NSArray *playbackSpeedStrings;
-
 @property (weak, nonatomic) IBOutlet UIButton *trashButton;
+
 
 @end

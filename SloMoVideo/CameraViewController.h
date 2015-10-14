@@ -35,7 +35,6 @@ typedef NS_ENUM( NSInteger, AVCamSetupResult ) {
 @property (nonatomic) AVCaptureDeviceInput *videoDeviceInput;
 @property (nonatomic) AVCaptureMovieFileOutput *movieFileOutput;
 @property (nonatomic, strong) AVCaptureDeviceFormat *defaultFormat;
-
 @property (nonatomic) CMTime defaultVideoMaxFrameDuration;
 
 

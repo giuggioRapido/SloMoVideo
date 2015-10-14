@@ -18,6 +18,5 @@
 
 @property (nonatomic) NSMutableArray *videos;
 @property (nonatomic) Video *videoToPlay;
-@property (nonatomic) MediaLibrary *MediaLibrary;
 
 @end
