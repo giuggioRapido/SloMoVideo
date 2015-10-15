@@ -11,7 +11,7 @@
 #import "Video.h"
 #import "MediaLibrary.h"
 
-@interface PlaybackViewController : UIViewController
+@interface PlaybackViewController : UIViewController 
 
 @property (nonatomic) Video *videoToPlay;
 

@@ -65,15 +65,17 @@ static int PlaybackViewControllerKVOContext = 0;
     self.playerView.playerLayer.player = self.player;
     //self.playerView.playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
     
-    //    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
-    //    self.playerLayer.frame = self.view.frame;
-    //    self.playerLayer.videoGravity = AVLayerVideoGravityResize;
-    
-    //[self.view.layer addSublayer:self.playerLayer];
-    
     /// Add observation of player.rate so that the controller can respond to changes in playback
     [self addObserver:self forKeyPath:@"self.player.rate" options:NSKeyValueObservingOptionNew context:&PlaybackViewControllerKVOContext];
     
+    
+    /// Programmatic layer:
+    //    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+    //    self.playerLayer.frame = self.view.frame;
+    //    self.playerLayer.videoGravity = AVLayerVideoGravityResize;
+    //[self.view.layer addSublayer:self.playerLayer];
+    
+    /// Useful detritus?
     //     NSLog(@"%i", self.playerItem.canPlaySlowForward);
     //     [self.player seekToTime:kCMTimeZero];
     //
@@ -110,6 +112,9 @@ static int PlaybackViewControllerKVOContext = 0;
         
         /// No need to call [self.player play] since setting the speed to anything other than 0 will play video.
         self.player.rate = playbackSpeeds[currentSpeedIndex];
+        
+        /// And if we are pressing play (rather than pause), hide the UI
+        [self hideUI];
     }
     
     //    NSLog(@"player rate: %@", [self.player valueForKey:@"rate"]);
@@ -157,7 +162,7 @@ static int PlaybackViewControllerKVOContext = 0;
 {
     /// A screen tap will [un]hide the UI. Currently this is only allowed if the video is not playing. To allow this
     /// functionality at any time, just get rid of the outer most if clause.
-    
+
     //    if (self.player.rate != 0) {
     if (self.UIHidden) {
         [self unhideUI];
@@ -167,8 +172,6 @@ static int PlaybackViewControllerKVOContext = 0;
     }
     //    }
 }
-
-
 
 #pragma mark Alter UI
 
@@ -215,9 +218,7 @@ static int PlaybackViewControllerKVOContext = 0;
         
         self.PlayButton.selected = (self.player.rate != 0) ? YES : NO;
         
-        if (self.player.rate != 0) {
-            [self hideUI];
-        } else {
+        if (self.player.rate == 0) {
             [self unhideUI];
         }
     }
@@ -235,7 +236,6 @@ static int PlaybackViewControllerKVOContext = 0;
 
 #pragma mark TO DO
 
-/// NEED TO PREVENT UI FROM HIDIDNG WHEN SELECTING PLAYBACK RATE WHILE VIDEO PLAYS
 
 
 @end
