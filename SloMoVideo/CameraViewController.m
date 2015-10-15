@@ -292,17 +292,15 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     
     if (self.sloMoToggle.selected) {
         /// Code here is for default FPS
-        [self returnFPSToDefault];
-        self.sloMoToggle.selected = NO;
         self.sloMoToggle.backgroundColor = [UIColor darkGrayColor];
-        
-        
+        self.sloMoToggle.selected = NO;
+        [self returnFPSToDefault];
     }
     else {
         /// Code here is for activating high FPS
-        [self increaseFPS];
-        self.sloMoToggle.selected = YES;
         self.sloMoToggle.backgroundColor = self.view.tintColor;
+        self.sloMoToggle.selected = YES;
+        [self increaseFPS];
     }
 }
 
@@ -321,14 +319,11 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     /// Things that should appear:
     UIColor *borderColor = [UIColor colorWithRed:206.0/255.0 green:63.0/255.0 blue:63.0/255.0 alpha:1.0];
     self.previewView.layer.borderColor = borderColor.CGColor;
-    self.previewView.layer.borderWidth = 3.0f;
-    
+    self.previewView.layer.borderWidth = 4.0f;
     
     [UIView animateWithDuration:0.3 animations:^() {
         self.doubleTapLabel.alpha = 1.0;
     }];
-    
-    
     
     /// And then re-hide the double tap tip after a delay
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
@@ -337,15 +332,14 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
         }];
     });
     
+    UIView * v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    v.backgroundColor = [UIColor whiteColor];
+    [self.previewView addSubview:v];
+    
     
     
     /// Useful detritus?
     //    NSLog(@"Border did appear\n\nself.previewView:%@\n\nlayer: %@\n\nborder color: %@", self.previewView, self.previewView.layer, self.previewView.layer.borderColor);
-    
-    //    UIView * v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    //    v.backgroundColor = [UIColor whiteColor];
-    //    [self.previewView addSubview:v];
-    
 }
 
 - (void)displayViewFinderUI
@@ -433,6 +427,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     if (!self.session.isRunning) {
         [self.session startRunning];
     }
+    
 }
 
 - (void)returnFPSToDefault
@@ -447,9 +442,11 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     videoDevice.activeVideoMaxFrameDuration = self.defaultVideoMaxFrameDuration;
     [videoDevice unlockForConfiguration];
     
+    
     if (!self.session.isRunning) {
         [self.session startRunning];
     }
+    
 }
 
 #pragma mark File Output Recording Delegate

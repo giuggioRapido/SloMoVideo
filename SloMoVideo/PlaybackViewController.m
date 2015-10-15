@@ -147,23 +147,7 @@ static int PlaybackViewControllerKVOContext = 0;
 
 - (IBAction)deleteVideo:(id)sender
 {
-    /// When video is deleted, remove the video from DAO's array and trip bool which will be used in Library VC
-    /// to determine if the collection view should be reloaded.
-    /// Then delete the original file from Documents.
-    
-    [[[MediaLibrary sharedLibrary] videos] removeObject:self.videoToPlay];
-    
-    [[MediaLibrary sharedLibrary] setVideoWasDeleted: YES];
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *filePath = self.videoToPlay.stringPath;
-    NSError *error = nil;
-    
-    if (![fileManager removeItemAtPath:filePath error:&error]) {
-        NSLog(@"[Error] %@ (%@)", error, filePath);
-    } else {
-        NSLog(@"Video deleted");
-    }
+    [[MediaLibrary sharedLibrary] deleteVideo:self.videoToPlay];
     
     /// Pop back to previous controller in nav stack since the current video no longer exists.
     [self.navigationController popViewControllerAnimated:YES];
