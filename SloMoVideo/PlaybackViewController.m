@@ -73,7 +73,7 @@ static int PlaybackViewControllerKVOContext = 0;
     //    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
     //    self.playerLayer.frame = self.view.frame;
     //    self.playerLayer.videoGravity = AVLayerVideoGravityResize;
-    //[self.view.layer addSublayer:self.playerLayer];
+    //    [self.view.layer addSublayer:self.playerLayer];
     
     /// Useful detritus?
     //     NSLog(@"%i", self.playerItem.canPlaySlowForward);
@@ -162,7 +162,7 @@ static int PlaybackViewControllerKVOContext = 0;
 {
     /// A screen tap will [un]hide the UI. Currently this is only allowed if the video is not playing. To allow this
     /// functionality at any time, just get rid of the outer most if clause.
-
+    
     //    if (self.player.rate != 0) {
     if (self.UIHidden) {
         [self unhideUI];
@@ -180,10 +180,12 @@ static int PlaybackViewControllerKVOContext = 0;
     /// UIisHidden is used in conjuction with setNeedsStatusBarAppearanceUpdate to hide/show the status bar
     
     self.UIHidden = YES;
+    NSLog(@"%f, %d", self.navigationController.navigationBar.alpha, self.navigationController.navigationBar.hidden);
     
     [UIView animateWithDuration:0.3 animations:^() {
         [self setNeedsStatusBarAppearanceUpdate];
         self.navigationController.navigationBar.alpha = 0.0;
+        NSLog(@"%f, %d", self.navigationController.navigationBar.alpha, self.navigationController.navigationBar.hidden);
     }];
     
     [UIView animateWithDuration:0.3 animations:^() {
@@ -196,15 +198,19 @@ static int PlaybackViewControllerKVOContext = 0;
     /// UIisHidden is used in conjuction with setNeedsStatusBarAppearanceUpdate to hide/show the status bar
     
     self.UIHidden = NO;
+    NSLog(@"%f, %d", self.navigationController.navigationBar.alpha, self.navigationController.navigationBar.hidden);
     
     [UIView animateWithDuration:0.3 animations:^() {
         [self setNeedsStatusBarAppearanceUpdate];
         self.navigationController.navigationBar.alpha = 1;
+        NSLog(@"%f, %d", self.navigationController.navigationBar.alpha, self.navigationController.navigationBar.hidden);
+        
     }];
     
     [UIView animateWithDuration:0.3 animations:^() {
         self.toolbar.alpha = 1.0;
     }];
+    
 }
 
 #pragma mark KVO
@@ -226,16 +232,44 @@ static int PlaybackViewControllerKVOContext = 0;
 
 -(BOOL)prefersStatusBarHidden
 {
+    /// Nav bar alpha adjustments necessary here so that navbar doesn't erroniously reappear when orientation changes
     if (self.UIHidden) {
+        self.navigationController.navigationBar.alpha = 0;
         return YES;
     }
     else {
+        self.navigationController.navigationBar.alpha = 1;
         return NO;
     }
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    //self.navigationController.navigationBar.alpha = 0;
+    
+    NSLog(@"%f, %d", self.navigationController.navigationBar.alpha, self.navigationController.navigationBar.hidden);
+    
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    NSLog(@"%f, %d", self.navigationController.navigationBar.alpha, self.navigationController.navigationBar.hidden);
+    
+}
+
+- (void)viewDidLayoutSubviews
+{
+    NSLog(@"%f, %d", self.navigationController.navigationBar.alpha, self.navigationController.navigationBar.hidden);
+}
+
+//- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection
+//              withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+//{
+//    NSLog(@"%f, %d", self.navigationController.navigationBar.alpha, self.navigationController.navigationBar.hidden);
+//    [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
+//    NSLog(@"%f, %d", self.navigationController.navigationBar.alpha, self.navigationController.navigationBar.hidden);
+//
+//
+//}
 #pragma mark TO DO
 
-
+/// FIX ISSUE WHERE NAV BAR APPEARS WHEN ORIENTATION CHANGES
 
 @end

@@ -24,6 +24,9 @@
     self.navigationItem.title = @"Library";
     
     self.videos = [[MediaLibrary sharedLibrary] videos];
+    
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -72,6 +75,12 @@
     /// Store the video at selected indexpath for use in segue.
     self.videoToPlay = [self.videos objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"segueToPlayer" sender:self];
+}
+
+- (BOOL)collectionView:(UICollectionView * _Nonnull)collectionView
+shouldShowMenuForItemAtIndexPath:(NSIndexPath * _Nonnull)indexPath
+{
+    return YES;
 }
 
 #pragma mark Segue

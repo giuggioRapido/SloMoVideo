@@ -3,47 +3,16 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "__42-[CameraViewController displayRecordingUI]_block_invoke_2258:CameraViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.previewView">
-            </PersistentString>
-            <PersistentString
-               value = "self.preview">
-            </PersistentString>
-            <PersistentString
-               value = "self.previewView.layer">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "-[CameraViewController captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:]:CameraViewController.m">
          <PersistentStrings>
-            <PersistentString
-               value = "self.previewView.layer.borderWidth">
-            </PersistentString>
             <PersistentString
                value = "self.previewView.layer.borderColor">
             </PersistentString>
             <PersistentString
                value = "self.previewView.layer.bounds">
             </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "__39-[CameraViewController startRecording:]_block_invoke:CameraViewController.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[CameraViewController displayViewFinderUI]:CameraViewController.m">
-         <PersistentStrings>
             <PersistentString
-               value = "self.previewView">
-            </PersistentString>
-            <PersistentString
-               value = "self.previewView.layer">
-            </PersistentString>
-            <PersistentString
-               value = "self.previewView.layer.borderColor">
+               value = "self.previewView.layer.borderWidth">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -65,32 +34,15 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[CameraViewController displayRecordingUI]:CameraViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.previewView.layer.bounds">
-            </PersistentString>
-            <PersistentString
-               value = "self.previewView.layer.borderColor">
-            </PersistentString>
-            <PersistentString
-               value = "self.previewView.layer">
-            </PersistentString>
-            <PersistentString
-               value = "self.previewView.layer.borderWidth">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "__42-[CameraViewController displayRecordingUI]_block_invoke250:CameraViewController.m">
-      </ContextState>
-      <ContextState
          contextName = "__42-[CameraViewController displayRecordingUI]_block_invoke244:CameraViewController.m">
          <PersistentStrings>
             <PersistentString
                value = "self.previewView.layer.bounds">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__39-[CameraViewController startRecording:]_block_invoke:CameraViewController.m">
       </ContextState>
       <ContextState
          contextName = "-[videoPlayerViewController viewWillAppear:]:videoPlayerViewController.m">
@@ -113,6 +65,90 @@
                value = "self.videos.count">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[PlaybackViewController viewDidLayoutSubviews]:PlaybackViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.navigationController.navigationBar.alpha">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__42-[CameraViewController displayRecordingUI]_block_invoke_2258:CameraViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.previewView">
+            </PersistentString>
+            <PersistentString
+               value = "self.preview">
+            </PersistentString>
+            <PersistentString
+               value = "self.previewView.layer">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CameraViewController displayViewFinderUI]:CameraViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.previewView">
+            </PersistentString>
+            <PersistentString
+               value = "self.previewView.layer.borderColor">
+            </PersistentString>
+            <PersistentString
+               value = "self.previewView.layer">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CameraViewController displayRecordingUI]:CameraViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.previewView.layer">
+            </PersistentString>
+            <PersistentString
+               value = "self.previewView.layer.borderColor">
+            </PersistentString>
+            <PersistentString
+               value = "self.previewView.layer.bounds">
+            </PersistentString>
+            <PersistentString
+               value = "self.previewView.layer.borderWidth">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__32-[PlaybackViewController hideUI]_block_invoke:PlaybackViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = " self.navigationController.navigationBar.alpha">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[PlaybackViewController viewWillTransitionToSize:withTransitionCoordinator:]:PlaybackViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "">
+            </PersistentString>
+            <PersistentString
+               value = " self.navigationController.navigationBar.alpha">
+            </PersistentString>
+            <PersistentString
+               value = "self.navigationController">
+            </PersistentString>
+            <PersistentString
+               value = " self.navigationController.navigationBar">
+            </PersistentString>
+            <PersistentString
+               value = "self.navigationBar">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__42-[CameraViewController displayRecordingUI]_block_invoke250:CameraViewController.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>
