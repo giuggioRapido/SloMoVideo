@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="amU-Sz-fJt">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -51,11 +50,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Js-zA-4hc">
-                                <rect key="frame" x="216" y="513" width="85" height="40"/>
+                                <rect key="frame" x="216" y="519" width="85" height="37"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="gEa-x8-kAQ"/>
+                                    <constraint firstAttribute="height" constant="37" id="VkB-tD-RWX"/>
                                     <constraint firstAttribute="width" constant="85" id="jC3-RU-sBE"/>
                                 </constraints>
                                 <state key="normal" title="SloMo Off">
@@ -73,13 +72,10 @@
                                     <action selector="toggleSloMo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eMe-Yq-lee"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Double-tap to stop recording" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6WJ-LF-nUo">
-                                <rect key="frame" x="-4" y="535" width="328" height="34"/>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Double-tap to stop recording" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6WJ-LF-nUo">
+                                <rect key="frame" x="0.0" y="535" width="320" height="33"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.80784313725490198" green="0.24705882352941178" blue="0.30196078431372547" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="kTu-7M-km9"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -88,18 +84,15 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="6WJ-LF-nUo" secondAttribute="bottom" constant="-1" id="071-eC-D8N"/>
                             <constraint firstItem="cG7-Sp-LKe" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="C2F-1p-Zxq"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="5Js-zA-4hc" secondAttribute="bottom" constant="15" id="CkD-hn-G5L"/>
                             <constraint firstItem="5Js-zA-4hc" firstAttribute="leading" secondItem="cG7-Sp-LKe" secondAttribute="trailing" constant="26" id="FON-1L-6wE"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="cG7-Sp-LKe" secondAttribute="bottom" constant="8" id="G3e-Is-Q1d"/>
-                            <constraint firstItem="6WJ-LF-nUo" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="HJ9-rA-FfO"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Pra-q2-dmL" secondAttribute="bottom" constant="12" id="QIP-ew-S8r"/>
                             <constraint firstItem="cG7-Sp-LKe" firstAttribute="leading" secondItem="Pra-q2-dmL" secondAttribute="trailing" constant="54" id="RYt-Nr-Yfz"/>
                             <constraint firstItem="OUm-k0-7gc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="cjo-Wa-T0K"/>
                             <constraint firstAttribute="trailingMargin" secondItem="OUm-k0-7gc" secondAttribute="trailing" constant="-20" id="fYp-6w-lEf"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="6WJ-LF-nUo" secondAttribute="trailing" constant="-20" id="gjX-4W-OGU"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="OUm-k0-7gc" secondAttribute="bottom" id="tA5-Eh-7s3"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="5Js-zA-4hc" secondAttribute="bottom" constant="12" id="xAe-qs-d7k"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="e2d-oH-CUt" appends="YES" id="LlH-Lj-jKq"/>
@@ -109,7 +102,7 @@
                     <connections>
                         <outlet property="doubleTapLabel" destination="6WJ-LF-nUo" id="jHg-wa-Xam"/>
                         <outlet property="libraryButton" destination="Pra-q2-dmL" id="Y8Y-S2-p9c"/>
-                        <outlet property="previewView" destination="8bC-Xf-vdC" id="pzq-wc-J68"/>
+                        <outlet property="previewView" destination="8bC-Xf-vdC" id="t6g-Bu-kmn"/>
                         <outlet property="recordButton" destination="cG7-Sp-LKe" id="cGa-18-w1Q"/>
                         <outlet property="sloMoToggle" destination="5Js-zA-4hc" id="xly-8i-VRY"/>
                         <outlet property="toolbar" destination="OUm-k0-7gc" id="mnk-SB-dGq"/>
@@ -123,7 +116,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="684" y="363.51999999999998"/>
+            <point key="canvasLocation" x="684" y="363"/>
         </scene>
         <!--Video Library View Controller-->
         <scene sceneID="iRs-kx-U0P">
@@ -231,7 +224,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LRT-yD-Zbm">
-                                <rect key="frame" x="27" y="523" width="48" height="33"/>
+                                <rect key="frame" x="12" y="523" width="48" height="33"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -274,13 +267,13 @@
                             <constraint firstItem="o0y-Zx-Udt" firstAttribute="centerY" secondItem="10N-HD-Xym" secondAttribute="centerY" id="Hee-g2-Kur"/>
                             <constraint firstItem="fyZ-ud-9hW" firstAttribute="top" secondItem="GwR-Dv-KfL" secondAttribute="bottom" id="Hq4-lK-WE5"/>
                             <constraint firstItem="GwR-Dv-KfL" firstAttribute="leading" secondItem="10N-HD-Xym" secondAttribute="leadingMargin" constant="-20" id="SEN-Df-p7l"/>
+                            <constraint firstItem="LRT-yD-Zbm" firstAttribute="leading" secondItem="10N-HD-Xym" secondAttribute="leadingMargin" constant="-4" id="SRB-rg-fDA"/>
                             <constraint firstItem="fyZ-ud-9hW" firstAttribute="top" secondItem="sJJ-db-bZ3" secondAttribute="bottom" constant="12" id="bmI-T1-yWR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="h3A-uN-96X" secondAttribute="trailing" id="bud-By-R8O"/>
                             <constraint firstItem="o0y-Zx-Udt" firstAttribute="height" secondItem="10N-HD-Xym" secondAttribute="height" id="fAl-Hr-xOd"/>
                             <constraint firstItem="o0y-Zx-Udt" firstAttribute="centerX" secondItem="10N-HD-Xym" secondAttribute="centerX" id="i3N-1U-6LS"/>
                             <constraint firstItem="o0y-Zx-Udt" firstAttribute="width" secondItem="10N-HD-Xym" secondAttribute="width" id="k5o-OF-L7w"/>
                             <constraint firstItem="sJJ-db-bZ3" firstAttribute="centerX" secondItem="10N-HD-Xym" secondAttribute="centerX" id="x3n-bb-FUu"/>
-                            <constraint firstItem="LRT-yD-Zbm" firstAttribute="leading" secondItem="10N-HD-Xym" secondAttribute="leadingMargin" constant="11" id="zML-CB-eSH"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Nl9-cZ-ZOL" appends="YES" id="NEc-NP-rDU"/>

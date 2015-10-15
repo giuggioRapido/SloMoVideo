@@ -3,15 +3,52 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[VideoLibraryViewController collectionView:numberOfItemsInSection:]:VideoLibraryViewController.m">
+         contextName = "__39-[CameraViewController startRecording:]_block_invoke:CameraViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "__42-[CameraViewController displayRecordingUI]_block_invoke_2258:CameraViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.videos.count">
+               value = "self.previewView">
+            </PersistentString>
+            <PersistentString
+               value = "self.preview">
+            </PersistentString>
+            <PersistentString
+               value = "self.previewView.layer">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "__39-[CameraViewController startRecording:]_block_invoke:CameraViewController.m">
+         contextName = "__42-[CameraViewController displayRecordingUI]_block_invoke_2:CameraViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.previewView.layer">
+            </PersistentString>
+            <PersistentString
+               value = "self.previewView.layer.borderColor">
+            </PersistentString>
+            <PersistentString
+               value = "self.previewView.layer.hidden">
+            </PersistentString>
+            <PersistentString
+               value = "self.previewView.layer.borderWidth">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CameraViewController displayViewFinderUI]:CameraViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.previewView">
+            </PersistentString>
+            <PersistentString
+               value = "self.previewView.layer.borderColor">
+            </PersistentString>
+            <PersistentString
+               value = "self.previewView.layer">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[videoPlayerViewController viewWillAppear:]:videoPlayerViewController.m">
@@ -24,6 +61,14 @@
             </PersistentString>
             <PersistentString
                value = "self.view.playerLayer.player">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[VideoLibraryViewController collectionView:numberOfItemsInSection:]:VideoLibraryViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.videos.count">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

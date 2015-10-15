@@ -18,7 +18,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 
 @interface CameraViewController()
 
-// UI
+/// UI
 @property (weak, nonatomic) IBOutlet PreviewView *previewView;
 @property (weak, nonatomic) IBOutlet UIButton *recordButton;
 @property (weak, nonatomic) IBOutlet UIButton *sloMoToggle;
@@ -27,7 +27,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 @property (weak, nonatomic) IBOutlet UILabel *doubleTapLabel;
 
 
-// Session management.
+/// Session management.
 @property (strong, nonatomic) AVCaptureSession *session;
 @property (strong, nonatomic) dispatch_queue_t sessionQueue;
 @property (strong, nonatomic) AVCaptureDeviceInput *videoDeviceInput;
@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 @property (nonatomic) CMTime defaultVideoMaxFrameDuration;
 
 
-// Utilities.
+/// Utilities.
 @property (nonatomic) AVCamSetupResult setupResult;
 @property (nonatomic, getter=isSessionRunning) BOOL sessionRunning;
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundRecordingID;
@@ -51,7 +51,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     [super viewDidLoad];
     
     self.navigationItem.title = @"Camera";
-
+    
     /// Create the AVCaptureSession.
     self.session = [[AVCaptureSession alloc] init];
    	
@@ -309,30 +309,26 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 - (IBAction)showVideoLibrary:(id)sender
 {
     [self performSegueWithIdentifier:@"segueToLibrary" sender:sender];
-    //[self.navigationController pushViewController:self.navigationController.viewControllers[1] animated:YES];
 }
 
 - (void)displayRecordingUI
 {
     /// Things that should disappear:
-    UIColor *borderColor = [UIColor colorWithRed:206.0/255.0 green:63.0/255.0 blue:63.0/255.0 alpha:1.0];
-    self.previewView.layer.borderColor = borderColor.CGColor;
-    self.previewView.layer.borderWidth = 3.0f;
-    
-    [UIView animateWithDuration:0.3 animations:^() {
-        self.recordButton.alpha = 0.0;
-        self.sloMoToggle.alpha = 0.0;
-        self.libraryButton.alpha = 0.0;
-    }];
-    
     [UIView animateWithDuration:0.3 animations:^() {
         self.toolbar.alpha = 0.0;
     }];
     
     /// Things that should appear:
+    UIColor *borderColor = [UIColor colorWithRed:206.0/255.0 green:63.0/255.0 blue:63.0/255.0 alpha:1.0];
+    self.previewView.layer.borderColor = borderColor.CGColor;
+    self.previewView.layer.borderWidth = 3.0f;
+    
+    
     [UIView animateWithDuration:0.3 animations:^() {
         self.doubleTapLabel.alpha = 1.0;
     }];
+    
+    
     
     /// And then re-hide the double tap tip after a delay
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
@@ -340,19 +336,23 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
             self.doubleTapLabel.alpha = 0.0;
         }];
     });
+    
+    
+    
+    /// Useful detritus?
+    //    NSLog(@"Border did appear\n\nself.previewView:%@\n\nlayer: %@\n\nborder color: %@", self.previewView, self.previewView.layer, self.previewView.layer.borderColor);
+    
+    //    UIView * v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+    //    v.backgroundColor = [UIColor whiteColor];
+    //    [self.previewView addSubview:v];
+    
 }
 
 - (void)displayViewFinderUI
 {
     /// Things that should appear:
     [UIView animateWithDuration:0.3 animations:^() {
-        self.recordButton.alpha = 1.0;
-        self.sloMoToggle.alpha = 1.0;
-        self.libraryButton.alpha = 1.0;
-    }];
-    
-    [UIView animateWithDuration:0.3 animations:^() {
-        self.toolbar.alpha = 0.5;
+        self.toolbar.alpha = 1.0;
     }];
     
     /// Things that should disappear:
@@ -491,5 +491,12 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 {
     return YES;
 }
+
+#pragma mark TO DO
+
+/// Fix the buggy-looking state switching for the slo mo toggle
+/// Fix border disappearance
+/// Fix iPad view scaling problem
+
 
 @end

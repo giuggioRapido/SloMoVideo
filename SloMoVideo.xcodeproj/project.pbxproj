@@ -14,6 +14,7 @@
 		DC6D03241BC5E92600CA6A5F /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6D03231BC5E92600CA6A5F /* UIImage+Resize.m */; settings = {ASSET_TAGS = (); }; };
 		DC89CCF31BBC6036007970F1 /* PlaybackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC89CCF21BBC6036007970F1 /* PlaybackViewController.m */; settings = {ASSET_TAGS = (); }; };
 		DC89CCF61BBC6E61007970F1 /* VideoLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC89CCF51BBC6E61007970F1 /* VideoLibraryViewController.m */; settings = {ASSET_TAGS = (); }; };
+		DCBF5EF51BCF05E5004B835E /* Universal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCBF5EF41BCF05E5004B835E /* Universal.storyboard */; settings = {ASSET_TAGS = (); }; };
 		DCF25C551BB3497800BC939B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C541BB3497800BC939B /* main.m */; };
 		DCF25C581BB3497800BC939B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C571BB3497800BC939B /* AppDelegate.m */; };
 		DCF25C5E1BB3497800BC939B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCF25C5C1BB3497800BC939B /* Main.storyboard */; };
@@ -57,6 +58,7 @@
 		DC89CCF21BBC6036007970F1 /* PlaybackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaybackViewController.m; sourceTree = "<group>"; };
 		DC89CCF41BBC6E61007970F1 /* VideoLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoLibraryViewController.h; sourceTree = "<group>"; };
 		DC89CCF51BBC6E61007970F1 /* VideoLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoLibraryViewController.m; sourceTree = "<group>"; };
+		DCBF5EF41BCF05E5004B835E /* Universal.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Universal.storyboard; sourceTree = "<group>"; };
 		DCF25C501BB3497800BC939B /* SloMoVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SloMoVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCF25C541BB3497800BC939B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DCF25C561BB3497800BC939B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				DC57B3ED1BCDAF91007EB94B /* Other */,
 				DC57B3EC1BCDAF03007EB94B /* Categories */,
 				DCF25C5C1BB3497800BC939B /* Main.storyboard */,
+				DCBF5EF41BCF05E5004B835E /* Universal.storyboard */,
 				DCF25C5F1BB3497800BC939B /* Assets.xcassets */,
 				DCF25C611BB3497800BC939B /* LaunchScreen.storyboard */,
 				DCF25C641BB3497800BC939B /* Info.plist */,
@@ -318,6 +321,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCBF5EF51BCF05E5004B835E /* Universal.storyboard in Resources */,
 				DCF25C631BB3497800BC939B /* LaunchScreen.storyboard in Resources */,
 				DCF25C601BB3497800BC939B /* Assets.xcassets in Resources */,
 				DCF25C5E1BB3497800BC939B /* Main.storyboard in Resources */,
@@ -435,7 +439,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -498,6 +502,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.princefungus.SloMoVideo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -509,6 +514,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.princefungus.SloMoVideo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

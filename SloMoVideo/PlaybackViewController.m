@@ -174,21 +174,22 @@ static int PlaybackViewControllerKVOContext = 0;
     /// A screen tap will [un]hide the UI. Currently this is only allowed if the video is not playing. To allow this
     /// functionality at any time, just get rid of the outer most if clause.
     
-    if (self.player.rate != 0) {
-        if (self.PlayButton.alpha < 1) {
-            [self unhideUI];
-        }
-        else {
-            [self hideUI];
-        }
+    //    if (self.player.rate != 0) {
+    if (self.UIHidden) {
+        [self unhideUI];
     }
+    else {
+        [self hideUI];
+    }
+    //    }
 }
+
+
 
 #pragma mark Alter UI
 
 -(void) hideUI
 {
-    /// Top code animates, bottom is instant hide/show
     /// UIisHidden is used in conjuction with setNeedsStatusBarAppearanceUpdate to hide/show the status bar
     
     self.UIHidden = YES;
@@ -198,25 +199,13 @@ static int PlaybackViewControllerKVOContext = 0;
         self.navigationController.navigationBar.alpha = 0.0;
     }];
     
-    for (UIView *subview in self.view.subviews) {
-        if (subview.tag == 1) {
-            [UIView animateWithDuration:0.3 animations:^() {
-                subview.alpha = 0.0;
-            }];
-        }
-    }
-    
-    //    self.navigationController.navigationBarHidden = YES;
-    //
-    //        for (UIView *subview in self.view.subviews) {
-    //            subview.hidden = YES;
-    //        }
+    [UIView animateWithDuration:0.3 animations:^() {
+        self.toolbar.alpha = 0;
+    }];
 }
 
 -(void) unhideUI
 {
-    /// Top code animates, bottom is instant hide/show. In the animated code, we need separate logic for the
-    /// toolbar since we want the alpha to only increase to 0.6, not 1.
     /// UIisHidden is used in conjuction with setNeedsStatusBarAppearanceUpdate to hide/show the status bar
     
     self.UIHidden = NO;
@@ -226,25 +215,9 @@ static int PlaybackViewControllerKVOContext = 0;
         self.navigationController.navigationBar.alpha = 1;
     }];
     
-    for (UIView *subview in self.view.subviews) {
-        if (subview == self.toolbar) {
-            [UIView animateWithDuration:0.3 animations:^() {
-                subview.alpha = 0.6;
-            }];
-            
-        } else {
-            [UIView animateWithDuration:0.3 animations:^() {
-                subview.alpha = 1;
-            }];
-        }
-    }
-    
-    
-    //    self.navigationController.navigationBarHidden = NO;
-    //
-    //    for (UIView *subview in self.view.subviews) {
-    //        subview.hidden = NO;
-    //    }
+    [UIView animateWithDuration:0.3 animations:^() {
+        self.toolbar.alpha = 1.0;
+    }];
 }
 
 #pragma mark KVO
@@ -276,6 +249,9 @@ static int PlaybackViewControllerKVOContext = 0;
     }
 }
 
+#pragma mark TO DO
+
+/// NEED TO PREVENT UI FROM HIDIDNG WHEN SELECTING PLAYBACK RATE WHILE VIDEO PLAYS
 
 
 @end
