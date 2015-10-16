@@ -151,6 +151,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
             self.setupResult = AVCamSetupResultSessionConfigurationFailed;
         }
         
+        
         AVCaptureDevice *audioDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
         AVCaptureDeviceInput *audioDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:&error];
         
@@ -189,6 +190,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = YES;
+    self.navigationController.toolbarHidden = YES;
     
     dispatch_async( self.sessionQueue, ^{
         switch (self.setupResult)

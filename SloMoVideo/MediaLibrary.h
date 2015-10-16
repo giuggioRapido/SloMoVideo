@@ -21,5 +21,6 @@
 + (id)sharedLibrary;
 - (void) initialPullFromDocuments;
 - (void) pullMostRecentFile;
+- (void)deleteVideo:(Video*)videoToDelete;
 
 @end

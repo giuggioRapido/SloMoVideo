@@ -13,4 +13,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *durationLabel;
 
+- (void)select;
+- (void)deselect;
+
+
 @end

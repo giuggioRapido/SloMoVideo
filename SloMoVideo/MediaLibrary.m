@@ -83,7 +83,7 @@
     //    });
 }
 
-- (void)deleteVideo: (Video*) videoToDelete
+- (void)deleteVideo:(Video*)videoToDelete
 {
     /// When video is deleted, remove the video from array and trip bool which will be used in Library VC
     /// to determine if the collection view should be reloaded.

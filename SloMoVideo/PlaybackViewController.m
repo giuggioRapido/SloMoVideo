@@ -52,7 +52,8 @@ static int PlaybackViewControllerKVOContext = 0;
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-    
+    self.navigationController.toolbarHidden = YES;
+
     /// Reset playback speed to 1x whenever view appears and set button title appropriately.
     currentSpeedIndex = 0;
     [self.speedButton setTitle:self.playbackSpeedStrings[currentSpeedIndex] forState:UIControlStateNormal];
@@ -198,13 +199,10 @@ static int PlaybackViewControllerKVOContext = 0;
     /// UIisHidden is used in conjuction with setNeedsStatusBarAppearanceUpdate to hide/show the status bar
     
     self.UIHidden = NO;
-    NSLog(@"%f, %d", self.navigationController.navigationBar.alpha, self.navigationController.navigationBar.hidden);
     
     [UIView animateWithDuration:0.3 animations:^() {
         [self setNeedsStatusBarAppearanceUpdate];
         self.navigationController.navigationBar.alpha = 1;
-        NSLog(@"%f, %d", self.navigationController.navigationBar.alpha, self.navigationController.navigationBar.hidden);
-        
     }];
     
     [UIView animateWithDuration:0.3 animations:^() {
@@ -243,33 +241,7 @@ static int PlaybackViewControllerKVOContext = 0;
     }
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    //self.navigationController.navigationBar.alpha = 0;
-    
-    NSLog(@"%f, %d", self.navigationController.navigationBar.alpha, self.navigationController.navigationBar.hidden);
-    
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    
-    NSLog(@"%f, %d", self.navigationController.navigationBar.alpha, self.navigationController.navigationBar.hidden);
-    
-}
-
-- (void)viewDidLayoutSubviews
-{
-    NSLog(@"%f, %d", self.navigationController.navigationBar.alpha, self.navigationController.navigationBar.hidden);
-}
-
-//- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection
-//              withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-//{
-//    NSLog(@"%f, %d", self.navigationController.navigationBar.alpha, self.navigationController.navigationBar.hidden);
-//    [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
-//    NSLog(@"%f, %d", self.navigationController.navigationBar.alpha, self.navigationController.navigationBar.hidden);
-//
-//
-//}
 #pragma mark TO DO
 
-/// FIX ISSUE WHERE NAV BAR APPEARS WHEN ORIENTATION CHANGES
 
 @end
