@@ -25,6 +25,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 @property (weak, nonatomic) IBOutlet UIButton *libraryButton;
 @property (weak, nonatomic) IBOutlet UIView *toolbar;
 @property (weak, nonatomic) IBOutlet UILabel *doubleTapLabel;
+@property (weak, nonatomic) UIView *borderBuddy;
 
 
 /// Session management.
@@ -45,6 +46,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 @end
 
 @implementation CameraViewController
+
 
 - (void)viewDidLoad
 {
@@ -327,17 +329,19 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
         self.doubleTapLabel.alpha = 1.0;
     }];
     
+    /// borderBuddy is needed so that the border doesn't disappear when doubleTapLabel disappears below.
+    if (!self.borderBuddy) {
+    UIView *borderBuddy = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    borderBuddy.backgroundColor = [UIColor whiteColor];
+    [self.previewView addSubview:borderBuddy];
+    }
+    
     /// And then re-hide the double tap tip after a delay
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         [UIView animateWithDuration:0.3 animations:^() {
             self.doubleTapLabel.alpha = 0.0;
         }];
     });
-    
-    UIView * v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-    v.backgroundColor = [UIColor whiteColor];
-    [self.previewView addSubview:v];
-    
     
     
     /// Useful detritus?
@@ -354,6 +358,8 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     /// Things that should disappear:
     self.previewView.layer.borderColor = nil;
     self.previewView.layer.borderWidth = 0;
+    
+    [self.borderBuddy removeFromSuperview];
     
     [UIView animateWithDuration:0.3 animations:^() {
         self.doubleTapLabel.alpha = 0.0;

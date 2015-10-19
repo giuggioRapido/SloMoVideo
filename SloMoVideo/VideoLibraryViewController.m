@@ -39,7 +39,7 @@
     self.navigationController.navigationBarHidden = NO;
     self.navigationController.toolbarHidden = YES;
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
-
+    
     /// If video was deleted in the Playback VC, reload collection view to reflect the deletion.
     if ([[MediaLibrary sharedLibrary] videoWasDeleted] == YES) {
         [[MediaLibrary sharedLibrary] setVideoWasDeleted: NO];
@@ -47,6 +47,26 @@
     }
 }
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
+    
+    /// If we've clicked Done (i.e. stop editing), clear deletion array and deselect all selected cells.
+    /// Call didSelect manuallyso that we call -deselect on each cell
+    if (!editing) {
+        [self.videosToDelete removeAllObjects];
+        for (NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems) {
+            [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
+            [self collectionView:self.collectionView didDeselectItemAtIndexPath:indexPath];
+        }
+    }
+    
+    /// Only allow multiple selection when we are editing
+    self.collectionView.allowsMultipleSelection = self.editing;
+    
+    /// Show/hide toolbar with Delete Videos button
+    [self.navigationController setToolbarHidden:!self.editing animated:YES];
+}
 
 #pragma mark UICollectionViewDataSource
 
@@ -76,8 +96,12 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    /// If we're editing, only select the cells for deletion. Else play the selected video.
+    
     if (self.editing) {
-        NSLog(@"selected items: %lu", self.collectionView.indexPathsForSelectedItems.count);
+        NSLog(@"nr of selected items: %lu", self.collectionView.indexPathsForSelectedItems.count);
+       // NSLog(@"selected indexpath: %ld", (long)indexPath.row);
+        
         Cell *selectedCell = [self.collectionView cellForItemAtIndexPath:indexPath];
         Video *selectedVideo = [self.videos objectAtIndex:indexPath.row];
         
@@ -98,40 +122,31 @@
     
     [selectedCell deselect];
     [self.videosToDelete removeObject:selectedVideo];
+    
+    NSLog(@"nr of selected items: %lu", self.collectionView.indexPathsForSelectedItems.count);
 }
 
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated
-{
-    [super setEditing:editing animated:animated];
-    //    self.navigationController.toolbarHidden = editing;
-    
-    for (NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems) {
-        [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
-        [self collectionView:self.collectionView didDeselectItemAtIndexPath:indexPath];
-    }
-    
-    self.collectionView.allowsMultipleSelection = self.editing;
-    [self.navigationController setToolbarHidden:!self.editing animated:YES];
-
-    //    self.collectionView.allowsSelection = NO;
-    //    self.collectionView.allowsSelection = YES;
-    
-   
-    
-    NSLog(@"selected items: %lu", self.collectionView.indexPathsForSelectedItems.count);
-}
 
 #pragma mark Actions
 
 - (IBAction)deleteVideos:(id)sender
 {
+    NSLog(@"nr of selected items: %lu", self.collectionView.indexPathsForSelectedItems.count);
+
+    /// Loop through selected indexpaths and deselect them
     for (NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems) {
-        Video *selectedVideo = [self.videos objectAtIndex:indexPath.row];
-        [[MediaLibrary sharedLibrary] deleteVideo: selectedVideo];
         [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
-        [self collectionView:self.collectionView didDeselectItemAtIndexPath:indexPath];
+        Cell *selectedCell = [self.collectionView cellForItemAtIndexPath:indexPath];
+        [selectedCell deselect];
     }
-   
+    
+    NSLog(@"nr of selected items: %lu", self.collectionView.indexPathsForSelectedItems.count);
+
+    /// Delete selected videos from model and clear the videosToDelete array
+    [[MediaLibrary sharedLibrary] deleteBatchOfVideos: self.videosToDelete];
+    [self.videosToDelete removeAllObjects];
+    
+    /// Reload collection view to show changes
     [self.collectionView reloadData];
 }
 
@@ -145,17 +160,5 @@
 }
 
 #pragma mark
-/*
- Allow for deletion of videos.
- The VC will exist in two states: either editing or not.
- If not editing, multiple selection is turned off and selecting a cell simply pushes to playback.
- If editing is on, multiple selection is on,
- touching cells with call select on them
- Touching them while they're seleted will call deselect on them
- Ending editing state will deselect all cells
- if editing, show toolbar with delete button
- when delete button is pressed, delete all selected cells
- 
- */
 
 @end

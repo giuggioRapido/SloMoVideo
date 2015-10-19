@@ -103,5 +103,12 @@
     }
 }
 
+- (void)deleteBatchOfVideos:(NSArray*)arrayToDelete
+{
+    for (Video *video in arrayToDelete) {
+        [self deleteVideo:video];
+    }
+}
+
 
 @end

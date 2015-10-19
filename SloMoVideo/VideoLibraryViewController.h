@@ -13,7 +13,6 @@
 #import "UIImage+Resize.h"
 #import "MediaLibrary.h"
 
-
 @interface VideoLibraryViewController : UICollectionViewController
 
 

@@ -102,27 +102,15 @@
                         <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="Ldi-GD-CcG" secondAttribute="trailing" constant="-1" id="3G5-1i-hzC"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Ldi-GD-CcG" secondAttribute="trailing" constant="-12" id="4Ss-KB-0ws"/>
                             <constraint firstItem="pPY-mf-83X" firstAttribute="centerX" secondItem="aEM-hg-0pc" secondAttribute="centerX" id="9cq-77-ek6"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Ldi-GD-CcG" secondAttribute="trailing" constant="-1" id="ELg-SH-NM9"/>
                             <constraint firstItem="q7T-WZ-It2" firstAttribute="top" secondItem="pPY-mf-83X" secondAttribute="bottom" id="Q7V-mQ-ipw"/>
                             <constraint firstItem="yom-P0-Sbf" firstAttribute="centerX" secondItem="aEM-hg-0pc" secondAttribute="centerX" id="SlE-wf-kQM"/>
                             <constraint firstItem="aUt-KL-Cdz" firstAttribute="leading" secondItem="aEM-hg-0pc" secondAttribute="leadingMargin" constant="-3" id="TL6-Qc-DA5"/>
                             <constraint firstItem="q7T-WZ-It2" firstAttribute="top" secondItem="yom-P0-Sbf" secondAttribute="bottom" id="VcM-e5-qsr"/>
                             <constraint firstItem="yom-P0-Sbf" firstAttribute="width" secondItem="aEM-hg-0pc" secondAttribute="width" id="ehN-DR-Xgm"/>
                             <constraint firstItem="pPY-mf-83X" firstAttribute="width" secondItem="aEM-hg-0pc" secondAttribute="width" id="q0X-Gw-Nc4"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Ldi-GD-CcG" secondAttribute="trailing" constant="-12" id="qM2-TR-oM5"/>
-                            <constraint firstItem="aUt-KL-Cdz" firstAttribute="leading" secondItem="aEM-hg-0pc" secondAttribute="leadingMargin" constant="-12" id="r9m-0z-gWv"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="r9m-0z-gWv"/>
-                                <exclude reference="3G5-1i-hzC"/>
-                                <exclude reference="ELg-SH-NM9"/>
-                                <exclude reference="qM2-TR-oM5"/>
-                            </mask>
-                        </variation>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Q7Q-QM-umL" appends="YES" id="IMW-QJ-EIr"/>
                         </connections>
@@ -280,7 +268,7 @@
                                             <action selector="changePlaybackSpeed:" destination="Nyn-A7-I6N" eventType="touchUpInside" id="hep-4l-3KK"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sSe-GB-8Sd" userLabel="Trash">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sSe-GB-8Sd" userLabel="Trash">
                                         <rect key="frame" x="556" y="9" width="28" height="39"/>
                                         <animations/>
                                         <constraints>
@@ -294,11 +282,10 @@
                                     </button>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" white="0.0" alpha="0.6010346283783784" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.60103462839999999" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="57" id="FpB-6d-7Ke"/>
                                     <constraint firstItem="7gD-Kc-0QL" firstAttribute="centerX" secondItem="hjv-8c-lud" secondAttribute="centerX" id="Imr-EU-8kn"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="57" id="Z2M-AK-c7W"/>
                                     <constraint firstItem="sSe-GB-8Sd" firstAttribute="centerY" secondItem="hjv-8c-lud" secondAttribute="centerY" id="gYX-3X-5Km"/>
                                     <constraint firstItem="dBE-Q4-IND" firstAttribute="centerY" secondItem="hjv-8c-lud" secondAttribute="centerY" id="guG-EE-Rea"/>
                                     <constraint firstItem="7gD-Kc-0QL" firstAttribute="centerY" secondItem="hjv-8c-lud" secondAttribute="centerY" id="t07-me-MSw"/>
