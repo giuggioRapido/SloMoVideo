@@ -133,7 +133,8 @@
 {
     NSLog(@"nr of selected items: %lu", self.collectionView.indexPathsForSelectedItems.count);
 
-    /// Loop through selected indexpaths and deselect them
+    /// Loop through selected indexpaths and deselect them. We can't simply call the didDeselect callback method
+    /// because it will remove objects from the videosToDelete array, so we just call deselect on the cells directly.
     for (NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems) {
         [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
         Cell *selectedCell = [self.collectionView cellForItemAtIndexPath:indexPath];

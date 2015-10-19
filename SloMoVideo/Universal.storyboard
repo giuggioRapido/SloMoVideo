@@ -292,6 +292,15 @@
                                     <constraint firstItem="dBE-Q4-IND" firstAttribute="leading" secondItem="hjv-8c-lud" secondAttribute="leading" constant="12" id="ux0-0g-G5E"/>
                                 </constraints>
                             </view>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="lRJ-Bn-F0F">
+                                <rect key="frame" x="18" y="461" width="564" height="31"/>
+                                <animations/>
+                                <connections>
+                                    <action selector="adjustTimeSlider:" destination="Nyn-A7-I6N" eventType="valueChanged" id="1zV-6y-1xC"/>
+                                    <action selector="touchDownTimeSlider:" destination="Nyn-A7-I6N" eventType="touchDown" id="2hM-F1-a6c"/>
+                                    <action selector="touchUpTimeSlider:" destination="Nyn-A7-I6N" eventType="touchUpInside" id="wLI-Pn-flz"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -300,8 +309,12 @@
                             <constraint firstAttribute="trailingMargin" secondItem="sSe-GB-8Sd" secondAttribute="trailing" constant="-4" id="3nB-bh-wU2"/>
                             <constraint firstItem="8jK-gp-a4m" firstAttribute="centerX" secondItem="Wtd-q2-CVP" secondAttribute="centerX" id="Arf-jl-Exf"/>
                             <constraint firstItem="8jK-gp-a4m" firstAttribute="height" secondItem="Wtd-q2-CVP" secondAttribute="height" id="MBp-v0-aCd"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="lRJ-Bn-F0F" secondAttribute="leading" id="Rvk-TV-1MF"/>
                             <constraint firstItem="8jK-gp-a4m" firstAttribute="width" secondItem="Wtd-q2-CVP" secondAttribute="width" id="Wcn-6X-urD"/>
+                            <constraint firstItem="hjv-8c-lud" firstAttribute="top" secondItem="lRJ-Bn-F0F" secondAttribute="bottom" constant="8" id="XWd-4R-n4X"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lRJ-Bn-F0F" secondAttribute="trailing" id="XzJ-IZ-6fT"/>
                             <constraint firstItem="8jK-gp-a4m" firstAttribute="centerY" secondItem="Wtd-q2-CVP" secondAttribute="centerY" id="oQ0-qc-qhe"/>
+                            <constraint firstItem="lRJ-Bn-F0F" firstAttribute="centerX" secondItem="Wtd-q2-CVP" secondAttribute="centerX" id="ovo-L4-HRs"/>
                             <constraint firstItem="hjv-8c-lud" firstAttribute="centerX" secondItem="Wtd-q2-CVP" secondAttribute="centerX" id="rTV-IX-JCS"/>
                             <constraint firstItem="sMp-Ze-ygD" firstAttribute="top" secondItem="hjv-8c-lud" secondAttribute="bottom" id="ycL-HI-SS9"/>
                         </constraints>
@@ -310,6 +323,7 @@
                         <outlet property="PlayButton" destination="7gD-Kc-0QL" id="ex2-SV-6wH"/>
                         <outlet property="playerView" destination="8jK-gp-a4m" id="6B4-Uc-0OE"/>
                         <outlet property="speedButton" destination="dBE-Q4-IND" id="IdN-Lf-n9X"/>
+                        <outlet property="timeSlider" destination="lRJ-Bn-F0F" id="q9O-C8-tWu"/>
                         <outlet property="toolbar" destination="hjv-8c-lud" id="pBL-2O-mhK"/>
                         <outlet property="trashButton" destination="sSe-GB-8Sd" id="0sK-kK-ipI"/>
                     </connections>

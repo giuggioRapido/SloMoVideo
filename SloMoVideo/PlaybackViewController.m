@@ -10,12 +10,16 @@
 #import "PlayerView.h"
 
 @interface PlaybackViewController()
+{
+    id<NSObject> _timeObserverToken;
+}
 
 @property (nonatomic, strong) AVPlayer *player;
 @property AVPlayerItem *playerItem;
 @property AVPlayerLayer *playerLayer;
 @property (nonatomic, strong) NSArray *playbackSpeedStrings;
 @property (nonatomic) BOOL UIHidden;
+@property CMTime currentTime;
 
 /// UI
 @property (weak, nonatomic) IBOutlet UIButton *PlayButton;
@@ -23,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *speedButton;
 @property (weak, nonatomic) IBOutlet UIButton *trashButton;
 @property (weak, nonatomic) IBOutlet PlayerView *playerView;
+@property (weak, nonatomic) IBOutlet UISlider *timeSlider;
+
 
 @end
 
@@ -45,6 +51,11 @@ static int PlaybackViewControllerKVOContext = 0;
     playbackSpeeds[0] = 1.0;
     playbackSpeeds[1] = 2.0;
     playbackSpeeds[2] = 0.5;
+    
+    /// Disable swipe back gesture because it may interfere with timeSlider control
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
 }
 
 -(void) viewWillAppear:(BOOL)animated
@@ -53,7 +64,7 @@ static int PlaybackViewControllerKVOContext = 0;
     
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     self.navigationController.toolbarHidden = YES;
-
+    
     /// Reset playback speed to 1x whenever view appears and set button title appropriately.
     currentSpeedIndex = 0;
     [self.speedButton setTitle:self.playbackSpeedStrings[currentSpeedIndex] forState:UIControlStateNormal];
@@ -69,6 +80,15 @@ static int PlaybackViewControllerKVOContext = 0;
     /// Add observation of player.rate so that the controller can respond to changes in playback
     [self addObserver:self forKeyPath:@"self.player.rate" options:NSKeyValueObservingOptionNew context:&PlaybackViewControllerKVOContext];
     
+    /// Use a weak self variable to avoid a retain cycle in the block.
+    PlaybackViewController __weak *weakSelf = self;
+    _timeObserverToken = [self.player addPeriodicTimeObserverForInterval:CMTimeMake(1, 2) queue:dispatch_get_main_queue() usingBlock:
+                          ^(CMTime time) {
+                              float currentTimeInSeconds = CMTimeGetSeconds(weakSelf.player.currentTime);
+                              float durationInSeconds = CMTimeGetSeconds(weakSelf.playerItem.duration);
+                              float progress = currentTimeInSeconds / durationInSeconds;
+                              weakSelf.timeSlider.value = progress;
+                          }];
     
     /// Programmatic layer:
     //    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
@@ -88,12 +108,28 @@ static int PlaybackViewControllerKVOContext = 0;
 {
     /// When view disappears, pause plaback and remove observers
     
+    if (_timeObserverToken) {
+        [self.player removeTimeObserver:_timeObserverToken];
+        _timeObserverToken = nil;
+    }
+    
     [self.player pause];
     
     [self removeObserver:self forKeyPath:@"self.player.rate" context:&PlaybackViewControllerKVOContext];
     
     [super viewDidDisappear:animated];
 }
+
+#pragma mark Properties
+
+- (CMTime)currentTime {
+    return self.player.currentTime;
+}
+
+- (void)setCurrentTime:(CMTime)newCurrentTime {
+    [self.player seekToTime:newCurrentTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
+}
+
 
 #pragma mark IBAction
 
@@ -173,6 +209,19 @@ static int PlaybackViewControllerKVOContext = 0;
     }
     //    }
 }
+- (IBAction)touchDownTimeSlider:(id)sender
+{
+    [self.player pause];
+}
+- (IBAction)touchUpTimeSlider:(id)sender
+{
+    self.player.rate = playbackSpeeds[currentSpeedIndex];
+}
+
+- (IBAction)adjustTimeSlider:(UISlider*)sender
+{
+    self.currentTime = CMTimeMakeWithSeconds(sender.value, 1000);
+}
 
 #pragma mark Alter UI
 
@@ -181,16 +230,15 @@ static int PlaybackViewControllerKVOContext = 0;
     /// UIisHidden is used in conjuction with setNeedsStatusBarAppearanceUpdate to hide/show the status bar
     
     self.UIHidden = YES;
-    NSLog(@"%f, %d", self.navigationController.navigationBar.alpha, self.navigationController.navigationBar.hidden);
     
     [UIView animateWithDuration:0.3 animations:^() {
         [self setNeedsStatusBarAppearanceUpdate];
         self.navigationController.navigationBar.alpha = 0.0;
-        NSLog(@"%f, %d", self.navigationController.navigationBar.alpha, self.navigationController.navigationBar.hidden);
     }];
     
     [UIView animateWithDuration:0.3 animations:^() {
         self.toolbar.alpha = 0;
+        //self.timeSlider.alpha = 0;
     }];
 }
 
@@ -207,6 +255,7 @@ static int PlaybackViewControllerKVOContext = 0;
     
     [UIView animateWithDuration:0.3 animations:^() {
         self.toolbar.alpha = 1.0;
+        //self.timeSlider.alpha = 1.0;
     }];
     
 }
@@ -220,8 +269,10 @@ static int PlaybackViewControllerKVOContext = 0;
     
     if ([keyPath isEqualToString:@"self.player.rate"]) {
         
+        /// Toggle play/pause button image in response to player.rate
         self.PlayButton.selected = (self.player.rate != 0) ? YES : NO;
         
+        /// When the video stops playing at the end, unhide UI
         if (self.player.rate == 0) {
             [self unhideUI];
         }
