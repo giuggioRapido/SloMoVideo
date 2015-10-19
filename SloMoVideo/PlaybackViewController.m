@@ -77,18 +77,22 @@ static int PlaybackViewControllerKVOContext = 0;
     self.playerView.playerLayer.player = self.player;
     //self.playerView.playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
     
+    
     /// Add observation of player.rate so that the controller can respond to changes in playback
     [self addObserver:self forKeyPath:@"self.player.rate" options:NSKeyValueObservingOptionNew context:&PlaybackViewControllerKVOContext];
     
+    /// Set the time slider's max to video duration to track playback progress.
+    /// This avoids having to map the duration to a 0 - 1 scale.
+    self.timeSlider.maximumValue = CMTimeGetSeconds(self.playerItem.duration);
+
     /// Use a weak self variable to avoid a retain cycle in the block.
     PlaybackViewController __weak *weakSelf = self;
+    
     _timeObserverToken = [self.player addPeriodicTimeObserverForInterval:CMTimeMake(1, 2) queue:dispatch_get_main_queue() usingBlock:
                           ^(CMTime time) {
-                              float currentTimeInSeconds = CMTimeGetSeconds(weakSelf.player.currentTime);
-                              float durationInSeconds = CMTimeGetSeconds(weakSelf.playerItem.duration);
-                              float progress = currentTimeInSeconds / durationInSeconds;
-                              weakSelf.timeSlider.value = progress;
+                              weakSelf.timeSlider.value = CMTimeGetSeconds(time);
                           }];
+    
     
     /// Programmatic layer:
     //    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
@@ -101,6 +105,15 @@ static int PlaybackViewControllerKVOContext = 0;
     //     [self.player seekToTime:kCMTimeZero];
     //
     //     NSLog (@"%@", NSStringFromCGRect(self.playerLayer.videoRect));
+    
+    //    _timeObserverToken = [self.player addPeriodicTimeObserverForInterval:CMTimeMake(1, 2) queue:dispatch_get_main_queue() usingBlock:
+    //                          ^(CMTime time) {
+    //                              float currentTimeInSeconds = CMTimeGetSeconds(weakSelf.player.currentTime);
+    //                              float durationInSeconds = CMTimeGetSeconds(weakSelf.playerItem.duration);
+    //                              float progress = currentTimeInSeconds / durationInSeconds;
+    //                              weakSelf.timeSlider.value = progress;
+    //                          }];
+    
 }
 
 
