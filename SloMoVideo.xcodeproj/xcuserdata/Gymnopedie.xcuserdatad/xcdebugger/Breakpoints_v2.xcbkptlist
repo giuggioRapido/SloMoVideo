@@ -10,60 +10,76 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SloMoVideo/VideoLibraryViewController.m"
-            timestampString = "466963556.128373"
+            timestampString = "467077960.138035"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
-            landmarkName = "-deleteVideos:"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
+            landmarkName = "@implementation VideoLibraryViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SloMoVideo/CameraViewController.m"
+            timestampString = "467149690.059849"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "373"
+            endingLineNumber = "373"
+            landmarkName = "-startRecording:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SloMoVideo/PlaybackViewController.m"
-            timestampString = "466982773.105022"
+            filePath = "SloMoVideo/CameraViewController.m"
+            timestampString = "467149690.059849"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
-            landmarkName = "-touchDownTimeSlider:"
+            startingLineNumber = "386"
+            endingLineNumber = "386"
+            landmarkName = "-startRecording:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SloMoVideo/PlaybackViewController.m"
-            timestampString = "466982773.105022"
+            filePath = "SloMoVideo/CameraViewController.m"
+            timestampString = "467149690.059849"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
-            landmarkName = "-touchUpTimeSlider:"
+            startingLineNumber = "359"
+            endingLineNumber = "359"
+            landmarkName = "-startRecording:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SloMoVideo/PlaybackViewController.m"
-            timestampString = "466982773.105022"
+            filePath = "SloMoVideo/CameraViewController.m"
+            timestampString = "467149690.059849"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
-            landmarkName = "-adjustTimeSlider:"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
+            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

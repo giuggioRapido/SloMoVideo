@@ -45,14 +45,15 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ldi-GD-CcG">
-                                        <rect key="frame" x="507" y="16" width="85" height="45"/>
+                                        <rect key="frame" x="523" y="16" width="60" height="45"/>
                                         <animations/>
-                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="JOz-7T-JiY"/>
-                                            <constraint firstAttribute="width" constant="85" id="eXm-cd-gH9"/>
+                                            <constraint firstAttribute="width" constant="60" id="eXm-cd-gH9"/>
                                         </constraints>
-                                        <state key="normal" title="SloMo Off">
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                        <state key="normal" title="30 fps">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="selected" title="SloMo On">
@@ -86,14 +87,14 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Double-tap to stop recording" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pPY-mf-83X">
-                                <rect key="frame" x="0.0" y="526" width="600" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="double-tap to stop recording" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pPY-mf-83X">
+                                <rect key="frame" x="0.0" y="521" width="600" height="35"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.80784313730000001" green="0.2470588235" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="rE6-Wy-dYZ"/>
+                                    <constraint firstAttribute="height" constant="35" id="rE6-Wy-dYZ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="22"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -102,7 +103,7 @@
                         <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="Ldi-GD-CcG" secondAttribute="trailing" constant="-12" id="4Ss-KB-0ws"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Ldi-GD-CcG" secondAttribute="trailing" constant="-3" id="4Ss-KB-0ws"/>
                             <constraint firstItem="pPY-mf-83X" firstAttribute="centerX" secondItem="aEM-hg-0pc" secondAttribute="centerX" id="9cq-77-ek6"/>
                             <constraint firstItem="q7T-WZ-It2" firstAttribute="top" secondItem="pPY-mf-83X" secondAttribute="bottom" id="Q7V-mQ-ipw"/>
                             <constraint firstItem="yom-P0-Sbf" firstAttribute="centerX" secondItem="aEM-hg-0pc" secondAttribute="centerX" id="SlE-wf-kQM"/>
@@ -170,14 +171,22 @@
                                             <color key="textColor" red="1" green="0.98586492859999997" blue="0.97088136739999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="30" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KT5-2b-mMK">
+                                            <rect key="frame" x="10" y="85" width="87" height="14"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                            <color key="textColor" red="0.64058408193256555" green="1" blue="0.97502550370757235" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <animations/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <animations/>
-                                <color key="backgroundColor" red="0.33360341310000002" green="0.69965277780000001" blue="0.4479580802" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="durationLabel" destination="Q3s-ba-Hgf" id="1Ox-yV-PIk"/>
+                                    <outlet property="fpsLabel" destination="KT5-2b-mMK" id="GRe-To-vJg"/>
                                     <outlet property="imageView" destination="6Sn-Cd-kKI" id="4fE-Lt-Gp0"/>
                                 </connections>
                             </collectionViewCell>

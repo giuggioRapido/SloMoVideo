@@ -51,6 +51,31 @@
         video.path = [NSURL fileURLWithPath:videoPath];
         video.asset = [AVURLAsset assetWithURL:video.path];
         
+        if ([video.stringPath hasSuffix:@"30 FPS.mov"]) {
+            //NSLog(@"30 fps detected");
+            video.fps = @"@30";
+        }
+        
+        else if ([video.stringPath hasSuffix:@"60 FPS.mov"]) {
+            //NSLog(@"60 fps detected");
+            video.fps = @"@60";
+        }
+        
+        else if ([video.stringPath hasSuffix:@"120 FPS.mov"]) {
+            //NSLog(@"120 fps detected");
+            video.fps = @"@120";
+        }
+        
+        else if ([video.stringPath hasSuffix:@"240 FPS.mov"]) {
+            //NSLog(@"240 fps detected");
+            video.fps = @"@240";
+        }
+        
+        else {
+            //NSLog(@"no fps detected");
+            video.fps = nil;
+        }
+        
         [video createThumbnail];
         
         [self.videos addObject:video];
@@ -74,12 +99,37 @@
     video.path = [NSURL fileURLWithPath:videoPath];
     video.asset = [AVURLAsset assetWithURL:video.path];
     
+    if ([video.stringPath hasSuffix:@"30 FPS.mov"]) {
+        //NSLog(@"30 fps detected");
+        video.fps = @"@30";
+    }
+    
+    else if ([video.stringPath hasSuffix:@"60 FPS.mov"]) {
+        //NSLog(@"60 fps detected");
+        video.fps = @"@60";
+    }
+    
+    else if ([video.stringPath hasSuffix:@"120 FPS.mov"]) {
+        //NSLog(@"120 fps detected");
+        video.fps = @"@120";
+    }
+    
+    else if ([video.stringPath hasSuffix:@"240 FPS.mov"]) {
+        //NSLog(@"240 fps detected");
+        video.fps = @"@240";
+    }
+    
+    else {
+        //NSLog(@"no fps detected");
+        video.fps = nil;
+    }
+    
     [video createThumbnail];
     
-    /// Because we want the videos array to be newest->oldest, we insert video at index 0. If we want it the other way,
-    /// just simply call addObject.
+    /// Because we want the videos array to be newest->oldest, we insert video at index 0. If we want it the other way, just simply call addObject instead.
     [self.videos insertObject:video atIndex:0];
     //    [self.videos addObject:video];
+    
     //    });
 }
 

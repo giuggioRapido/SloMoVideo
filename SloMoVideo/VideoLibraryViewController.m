@@ -13,11 +13,14 @@
 @property (nonatomic, strong) NSMutableArray *videos;
 @property (nonatomic, strong) NSMutableArray *videosToDelete;
 @property (nonatomic, strong) Video *videoToPlay;
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteVideosButton;
 
 @end
 
 @implementation VideoLibraryViewController
+
+#pragma mark View Cycle
 
 -(void) viewDidLoad
 {
@@ -87,6 +90,7 @@
     Video *currentVideo = [self.videos objectAtIndex:indexPath.row];
     
     cell.durationLabel.text = currentVideo.duration;
+    cell.fpsLabel.text = currentVideo.fps;
     cell.imageView.image = currentVideo.thumbnail;
     
     return cell;
@@ -99,10 +103,7 @@
     /// If we're editing, only select the cells for deletion. Else play the selected video.
     
     if (self.editing) {
-        NSLog(@"nr of selected items: %lu", self.collectionView.indexPathsForSelectedItems.count);
-       // NSLog(@"selected indexpath: %ld", (long)indexPath.row);
-        
-        Cell *selectedCell = [self.collectionView cellForItemAtIndexPath:indexPath];
+        Cell *selectedCell = (Cell*)[self.collectionView cellForItemAtIndexPath:indexPath];
         Video *selectedVideo = [self.videos objectAtIndex:indexPath.row];
         
         [selectedCell select];
@@ -117,13 +118,11 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    Cell *selectedCell = [self.collectionView cellForItemAtIndexPath:indexPath];
+    Cell *selectedCell = (Cell*)[self.collectionView cellForItemAtIndexPath:indexPath];
     Video *selectedVideo = [self.videos objectAtIndex:indexPath.row];
     
     [selectedCell deselect];
     [self.videosToDelete removeObject:selectedVideo];
-    
-    NSLog(@"nr of selected items: %lu", self.collectionView.indexPathsForSelectedItems.count);
 }
 
 
@@ -131,18 +130,14 @@
 
 - (IBAction)deleteVideos:(id)sender
 {
-    NSLog(@"nr of selected items: %lu", self.collectionView.indexPathsForSelectedItems.count);
-
     /// Loop through selected indexpaths and deselect them. We can't simply call the didDeselect callback method
     /// because it will remove objects from the videosToDelete array, so we just call deselect on the cells directly.
     for (NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems) {
         [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
-        Cell *selectedCell = [self.collectionView cellForItemAtIndexPath:indexPath];
+        Cell *selectedCell = (Cell*)[self.collectionView cellForItemAtIndexPath:indexPath];
         [selectedCell deselect];
     }
     
-    NSLog(@"nr of selected items: %lu", self.collectionView.indexPathsForSelectedItems.count);
-
     /// Delete selected videos from model and clear the videosToDelete array
     [[MediaLibrary sharedLibrary] deleteBatchOfVideos: self.videosToDelete];
     [self.videosToDelete removeAllObjects];

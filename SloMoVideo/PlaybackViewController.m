@@ -38,6 +38,7 @@ int currentSpeedIndex;
 float playbackSpeeds[3];
 static int PlaybackViewControllerKVOContext = 0;
 
+#pragma mark View Cycle
 
 -(void) viewDidLoad
 {
@@ -75,8 +76,7 @@ static int PlaybackViewControllerKVOContext = 0;
     self.player = [[AVPlayer alloc] initWithPlayerItem:self.playerItem];
     
     self.playerView.playerLayer.player = self.player;
-    //self.playerView.playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
-    
+    self.playerView.playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
     
     /// Add observation of player.rate so that the controller can respond to changes in playback
     [self addObserver:self forKeyPath:@"self.player.rate" options:NSKeyValueObservingOptionNew context:&PlaybackViewControllerKVOContext];
@@ -84,7 +84,7 @@ static int PlaybackViewControllerKVOContext = 0;
     /// Set the time slider's max to video duration to track playback progress.
     /// This avoids having to map the duration to a 0 - 1 scale.
     self.timeSlider.maximumValue = CMTimeGetSeconds(self.playerItem.duration);
-
+    
     /// Use a weak self variable to avoid a retain cycle in the block.
     PlaybackViewController __weak *weakSelf = self;
     
@@ -121,13 +121,13 @@ static int PlaybackViewControllerKVOContext = 0;
 {
     /// When view disappears, pause plaback and remove observers
     
+    [self.player pause];
+    
     if (_timeObserverToken) {
         [self.player removeTimeObserver:_timeObserverToken];
         _timeObserverToken = nil;
     }
-    
-    [self.player pause];
-    
+
     [self removeObserver:self forKeyPath:@"self.player.rate" context:&PlaybackViewControllerKVOContext];
     
     [super viewDidDisappear:animated];
@@ -224,7 +224,9 @@ static int PlaybackViewControllerKVOContext = 0;
 }
 - (IBAction)touchDownTimeSlider:(id)sender
 {
-    [self.player pause];
+    if (self.player.rate != 0) {
+        [self.player pause];
+    }
 }
 - (IBAction)touchUpTimeSlider:(id)sender
 {
@@ -251,7 +253,7 @@ static int PlaybackViewControllerKVOContext = 0;
     
     [UIView animateWithDuration:0.3 animations:^() {
         self.toolbar.alpha = 0;
-        //self.timeSlider.alpha = 0;
+        self.timeSlider.alpha = 0;
     }];
 }
 
@@ -268,7 +270,7 @@ static int PlaybackViewControllerKVOContext = 0;
     
     [UIView animateWithDuration:0.3 animations:^() {
         self.toolbar.alpha = 1.0;
-        //self.timeSlider.alpha = 1.0;
+        self.timeSlider.alpha = 1.0;
     }];
     
 }

@@ -19,8 +19,9 @@
 
 
 + (id)sharedLibrary;
-- (void) initialPullFromDocuments;
-- (void) pullMostRecentFile;
+
+- (void)initialPullFromDocuments;
+- (void)pullMostRecentFile;
 - (void)deleteVideo:(Video*)videoToDelete;
 - (void)deleteBatchOfVideos:(NSArray*)arrayToDelete;
 

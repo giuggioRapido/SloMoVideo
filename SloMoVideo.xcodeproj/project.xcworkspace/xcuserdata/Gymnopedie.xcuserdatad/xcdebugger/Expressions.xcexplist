@@ -6,13 +6,13 @@
          contextName = "-[CameraViewController captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:]:CameraViewController.m">
          <PersistentStrings>
             <PersistentString
+               value = "self.previewView.layer.borderColor">
+            </PersistentString>
+            <PersistentString
                value = "self.previewView.layer.bounds">
             </PersistentString>
             <PersistentString
                value = "self.previewView.layer.borderWidth">
-            </PersistentString>
-            <PersistentString
-               value = "self.previewView.layer.borderColor">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -43,6 +43,14 @@
       </ContextState>
       <ContextState
          contextName = "__39-[CameraViewController startRecording:]_block_invoke:CameraViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.videoDevice.activeFormat">
+            </PersistentString>
+            <PersistentString
+               value = "self.session.sessionPreset">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "__42-[CameraViewController displayRecordingUI]_block_invoke244:CameraViewController.m">
@@ -99,6 +107,17 @@
             </PersistentString>
             <PersistentString
                value = "self.previewView.layer.borderColor">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CameraViewController startRecording:]:CameraViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.videoDevice.activeFormat">
+            </PersistentString>
+            <PersistentString
+               value = "self.session.sessionPreset">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -164,6 +183,14 @@
             </PersistentString>
             <PersistentString
                value = "self.collectionView.indexPathsForSelectedItems.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__35-[CameraViewController viewDidLoad]_block_invoke33:CameraViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.session.sessionPreset">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

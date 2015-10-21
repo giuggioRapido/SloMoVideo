@@ -18,6 +18,7 @@
 @property (nonatomic) UIImage *thumbnail;
 @property (nonatomic) NSString *duration;
 @property (nonatomic) NSString *stringPath;
+@property (nonatomic) NSString *fps;
 
 - (void)createThumbnail;
 

@@ -28,16 +28,19 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 @property (weak, nonatomic) UIView *borderBuddy;
 
 
-/// Session management.
+/// Session management
 @property (strong, nonatomic) AVCaptureSession *session;
 @property (strong, nonatomic) dispatch_queue_t sessionQueue;
 @property (strong, nonatomic) AVCaptureDeviceInput *videoDeviceInput;
 @property (strong, nonatomic) AVCaptureMovieFileOutput *movieFileOutput;
 @property (strong, nonatomic) AVCaptureDeviceFormat *defaultFormat;
 @property (nonatomic) CMTime defaultVideoMaxFrameDuration;
+@property (strong, nonatomic) AVCaptureDevice *videoDevice;
 
+@property (strong, nonatomic) NSMutableDictionary *fpsOptions;
+@property (strong, nonatomic) NSString *currentFPS;
 
-/// Utilities.
+/// Utilities
 @property (nonatomic) AVCamSetupResult setupResult;
 @property (nonatomic, getter=isSessionRunning) BOOL sessionRunning;
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundRecordingID;
@@ -47,6 +50,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 
 @implementation CameraViewController
 
+#pragma mark View Cycle
 
 - (void)viewDidLoad
 {
@@ -54,8 +58,15 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     
     self.navigationItem.title = @"Camera";
     
-    /// Create the AVCaptureSession.
+    AVCaptureVideoPreviewLayer *layer = (AVCaptureVideoPreviewLayer*)self.previewView.layer;
+    //layer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    
+    self.fpsOptions = [[NSMutableDictionary alloc] init];
+    
+    /// Create the AVCaptureSession. Set preset to highest resolution. Initial camera setting on 5s, e.g. will be
+    /// Initial camera setting on 5s, e.g. will be 30 FPS at 1080p
     self.session = [[AVCaptureSession alloc] init];
+    self.session.sessionPreset = AVCaptureSessionPresetHigh;
    	
     /// Setup the preview view.
     self.previewView.session = self.session;
@@ -111,20 +122,113 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
         self.backgroundRecordingID = UIBackgroundTaskInvalid;
         NSError *error = nil;
         
-        /// Following line uses a method to select specified device
+        /// We're using the default device, but the commented line shows how to do a specific selection.
+        self.videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
         //        AVCaptureDevice *videoDevice = [CameraViewController deviceWithMediaType:AVMediaTypeVideo preferringPosition:AVCaptureDevicePositionBack];
         
-        AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+        NSLog(@"Initial format:%@", self.videoDevice.activeFormat);
         
-        /// Save the default format
-        self.defaultFormat = videoDevice.activeFormat;
-        self.defaultVideoMaxFrameDuration = videoDevice.activeVideoMaxFrameDuration;
-        AVCaptureDeviceInput *videoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
+        /// The next section concerns AVCaptureDeviceFormats.
+        /// Set up variables to store formats for each framerate.
+        AVCaptureDeviceFormat *best30fpsFormat = nil;
+        AVCaptureDeviceFormat *best60fpsFormat = nil;
+        AVCaptureDeviceFormat *best120fpsFormat = nil;
+        AVCaptureDeviceFormat *best240fpsFormat = nil;
+        
+        /// Look through available formats for current device
+        for (AVCaptureDeviceFormat *format in self.videoDevice.formats) {
+            /// Set up variables to store pertinent information about each format.
+            CMFormatDescriptionRef formatDescription = format.formatDescription;
+            CMVideoDimensions dimensions = CMVideoFormatDescriptionGetDimensions(formatDescription);
+            FourCharCode mediaSubType = CMFormatDescriptionGetMediaSubType(formatDescription);
+            BOOL fullRange = NO;
+            
+            /// We want only the formats with full range, so we use a bool to select for those.
+            if (mediaSubType==kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange) {
+                fullRange = NO;
+            }
+            else if (mediaSubType==kCVPixelFormatType_420YpCbCr8BiPlanarFullRange) {
+                fullRange = YES;
+            }
+            else {
+                NSLog(@"Unknown media subtype encountered in format: %@", format);
+            }
+            
+            /// Look through framerates in each format.
+            /// Multiple formats will have the same framerate ranges, so we evaluate
+            /// in groups of similar formats and by checking each format against the
+            /// previous format, we finally select for the "best" format for each
+            /// desired framerate.
+            /// In our case, "best" means that each selected format has the highest
+            /// resolution for that framerate and has full range.
+            /// The chosen formats are saved in a dictionary for use elsewhere.
+            for (AVFrameRateRange *range in format.videoSupportedFrameRateRanges) {
+                if (range.maxFrameRate == 30) {
+                    CMFormatDescriptionRef bestFDR = best30fpsFormat.formatDescription;
+                    CMVideoDimensions bestDimensions = CMVideoFormatDescriptionGetDimensions(bestFDR);
+                    /// We need to stop the 30 FPS setting from going above 1080 or app crashes when trying to save
+                    /// the video. Despite indications to the contrary, 2k+ resolutions are not valid video formats
+                    /// (at least on an iPhone 5s).
+                    if (dimensions.width > bestDimensions.width && dimensions.width <= 1080 && fullRange == YES) {
+                        best30fpsFormat = format;
+                        [self.fpsOptions setObject:best30fpsFormat forKey:@"30 FPS"];
+                    }
+                }
+                else if (range.maxFrameRate == 60) {
+                    CMFormatDescriptionRef bestFDR = best60fpsFormat.formatDescription;
+                    CMVideoDimensions bestDimensions = CMVideoFormatDescriptionGetDimensions(bestFDR);
+                    if (dimensions.height > bestDimensions.height && fullRange == YES) {
+                        best60fpsFormat = format;
+                        [self.fpsOptions setObject:best60fpsFormat forKey:@"60 FPS"];
+                    }
+                }
+                else if (range.maxFrameRate == 120) {
+                    CMFormatDescriptionRef bestFDR = best120fpsFormat.formatDescription;
+                    CMVideoDimensions bestDimensions = CMVideoFormatDescriptionGetDimensions(bestFDR);
+                    if (dimensions.height > bestDimensions.height && fullRange == YES) {
+                        best120fpsFormat = format;
+                        [self.fpsOptions setObject:best120fpsFormat forKey:@"120 FPS"];
+                    }
+                }
+                else if (range.maxFrameRate == 240) {
+                    CMFormatDescriptionRef bestFDR = best240fpsFormat.formatDescription;
+                    CMVideoDimensions bestDimensions = CMVideoFormatDescriptionGetDimensions(bestFDR);
+                    if (dimensions.height > bestDimensions.height && fullRange == YES) {
+                        best240fpsFormat = format;
+                        [self.fpsOptions setObject:best240fpsFormat forKey:@"240 FPS"];
+                    }
+                }
+                else {
+                    NSLog(@"Framerate not recognized in range: %@", range);
+                }
+            }
+        }
+        
+        NSLog(@"fpsOptions: %@",self.fpsOptions);
+        
+        /// Set the currentFPS and default active format to 30 FPS.
+        if (best30fpsFormat) {
+            self.currentFPS = @"30 FPS";
+            if ([self.videoDevice lockForConfiguration:NULL] == YES) {
+                self.videoDevice.activeFormat = [self.fpsOptions objectForKey:self.currentFPS];
+                /// Below not necessary? We'll see.
+                //videoDevice.activeVideoMinFrameDuration =
+                [self.videoDevice unlockForConfiguration];
+                NSLog(@"object for key self.currentFPS: %@", [self.fpsOptions objectForKey:self.currentFPS]);
+                NSLog(@"After initial set to 30 fps: %@", self.videoDevice.activeFormat);
+                
+            }
+        }
+        
+        
+        /// Create input object
+        AVCaptureDeviceInput *videoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:self.videoDevice error:&error];
         
         if (!videoDeviceInput) {
             NSLog( @"Could not create video device input: %@", error );
         }
         
+        /// Configure session
         [self.session beginConfiguration];
         
         if ([self.session canAddInput:videoDeviceInput]) {
@@ -170,10 +274,11 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
         
         /// Create AVCaptureMovieFileOutput object
         AVCaptureMovieFileOutput *movieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
-        if ( [self.session canAddOutput:movieFileOutput] ) {
+        
+        if ([self.session canAddOutput:movieFileOutput]) {
             [self.session addOutput:movieFileOutput];
             AVCaptureConnection *connection = [movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
-            if ( connection.isVideoStabilizationSupported ) {
+            if (connection.isVideoStabilizationSupported) {
                 connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeAuto;
             }
             self.movieFileOutput = movieFileOutput;
@@ -200,8 +305,11 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
             case AVCamSetupResultSuccess:
             {
                 /// Only start the session running if setup succeeded.
-                [self.session startRunning];
-                self.sessionRunning = self.session.isRunning;
+                if ([self.videoDevice lockForConfiguration:NULL] == YES) {
+                    [self.session startRunning];
+                    self.sessionRunning = self.session.isRunning;
+                    [self.videoDevice unlockForConfiguration];
+                }
                 break;
             }
             case AVCamSetupResultCameraNotAuthorized:
@@ -251,6 +359,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 
 - (IBAction)startRecording:(id)sender
 {
+    
     dispatch_async (self.sessionQueue, ^{
         if ([UIDevice currentDevice].isMultitaskingSupported) {
             /// Setup background task. This is needed because the -[captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:]
@@ -263,20 +372,21 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
         
         /// Update the orientation on the movie file output video connection before starting recording.
         AVCaptureConnection *connection = [self.movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
+        NSLog(@"%@", connection);
         AVCaptureVideoPreviewLayer *previewLayer = (AVCaptureVideoPreviewLayer *)self.previewView.layer;
         connection.videoOrientation = previewLayer.connection.videoOrientation;
         
         /// Create file name from date
         NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
-        NSString* fileName = [NSString stringWithFormat:@"%@.mov",[formatter stringFromDate:[NSDate date]]];
+        NSString* fileName = [NSString stringWithFormat:@"%@-%@.mov",[formatter stringFromDate:[NSDate date]], self.currentFPS];
         
         /// Start recording to Documents directory.
         NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
         NSString *filePath = [documentsPath stringByAppendingPathComponent:fileName];
         
         [self.movieFileOutput startRecordingToOutputFileURL:[NSURL fileURLWithPath:filePath] recordingDelegate:self];
-    } );
+    });
 }
 
 - (IBAction)stopRecording:(id)sender
@@ -291,21 +401,78 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 
 - (IBAction)toggleSloMo:(id)sender
 {
-    /// When button is selected, it is in the high FPS state. Background color needs to be set separately, however, since
-    /// 'selected' doesn't allow for different BG color
+    /// Create colors for each of the three FPS settings. Only making three for current purposes.
+    UIColor *blue = [UIColor colorWithRed:0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0];
+    UIColor *blueGreen = [UIColor colorWithRed:0/255.0 green:149.0/255.0 blue:139.0/255.0 alpha:1.0];
+    UIColor *green = [UIColor colorWithRed:0/255.0 green:179.0/255.0 blue:72.0/255.0 alpha:1.0];
     
-    if (self.sloMoToggle.selected) {
-        /// Code here is for default FPS
-        self.sloMoToggle.backgroundColor = [UIColor darkGrayColor];
-        self.sloMoToggle.selected = NO;
-        [self returnFPSToDefault];
+    /// Check how many fps options there are (this will be device-specific).
+    switch (self.fpsOptions.count) {
+        case 1:
+            self.sloMoToggle.enabled = NO;
+            break;
+            
+        case 2:
+            if ([self.currentFPS isEqualToString:@"30 FPS"]) {
+                self.currentFPS = @"60 FPS";
+                [self.sloMoToggle setTitle:self.currentFPS forState: UIControlStateNormal];
+                self.sloMoToggle.backgroundColor = green;
+            }
+            else {
+                self.currentFPS = @"30 FPS";
+                [self.sloMoToggle setTitle:self.currentFPS forState: UIControlStateNormal];
+                self.sloMoToggle.backgroundColor = blue;
+            }
+            break;
+            
+        case 3:
+            if ([self.currentFPS isEqualToString:@"30 FPS"]) {
+                self.currentFPS = @"60 FPS";
+                [self.sloMoToggle setTitle:self.currentFPS forState: UIControlStateNormal];
+                self.sloMoToggle.backgroundColor = blueGreen;
+            }
+            else if ([self.currentFPS isEqualToString:@"60 FPS"]) {
+                self.currentFPS = @"120 FPS";
+                [self.sloMoToggle setTitle:self.currentFPS forState: UIControlStateNormal];
+                self.sloMoToggle.backgroundColor = green;
+            }
+            else {
+                self.currentFPS = @"30 FPS";
+                [self.sloMoToggle setTitle:self.currentFPS forState: UIControlStateNormal];
+                self.sloMoToggle.backgroundColor = blue;
+            }
+            break;
+            
+        case 4:
+            if ([self.currentFPS isEqualToString:@"30 FPS"]) {
+                self.currentFPS = @"60 FPS";
+                [self.sloMoToggle setTitle:self.currentFPS forState: UIControlStateNormal];
+                self.sloMoToggle.backgroundColor = blueGreen;
+            }
+            else if ([self.currentFPS isEqualToString:@"60 FPS"]) {
+                self.currentFPS = @"120 FPS";
+                [self.sloMoToggle setTitle:self.currentFPS forState: UIControlStateNormal];
+                self.sloMoToggle.backgroundColor = green;
+            }
+            else if ([self.currentFPS isEqualToString:@"120 FPS"]) {
+                self.currentFPS = @"240 FPS";
+                [self.sloMoToggle setTitle:self.currentFPS forState: UIControlStateNormal];
+                self.sloMoToggle.backgroundColor = blue;
+            }
+            else {
+                self.currentFPS = @"30 FPS";
+                [self.sloMoToggle setTitle:self.currentFPS forState: UIControlStateNormal];
+                self.sloMoToggle.backgroundColor = blue;
+            }
+            break;
+            
+        default:
+            NSLog(@"There are either none or more than 4 fpsOptions");
+            break;
     }
-    else {
-        /// Code here is for activating high FPS
-        self.sloMoToggle.backgroundColor = self.view.tintColor;
-        self.sloMoToggle.selected = YES;
-        [self increaseFPS];
-    }
+    
+    /// Call method that actually changes the camera format
+    [self changeFPS];
 }
 
 - (IBAction)showVideoLibrary:(id)sender
@@ -331,14 +498,14 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     
     /// borderBuddy is needed so that the border doesn't disappear when doubleTapLabel disappears below.
     if (!self.borderBuddy) {
-    UIView *borderBuddy = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-    borderBuddy.backgroundColor = [UIColor whiteColor];
-    [self.previewView addSubview:borderBuddy];
+        UIView *borderBuddy = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+        borderBuddy.backgroundColor = [UIColor whiteColor];
+        [self.previewView addSubview:borderBuddy];
     }
     
     /// And then re-hide the double tap tip after a delay
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [UIView animateWithDuration:0.3 animations:^() {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.4 animations:^() {
             self.doubleTapLabel.alpha = 0.0;
         }];
     });
@@ -404,31 +571,19 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     return captureDevice;
 }
 
-- (void)increaseFPS
+- (void)changeFPS
 {
     if (self.session.isRunning) {
         [self.session stopRunning];
     }
     
-    AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    AVCaptureDeviceFormat *selectedFormat = nil;
-    AVFrameRateRange *frameRateRange = nil;
-    for (AVCaptureDeviceFormat *format in [videoDevice formats]) {
-        for (AVFrameRateRange *range in format.videoSupportedFrameRateRanges) {
-            if (range.minFrameRate <= 60.0 && 60.0 <= range.maxFrameRate) {
-                selectedFormat = format;
-                frameRateRange = range;
-            }
-        }
-    }
+    AVCaptureDeviceFormat *selectedFormat = [self.fpsOptions objectForKey:self.currentFPS];
     
     if (selectedFormat) {
-        if ([videoDevice lockForConfiguration:nil]) {
-            //            NSLog(@"selected format:%@", selectedFormat);
-            videoDevice.activeFormat = selectedFormat;
-            videoDevice.activeVideoMinFrameDuration = CMTimeMake(1, (int32_t)60.0);
-            videoDevice.activeVideoMaxFrameDuration = CMTimeMake(1, (int32_t)60.0);
-            [videoDevice unlockForConfiguration];
+        if ([self.videoDevice lockForConfiguration:nil]) {
+            self.videoDevice.activeFormat = selectedFormat;
+            [self.videoDevice unlockForConfiguration];
+            NSLog(@"changed to format: %@", self.videoDevice.activeFormat);
         }
     }
     
@@ -438,24 +593,58 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     
 }
 
-- (void)returnFPSToDefault
-{
-    if (self.session.isRunning) {
-        [self.session stopRunning];
-    }
-    
-    AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    [videoDevice lockForConfiguration:nil];
-    videoDevice.activeFormat = self.defaultFormat;
-    videoDevice.activeVideoMaxFrameDuration = self.defaultVideoMaxFrameDuration;
-    [videoDevice unlockForConfiguration];
-    
-    
-    if (!self.session.isRunning) {
-        [self.session startRunning];
-    }
-    
-}
+//- (void)increaseFPS
+//{
+//    if (self.session.isRunning) {
+//        [self.session stopRunning];
+//    }
+//
+//    AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+//    AVCaptureDeviceFormat *selectedFormat = nil;
+//    AVFrameRateRange *frameRateRange = nil;
+//    for (AVCaptureDeviceFormat *format in [videoDevice formats]) {
+//        for (AVFrameRateRange *range in format.videoSupportedFrameRateRanges) {
+//            if (range.minFrameRate <= 60.0 && 60.0 <= range.maxFrameRate) {
+//                selectedFormat = format;
+//                frameRateRange = range;
+//            }
+//        }
+//    }
+//
+//    if (selectedFormat) {
+//        if ([videoDevice lockForConfiguration:nil]) {
+//            //            NSLog(@"selected format:%@", selectedFormat);
+//            videoDevice.activeFormat = selectedFormat;
+//            videoDevice.activeVideoMinFrameDuration = CMTimeMake(1, (int32_t)60.0);
+//            videoDevice.activeVideoMaxFrameDuration = CMTimeMake(1, (int32_t)60.0);
+//            [videoDevice unlockForConfiguration];
+//        }
+//    }
+//
+//    if (!self.session.isRunning) {
+//        [self.session startRunning];
+//    }
+//
+//}
+//
+//- (void)returnFPSToDefault
+//{
+//    if (self.session.isRunning) {
+//        [self.session stopRunning];
+//    }
+//
+//    AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+//    [videoDevice lockForConfiguration:nil];
+//    videoDevice.activeFormat = self.defaultFormat;
+//    videoDevice.activeVideoMaxFrameDuration = self.defaultVideoMaxFrameDuration;
+//    [videoDevice unlockForConfiguration];
+//
+//
+//    if (!self.session.isRunning) {
+//        [self.session startRunning];
+//    }
+//
+//}
 
 #pragma mark File Output Recording Delegate
 - (void)captureOutput:(AVCaptureFileOutput *)captureOutput didStartRecordingToOutputFileAtURL:(NSURL *)fileURL fromConnections:(NSArray *)connections
@@ -500,8 +689,16 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 #pragma mark TO DO
 
 /// Fix the buggy-looking state switching for the slo mo toggle
-/// Fix border disappearance
 /// Fix iPad view scaling problem
+
+/// Add settings page that allows selection between all available formats
+/// Setting to disable double tap tip
+
+/// Fix crash when cycled back to 30 fps and try recording
+
+
+
+/// INTERCEPT ERRORS THROUGHOUT APP ///
 
 
 @end
