@@ -32,6 +32,7 @@
     self.videos = [[MediaLibrary sharedLibrary] videos];
     self.videosToDelete = [[NSMutableArray alloc] init];
     
+    /// Changing a bar buttom item's text color requires this method, apparently.
     [self.deleteVideosButton setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor redColor]} forState:UIControlStateNormal];
 }
 
@@ -55,7 +56,7 @@
     [super setEditing:editing animated:animated];
     
     /// If we've clicked Done (i.e. stop editing), clear deletion array and deselect all selected cells.
-    /// Call didSelect manuallyso that we call -deselect on each cell
+    /// Call didSelect manually so that we call -deselect on each cell
     if (!editing) {
         [self.videosToDelete removeAllObjects];
         for (NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems) {
@@ -68,7 +69,7 @@
     self.collectionView.allowsMultipleSelection = self.editing;
     
     /// Show/hide toolbar with Delete Videos button
-    [self.navigationController setToolbarHidden:!self.editing animated:YES];
+    [self.navigationController setToolbarHidden: !self.editing animated:YES];
 }
 
 #pragma mark UICollectionViewDataSource
@@ -132,6 +133,8 @@
 {
     /// Loop through selected indexpaths and deselect them. We can't simply call the didDeselect callback method
     /// because it will remove objects from the videosToDelete array, so we just call deselect on the cells directly.
+    /// We need -deselectItemAtIndexPath because otherwise the cells will delete, but the cells that take their places
+    /// will "inherit" selected state (i.e. selection is based on index paths, not the cells themselves).
     for (NSIndexPath *indexPath in self.collectionView.indexPathsForSelectedItems) {
         [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
         Cell *selectedCell = (Cell*)[self.collectionView cellForItemAtIndexPath:indexPath];
@@ -155,6 +158,6 @@
     vc.videoToPlay = self.videoToPlay;
 }
 
-#pragma mark
+#pragma mark To Do
 
 @end

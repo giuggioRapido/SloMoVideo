@@ -15,6 +15,7 @@
     self.layer.borderWidth = 2.0f;
     self.layer.borderColor = [UIColor redColor].CGColor;
 }
+
 - (void)deselect
 {
     self.layer.borderWidth = 0.0;

@@ -25,7 +25,8 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 @property (weak, nonatomic) IBOutlet UIButton *libraryButton;
 @property (weak, nonatomic) IBOutlet UIView *toolbar;
 @property (weak, nonatomic) IBOutlet UILabel *doubleTapLabel;
-@property (weak, nonatomic) UIView *borderBuddy;
+@property (strong, nonatomic) UIView *borderBuddy;
+@property (strong, nonatomic) UIColor *defaultToolbarColor;
 
 
 /// Session management
@@ -58,10 +59,9 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     
     self.navigationItem.title = @"Camera";
     
-    AVCaptureVideoPreviewLayer *layer = (AVCaptureVideoPreviewLayer*)self.previewView.layer;
-    //layer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    
     self.fpsOptions = [[NSMutableDictionary alloc] init];
+    
+    self.defaultToolbarColor = self.toolbar.backgroundColor;
     
     /// Create the AVCaptureSession. Set preset to highest resolution. Initial camera setting on 5s, e.g. will be
     /// Initial camera setting on 5s, e.g. will be 30 FPS at 1080p
@@ -73,6 +73,8 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     
     /// Communicate with the session and other session objects on this queue.
     self.sessionQueue = dispatch_queue_create("session queue", DISPATCH_QUEUE_SERIAL);
+    
+    self.setupResult = AVCamSetupResultSuccess;
     
     /// Check video authorization status. Video access is required and audio access is optional.
     /// If audio access is denied, audio is not recorded during movie recording.
@@ -112,8 +114,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     /// Setup the capture session.
     /// In general it is not safe to mutate an AVCaptureSession or any of its inputs, outputs, or connections from multiple threads at the same time.
     /// Why not do all of this on the main queue?
-    /// Because -[AVCaptureSession startRunning] is a blocking call which can take a long time. We dispatch session setup to the sessionQueue
-    /// so that the main queue isn't blocked, which keeps the UI responsive.
+    /// Because -[AVCaptureSession startRunning] is a blocking call which can take a long time. We dispatch session setup to the sessionQueue so that the main queue isn't blocked, which keeps the UI responsive.
     dispatch_async (self.sessionQueue, ^{
         if (self.setupResult != AVCamSetupResultSuccess) {
             return;
@@ -122,11 +123,10 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
         self.backgroundRecordingID = UIBackgroundTaskInvalid;
         NSError *error = nil;
         
-        /// We're using the default device, but the commented line shows how to do a specific selection.
+        /// We're using the default device, but the commented line shows how to do a specific device.
+        /// The default device here ends up being the back facing camera.
         self.videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
         //        AVCaptureDevice *videoDevice = [CameraViewController deviceWithMediaType:AVMediaTypeVideo preferringPosition:AVCaptureDevicePositionBack];
-        
-        NSLog(@"Initial format:%@", self.videoDevice.activeFormat);
         
         /// The next section concerns AVCaptureDeviceFormats.
         /// Set up variables to store formats for each framerate.
@@ -134,6 +134,8 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
         AVCaptureDeviceFormat *best60fpsFormat = nil;
         AVCaptureDeviceFormat *best120fpsFormat = nil;
         AVCaptureDeviceFormat *best240fpsFormat = nil;
+        
+        NSLog(@"%@", self.videoDevice.formats);
         
         /// Look through available formats for current device
         for (AVCaptureDeviceFormat *format in self.videoDevice.formats) {
@@ -153,7 +155,6 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
             else {
                 NSLog(@"Unknown media subtype encountered in format: %@", format);
             }
-            
             /// Look through framerates in each format.
             /// Multiple formats will have the same framerate ranges, so we evaluate
             /// in groups of similar formats and by checking each format against the
@@ -169,7 +170,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
                     /// We need to stop the 30 FPS setting from going above 1080 or app crashes when trying to save
                     /// the video. Despite indications to the contrary, 2k+ resolutions are not valid video formats
                     /// (at least on an iPhone 5s).
-                    if (dimensions.width > bestDimensions.width && dimensions.width <= 1080 && fullRange == YES) {
+                    if (dimensions.height > bestDimensions.height && dimensions.height <= 1080 && fullRange == YES) {
                         best30fpsFormat = format;
                         [self.fpsOptions setObject:best30fpsFormat forKey:@"30 FPS"];
                     }
@@ -177,7 +178,9 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
                 else if (range.maxFrameRate == 60) {
                     CMFormatDescriptionRef bestFDR = best60fpsFormat.formatDescription;
                     CMVideoDimensions bestDimensions = CMVideoFormatDescriptionGetDimensions(bestFDR);
-                    if (dimensions.height > bestDimensions.height && fullRange == YES) {
+                    /// Note that on an iPhone 5s, the max resolution for 60fps is 480, hence why the viewfinder
+                    /// is not full screen when 60 fps is selected.
+                    if (dimensions.height > bestDimensions.height && fullRange == NO) {
                         best60fpsFormat = format;
                         [self.fpsOptions setObject:best60fpsFormat forKey:@"60 FPS"];
                     }
@@ -204,23 +207,22 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
             }
         }
         
-        NSLog(@"fpsOptions: %@",self.fpsOptions);
+        
+        NSLog(@"%@", self.fpsOptions);
         
         /// Set the currentFPS and default active format to 30 FPS.
         if (best30fpsFormat) {
             self.currentFPS = @"30 FPS";
             if ([self.videoDevice lockForConfiguration:NULL] == YES) {
-                self.videoDevice.activeFormat = [self.fpsOptions objectForKey:self.currentFPS];
+                [self changeFPS];
                 /// Below not necessary? We'll see.
                 //videoDevice.activeVideoMinFrameDuration =
                 [self.videoDevice unlockForConfiguration];
-                NSLog(@"object for key self.currentFPS: %@", [self.fpsOptions objectForKey:self.currentFPS]);
-                NSLog(@"After initial set to 30 fps: %@", self.videoDevice.activeFormat);
-                
             }
         }
-        
-        
+        else {
+            NSLog(@"there was a problem creating the fpsOptions dictionary");
+        }
         /// Create input object
         AVCaptureDeviceInput *videoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:self.videoDevice error:&error];
         
@@ -305,6 +307,10 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
             case AVCamSetupResultSuccess:
             {
                 /// Only start the session running if setup succeeded.
+                /// -starRunning is placed in lock block because this is needed if we want the coder-assigned
+                /// format to be used rather than the format dictated by the session preset.
+                /// With that said, it hasn't been working as expected. But in a practical sense,
+                /// this doesn't matter since the default session preset is the format we'd want anyway.
                 if ([self.videoDevice lockForConfiguration:NULL] == YES) {
                     [self.session startRunning];
                     self.sessionRunning = self.session.isRunning;
@@ -355,11 +361,11 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     [super viewDidDisappear:animated];
 }
 
+
 #pragma mark Actions
 
 - (IBAction)startRecording:(id)sender
 {
-    
     dispatch_async (self.sessionQueue, ^{
         if ([UIDevice currentDevice].isMultitaskingSupported) {
             /// Setup background task. This is needed because the -[captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:]
@@ -372,7 +378,6 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
         
         /// Update the orientation on the movie file output video connection before starting recording.
         AVCaptureConnection *connection = [self.movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
-        NSLog(@"%@", connection);
         AVCaptureVideoPreviewLayer *previewLayer = (AVCaptureVideoPreviewLayer *)self.previewView.layer;
         connection.videoOrientation = previewLayer.connection.videoOrientation;
         
@@ -383,6 +388,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
         
         /// Start recording to Documents directory.
         NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+        
         NSString *filePath = [documentsPath stringByAppendingPathComponent:fileName];
         
         [self.movieFileOutput startRecordingToOutputFileURL:[NSURL fileURLWithPath:filePath] recordingDelegate:self];
@@ -393,7 +399,6 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 {
     /// This method is called when the user double taps anywhere on the screen.
     /// Only stop recording if we're currently recording.
-    
     if (self.movieFileOutput.isRecording) {
         [self.movieFileOutput stopRecording];
     }
@@ -404,7 +409,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     /// Create colors for each of the three FPS settings. Only making three for current purposes.
     UIColor *blue = [UIColor colorWithRed:0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0];
     UIColor *blueGreen = [UIColor colorWithRed:0/255.0 green:149.0/255.0 blue:139.0/255.0 alpha:1.0];
-    UIColor *green = [UIColor colorWithRed:0/255.0 green:179.0/255.0 blue:72.0/255.0 alpha:1.0];
+    UIColor *green = [UIColor colorWithRed:0/255.0 green:179.0/255.0 blue:95.0/255.0 alpha:1.0];
     
     /// Check how many fps options there are (this will be device-specific).
     switch (self.fpsOptions.count) {
@@ -498,9 +503,12 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     
     /// borderBuddy is needed so that the border doesn't disappear when doubleTapLabel disappears below.
     if (!self.borderBuddy) {
-        UIView *borderBuddy = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-        borderBuddy.backgroundColor = [UIColor whiteColor];
-        [self.previewView addSubview:borderBuddy];
+        self.borderBuddy = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+        self.borderBuddy.backgroundColor = [UIColor whiteColor];
+        [self.previewView addSubview:self.borderBuddy];
+    }
+    else {
+        self.borderBuddy.hidden = NO;
     }
     
     /// And then re-hide the double tap tip after a delay
@@ -526,7 +534,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     self.previewView.layer.borderColor = nil;
     self.previewView.layer.borderWidth = 0;
     
-    [self.borderBuddy removeFromSuperview];
+    self.borderBuddy.hidden = YES;
     
     [UIView animateWithDuration:0.3 animations:^() {
         self.doubleTapLabel.alpha = 0.0;
@@ -534,6 +542,11 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 }
 
 #pragma mark Orientation
+- (BOOL)shouldAutorotate
+{
+    // Disable autorotation of the interface when recording is in progress.
+    return ! self.movieFileOutput.isRecording;
+}
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
@@ -551,6 +564,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
         previewLayer.connection.videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
     }
 }
+
 
 #pragma mark Device Configuration
 
@@ -593,60 +607,9 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     
 }
 
-//- (void)increaseFPS
-//{
-//    if (self.session.isRunning) {
-//        [self.session stopRunning];
-//    }
-//
-//    AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-//    AVCaptureDeviceFormat *selectedFormat = nil;
-//    AVFrameRateRange *frameRateRange = nil;
-//    for (AVCaptureDeviceFormat *format in [videoDevice formats]) {
-//        for (AVFrameRateRange *range in format.videoSupportedFrameRateRanges) {
-//            if (range.minFrameRate <= 60.0 && 60.0 <= range.maxFrameRate) {
-//                selectedFormat = format;
-//                frameRateRange = range;
-//            }
-//        }
-//    }
-//
-//    if (selectedFormat) {
-//        if ([videoDevice lockForConfiguration:nil]) {
-//            //            NSLog(@"selected format:%@", selectedFormat);
-//            videoDevice.activeFormat = selectedFormat;
-//            videoDevice.activeVideoMinFrameDuration = CMTimeMake(1, (int32_t)60.0);
-//            videoDevice.activeVideoMaxFrameDuration = CMTimeMake(1, (int32_t)60.0);
-//            [videoDevice unlockForConfiguration];
-//        }
-//    }
-//
-//    if (!self.session.isRunning) {
-//        [self.session startRunning];
-//    }
-//
-//}
-//
-//- (void)returnFPSToDefault
-//{
-//    if (self.session.isRunning) {
-//        [self.session stopRunning];
-//    }
-//
-//    AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-//    [videoDevice lockForConfiguration:nil];
-//    videoDevice.activeFormat = self.defaultFormat;
-//    videoDevice.activeVideoMaxFrameDuration = self.defaultVideoMaxFrameDuration;
-//    [videoDevice unlockForConfiguration];
-//
-//
-//    if (!self.session.isRunning) {
-//        [self.session startRunning];
-//    }
-//
-//}
 
 #pragma mark File Output Recording Delegate
+
 - (void)captureOutput:(AVCaptureFileOutput *)captureOutput didStartRecordingToOutputFileAtURL:(NSURL *)fileURL fromConnections:(NSArray *)connections
 {
     /// Hide the record button and color border to indicate that camera is recording
@@ -661,8 +624,8 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     /// This allows a new recording to be started, associated with a new UIBackgroundTaskIdentifier, once the movie file output's isRecording property
     /// is back to NO — which happens sometime after this method returns.
     /// Note: Since we use a unique file path for each recording, a new recording will not overwrite a recording currently being saved.
-    UIBackgroundTaskIdentifier currentBackgroundRecordingID = self.backgroundRecordingID;
-    self.backgroundRecordingID = UIBackgroundTaskInvalid;
+    //    UIBackgroundTaskIdentifier currentBackgroundRecordingID = self.backgroundRecordingID;
+    //    self.backgroundRecordingID = UIBackgroundTaskInvalid;
     
     BOOL success = YES;
     
@@ -681,9 +644,21 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     });
 }
 
+
+#pragma mark Other
+
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
+}
+
+/// Adding this in hopes it fixes memory warnings
+- (void)dealloc {
+    AVCaptureInput* input = [self.session.inputs objectAtIndex:0];
+    [self.session removeInput:input];
+    AVCaptureVideoDataOutput* output = [self.session.outputs objectAtIndex:0];
+    [self.session removeOutput:output];
+    [self.session stopRunning];
 }
 
 #pragma mark TO DO
@@ -693,9 +668,6 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 
 /// Add settings page that allows selection between all available formats
 /// Setting to disable double tap tip
-
-/// Fix crash when cycled back to 30 fps and try recording
-
 
 
 /// INTERCEPT ERRORS THROUGHOUT APP ///

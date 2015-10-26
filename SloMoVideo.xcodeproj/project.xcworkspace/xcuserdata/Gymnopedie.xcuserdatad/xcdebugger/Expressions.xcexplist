@@ -6,13 +6,13 @@
          contextName = "-[CameraViewController captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:]:CameraViewController.m">
          <PersistentStrings>
             <PersistentString
+               value = "self.previewView.layer.borderWidth">
+            </PersistentString>
+            <PersistentString
                value = "self.previewView.layer.borderColor">
             </PersistentString>
             <PersistentString
                value = "self.previewView.layer.bounds">
-            </PersistentString>
-            <PersistentString
-               value = "self.previewView.layer.borderWidth">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -100,13 +100,19 @@
          contextName = "-[CameraViewController displayViewFinderUI]:CameraViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.previewView">
-            </PersistentString>
-            <PersistentString
                value = "self.previewView.layer">
             </PersistentString>
             <PersistentString
                value = "self.previewView.layer.borderColor">
+            </PersistentString>
+            <PersistentString
+               value = "self.previewView">
+            </PersistentString>
+            <PersistentString
+               value = "self.borderBuddy.hidden">
+            </PersistentString>
+            <PersistentString
+               value = "self.borderBuddy">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -191,6 +197,9 @@
          <PersistentStrings>
             <PersistentString
                value = "self.session.sessionPreset">
+            </PersistentString>
+            <PersistentString
+               value = "best30fpsFormat.formatDescription">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

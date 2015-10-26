@@ -37,6 +37,7 @@
 int currentSpeedIndex;
 float playbackSpeeds[3];
 static int PlaybackViewControllerKVOContext = 0;
+bool wasPlaying;
 
 #pragma mark View Cycle
 
@@ -53,7 +54,7 @@ static int PlaybackViewControllerKVOContext = 0;
     playbackSpeeds[1] = 2.0;
     playbackSpeeds[2] = 0.5;
     
-    /// Disable swipe back gesture because it may interfere with timeSlider control
+    /// Disable swipe back gesture because it tends to interfere with timeSlider control.
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
@@ -127,7 +128,7 @@ static int PlaybackViewControllerKVOContext = 0;
         [self.player removeTimeObserver:_timeObserverToken];
         _timeObserverToken = nil;
     }
-
+    
     [self removeObserver:self forKeyPath:@"self.player.rate" context:&PlaybackViewControllerKVOContext];
     
     [super viewDidDisappear:animated];
@@ -135,11 +136,13 @@ static int PlaybackViewControllerKVOContext = 0;
 
 #pragma mark Properties
 
-- (CMTime)currentTime {
+- (CMTime)currentTime
+{
     return self.player.currentTime;
 }
 
-- (void)setCurrentTime:(CMTime)newCurrentTime {
+- (void)setCurrentTime:(CMTime)newCurrentTime
+{
     [self.player seekToTime:newCurrentTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
 }
 
@@ -163,8 +166,14 @@ static int PlaybackViewControllerKVOContext = 0;
         /// No need to call [self.player play] since setting the speed to anything other than 0 will play video.
         self.player.rate = playbackSpeeds[currentSpeedIndex];
         
-        /// And if we are pressing play (rather than pause), hide the UI
-        [self hideUI];
+        /// And if we are pressing play (rather than pause), hide the UI after a delay, unless the user has already
+        /// tapped to hide the UI before the 2 seconds are over.
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            if (!self.UIHidden){
+                [self hideUI];
+            }
+        });
+        
     }
     
     //    NSLog(@"player rate: %@", [self.player valueForKey:@"rate"]);
@@ -210,8 +219,8 @@ static int PlaybackViewControllerKVOContext = 0;
 
 - (IBAction)tapScreen:(id)sender
 {
-    /// A screen tap will [un]hide the UI. Currently this is only allowed if the video is not playing. To allow this
-    /// functionality at any time, just get rid of the outer most if clause.
+    /// A screen tap will [un]hide the UI.
+    /// The outermost if-clause (commented-out by default) dictates whether the UI can be hidden when video is paused.
     
     //    if (self.player.rate != 0) {
     if (self.UIHidden) {
@@ -222,15 +231,22 @@ static int PlaybackViewControllerKVOContext = 0;
     }
     //    }
 }
+
 - (IBAction)touchDownTimeSlider:(id)sender
 {
     if (self.player.rate != 0) {
+        wasPlaying = YES;
         [self.player pause];
+    }
+    else {
+        wasPlaying = NO;
     }
 }
 - (IBAction)touchUpTimeSlider:(id)sender
 {
+    if (wasPlaying) {
     self.player.rate = playbackSpeeds[currentSpeedIndex];
+    }
 }
 
 - (IBAction)adjustTimeSlider:(UISlider*)sender
@@ -310,5 +326,6 @@ static int PlaybackViewControllerKVOContext = 0;
 
 #pragma mark TO DO
 
+/// preserve paused state when seeking while paused (it currently starts playing when seeking is finished)
 
 @end
