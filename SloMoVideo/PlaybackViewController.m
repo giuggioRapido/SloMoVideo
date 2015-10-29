@@ -175,10 +175,6 @@ bool wasPlaying;
         });
         
     }
-    
-    //    NSLog(@"player rate: %@", [self.player valueForKey:@"rate"]);
-    //    NSLog(@"can play slow: %d", [self.playerItem canPlaySlowForward]);
-    //    NSLog(@"can play fast: %d", [self.playerItem canPlayFastForward]);
 }
 
 

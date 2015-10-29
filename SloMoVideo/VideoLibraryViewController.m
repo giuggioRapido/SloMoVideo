@@ -105,10 +105,15 @@
     
     if (self.editing) {
         Cell *selectedCell = (Cell*)[self.collectionView cellForItemAtIndexPath:indexPath];
-        Video *selectedVideo = [self.videos objectAtIndex:indexPath.row];
-        
-        [selectedCell select];
-        [self.videosToDelete addObject:selectedVideo];
+        if ([self.videos objectAtIndex:indexPath.row]){
+            Video *selectedVideo = [self.videos objectAtIndex:indexPath.row];
+            
+            [selectedCell select];
+            [self.videosToDelete addObject:selectedVideo];
+        }
+        else {
+            NSLog(@"A video doesn't exist at selected indexpath.row");
+        }
     }
     else {
         /// Store the video at selected indexpath for use in segue.

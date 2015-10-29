@@ -35,7 +35,6 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 @property (strong, nonatomic) AVCaptureDeviceInput *videoDeviceInput;
 @property (strong, nonatomic) AVCaptureMovieFileOutput *movieFileOutput;
 @property (strong, nonatomic) AVCaptureDeviceFormat *defaultFormat;
-@property (nonatomic) CMTime defaultVideoMaxFrameDuration;
 @property (strong, nonatomic) AVCaptureDevice *videoDevice;
 
 @property (strong, nonatomic) NSMutableDictionary <NSString*, AVCaptureDeviceFormat*> *fpsOptions;
@@ -128,14 +127,16 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
         self.videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
         //        AVCaptureDevice *videoDevice = [CameraViewController deviceWithMediaType:AVMediaTypeVideo preferringPosition:AVCaptureDevicePositionBack];
         
+        if (!self.videoDevice) {
+            NSLog(@"There was a problem creating the video device");
+        }
+        
         /// The next section concerns AVCaptureDeviceFormats.
         /// Set up variables to store formats for each framerate.
         AVCaptureDeviceFormat *best30fpsFormat = nil;
         AVCaptureDeviceFormat *best60fpsFormat = nil;
         AVCaptureDeviceFormat *best120fpsFormat = nil;
         AVCaptureDeviceFormat *best240fpsFormat = nil;
-        
-        NSLog(@"%@", self.videoDevice.formats);
         
         /// Look through available formats for current device
         for (AVCaptureDeviceFormat *format in self.videoDevice.formats) {
@@ -207,9 +208,6 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
             }
         }
         
-        
-        NSLog(@"%@", self.fpsOptions);
-        
         /// Set the currentFPS and default active format to 30 FPS.
         if (best30fpsFormat) {
             self.currentFPS = @"30 FPS";
@@ -221,8 +219,10 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
             }
         }
         else {
-            NSLog(@"there was a problem creating the fpsOptions dictionary");
+            NSLog(@"There was a problem creating the fpsOptions dictionary");
         }
+        
+        
         /// Create input object
         AVCaptureDeviceInput *videoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:self.videoDevice error:&error];
         
@@ -544,7 +544,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 #pragma mark Orientation
 - (BOOL)shouldAutorotate
 {
-    // Disable autorotation of the interface when recording is in progress.
+    /// Disable autorotation of the interface when recording is in progress.
     return ! self.movieFileOutput.isRecording;
 }
 

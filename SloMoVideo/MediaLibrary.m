@@ -33,8 +33,6 @@
 
 - (void)initialPullFromDocuments
 {
-    //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
     NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:NULL];
@@ -53,27 +51,22 @@
             video.asset = [AVURLAsset assetWithURL:video.path];
             
             if ([video.stringPath hasSuffix:@"30 FPS.mov"]) {
-                //NSLog(@"30 fps detected");
                 video.fps = @"@30";
             }
             
             else if ([video.stringPath hasSuffix:@"60 FPS.mov"]) {
-                //NSLog(@"60 fps detected");
                 video.fps = @"@60";
             }
             
             else if ([video.stringPath hasSuffix:@"120 FPS.mov"]) {
-                //NSLog(@"120 fps detected");
                 video.fps = @"@120";
             }
             
             else if ([video.stringPath hasSuffix:@"240 FPS.mov"]) {
-                //NSLog(@"240 fps detected");
                 video.fps = @"@240";
             }
             
             else {
-                //NSLog(@"no fps detected");
                 video.fps = nil;
             }
             
