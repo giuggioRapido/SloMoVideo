@@ -10,8 +10,8 @@
 
 @interface VideoLibraryViewController()
 
-@property (nonatomic, strong) NSMutableArray *videos;
-@property (nonatomic, strong) NSMutableArray *videosToDelete;
+@property (nonatomic, strong) NSMutableArray <Video*> *videos;
+@property (nonatomic, strong) NSMutableArray <Video*> *videosToDelete;
 @property (nonatomic, strong) Video *videoToPlay;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteVideosButton;

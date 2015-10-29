@@ -17,7 +17,7 @@
 @property (nonatomic, strong) AVPlayer *player;
 @property AVPlayerItem *playerItem;
 @property AVPlayerLayer *playerLayer;
-@property (nonatomic, strong) NSArray *playbackSpeedStrings;
+@property (nonatomic, strong) NSArray <NSString*> *playbackSpeedStrings;
 @property (nonatomic) BOOL UIHidden;
 @property CMTime currentTime;
 

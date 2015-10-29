@@ -38,7 +38,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 @property (nonatomic) CMTime defaultVideoMaxFrameDuration;
 @property (strong, nonatomic) AVCaptureDevice *videoDevice;
 
-@property (strong, nonatomic) NSMutableDictionary *fpsOptions;
+@property (strong, nonatomic) NSMutableDictionary <NSString*, AVCaptureDeviceFormat*> *fpsOptions;
 @property (strong, nonatomic) NSString *currentFPS;
 
 /// Utilities
@@ -94,7 +94,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
             /// Note that audio access will be implicitly requested when we create an AVCaptureDeviceInput for audio during session setup.
             dispatch_suspend( self.sessionQueue );
             
-            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^( BOOL granted ) {
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler: ^( BOOL granted ) {
                 if ( ! granted ) {
                     self.setupResult = AVCamSetupResultCameraNotAuthorized;
                 }

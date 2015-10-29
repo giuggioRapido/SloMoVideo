@@ -39,54 +39,53 @@
     NSString *documentsPath = [paths objectAtIndex:0];
     NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:NULL];
     
-    /// The following two for statements change the direction in which the iterate through the documents contents.
-    /// Ultimately this changes whether thumbnails are listed in newest->oldest or vice versa.
-    //    for (int count = 0; count < (int)[directoryContent count]; count++)
-    for (int count = (int)directoryContent.count - 1; count >= 0; count--)
-    {
-        NSString *videoPath = [documentsPath stringByAppendingPathComponent:[directoryContent objectAtIndex:count]];
-        
-        Video *video = [[Video alloc]init];
-        video.stringPath = videoPath;
-        video.path = [NSURL fileURLWithPath:videoPath];
-        video.asset = [AVURLAsset assetWithURL:video.path];
-        
-        if ([video.stringPath hasSuffix:@"30 FPS.mov"]) {
-            //NSLog(@"30 fps detected");
-            video.fps = @"@30";
+    if (directoryContent.count > 0) {
+        /// The following two for statements change the direction in which the iterate through the documents contents.
+        /// Ultimately this changes whether thumbnails are listed in newest->oldest or vice versa.
+        //    for (int count = 0; count < (int)[directoryContent count]; count++)
+        for (int count = (int)directoryContent.count - 1; count >= 0; count--)
+        {
+            NSString *videoPath = [documentsPath stringByAppendingPathComponent:[directoryContent objectAtIndex:count]];
+            
+            Video *video = [[Video alloc]init];
+            video.stringPath = videoPath;
+            video.path = [NSURL fileURLWithPath:videoPath];
+            video.asset = [AVURLAsset assetWithURL:video.path];
+            
+            if ([video.stringPath hasSuffix:@"30 FPS.mov"]) {
+                //NSLog(@"30 fps detected");
+                video.fps = @"@30";
+            }
+            
+            else if ([video.stringPath hasSuffix:@"60 FPS.mov"]) {
+                //NSLog(@"60 fps detected");
+                video.fps = @"@60";
+            }
+            
+            else if ([video.stringPath hasSuffix:@"120 FPS.mov"]) {
+                //NSLog(@"120 fps detected");
+                video.fps = @"@120";
+            }
+            
+            else if ([video.stringPath hasSuffix:@"240 FPS.mov"]) {
+                //NSLog(@"240 fps detected");
+                video.fps = @"@240";
+            }
+            
+            else {
+                //NSLog(@"no fps detected");
+                video.fps = nil;
+            }
+            
+            [video createThumbnail];
+            
+            [self.videos addObject:video];
         }
-        
-        else if ([video.stringPath hasSuffix:@"60 FPS.mov"]) {
-            //NSLog(@"60 fps detected");
-            video.fps = @"@60";
-        }
-        
-        else if ([video.stringPath hasSuffix:@"120 FPS.mov"]) {
-            //NSLog(@"120 fps detected");
-            video.fps = @"@120";
-        }
-        
-        else if ([video.stringPath hasSuffix:@"240 FPS.mov"]) {
-            //NSLog(@"240 fps detected");
-            video.fps = @"@240";
-        }
-        
-        else {
-            //NSLog(@"no fps detected");
-            video.fps = nil;
-        }
-        
-        [video createThumbnail];
-        
-        [self.videos addObject:video];
     }
-    //    });
 }
 
 - (void)pullMostRecentFile
 {
-    //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
     NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:NULL];
@@ -100,27 +99,22 @@
     video.asset = [AVURLAsset assetWithURL:video.path];
     
     if ([video.stringPath hasSuffix:@"30 FPS.mov"]) {
-        //NSLog(@"30 fps detected");
         video.fps = @"@30";
     }
     
     else if ([video.stringPath hasSuffix:@"60 FPS.mov"]) {
-        //NSLog(@"60 fps detected");
         video.fps = @"@60";
     }
     
     else if ([video.stringPath hasSuffix:@"120 FPS.mov"]) {
-        //NSLog(@"120 fps detected");
         video.fps = @"@120";
     }
     
     else if ([video.stringPath hasSuffix:@"240 FPS.mov"]) {
-        //NSLog(@"240 fps detected");
         video.fps = @"@240";
     }
     
     else {
-        //NSLog(@"no fps detected");
         video.fps = nil;
     }
     
@@ -129,8 +123,6 @@
     /// Because we want the videos array to be newest->oldest, we insert video at index 0. If we want it the other way, just simply call addObject instead.
     [self.videos insertObject:video atIndex:0];
     //    [self.videos addObject:video];
-    
-    //    });
 }
 
 - (void)deleteVideo:(Video*)videoToDelete
@@ -153,7 +145,7 @@
     }
 }
 
-- (void)deleteBatchOfVideos:(NSArray*)arrayToDelete
+- (void)deleteBatchOfVideos:(NSArray<Video*> *)arrayToDelete
 {
     for (Video *video in arrayToDelete) {
         [self deleteVideo:video];

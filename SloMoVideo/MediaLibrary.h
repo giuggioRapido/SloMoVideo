@@ -14,7 +14,7 @@
 
 @interface MediaLibrary : NSObject
 
-@property (strong, nonatomic) NSMutableArray *videos;
+@property (strong, nonatomic) NSMutableArray<Video *> *videos;
 @property (nonatomic, readwrite) BOOL videoWasDeleted;
 
 
@@ -23,7 +23,7 @@
 - (void)initialPullFromDocuments;
 - (void)pullMostRecentFile;
 - (void)deleteVideo:(Video*)videoToDelete;
-- (void)deleteBatchOfVideos:(NSArray*)arrayToDelete;
+- (void)deleteBatchOfVideos:(NSArray<Video*>*)arrayToDelete;
 
 
 @end
