@@ -107,7 +107,6 @@
         Cell *selectedCell = (Cell*)[self.collectionView cellForItemAtIndexPath:indexPath];
         if ([self.videos objectAtIndex:indexPath.row]){
             Video *selectedVideo = [self.videos objectAtIndex:indexPath.row];
-            
             [selectedCell select];
             [self.videosToDelete addObject:selectedVideo];
         }

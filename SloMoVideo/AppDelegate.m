@@ -21,7 +21,21 @@
     
     // Inform the device that we want to use the device orientation.
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    [[MediaLibrary sharedLibrary] initialPullFromDocuments];
+    
+    /// Get video files without GCD
+    //[[MediaLibrary sharedLibrary] initialPullFromDocuments];
+
+    /// Using async serial queue. At the moment, this seems to offer fastest launch time. Speed differences
+    /// start becoming apparent around the 70 video mark. 
+    dispatch_queue_t mediaLibraryQueue = dispatch_queue_create("media library queue", DISPATCH_QUEUE_SERIAL);
+    dispatch_async(mediaLibraryQueue, ^{
+        [[MediaLibrary sharedLibrary] initialPullFromDocuments];
+    });
+    
+    /// Using global concurrent queue
+    //            dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0), ^{
+    //            [[MediaLibrary sharedLibrary] initialPullFromDocuments];
+    //         });
     
     return YES;
 }

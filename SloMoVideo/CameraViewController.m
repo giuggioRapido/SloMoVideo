@@ -38,6 +38,10 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 @property (strong, nonatomic) AVCaptureDevice *videoDevice;
 
 @property (strong, nonatomic) NSMutableDictionary <NSString*, AVCaptureDeviceFormat*> *fpsOptions;
+@property (strong, nonatomic) NSMutableArray <AVCaptureDeviceFormat*> *orderedFormats;
+@property (strong, nonatomic) NSArray <NSString*> *sortedFormatKeys;
+
+
 @property (strong, nonatomic) NSString *currentFPS;
 
 /// Utilities
@@ -173,7 +177,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
                     /// (at least on an iPhone 5s).
                     if (dimensions.height > bestDimensions.height && dimensions.height <= 1080 && fullRange == YES) {
                         best30fpsFormat = format;
-                        [self.fpsOptions setObject:best30fpsFormat forKey:@"30 FPS"];
+                        [self.fpsOptions setObject:best30fpsFormat forKey:@"30"];
                     }
                 }
                 else if (range.maxFrameRate == 60) {
@@ -183,7 +187,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
                     /// is not full screen when 60 fps is selected.
                     if (dimensions.height > bestDimensions.height && fullRange == NO) {
                         best60fpsFormat = format;
-                        [self.fpsOptions setObject:best60fpsFormat forKey:@"60 FPS"];
+                        [self.fpsOptions setObject:best60fpsFormat forKey:@"60"];
                     }
                 }
                 else if (range.maxFrameRate == 120) {
@@ -191,7 +195,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
                     CMVideoDimensions bestDimensions = CMVideoFormatDescriptionGetDimensions(bestFDR);
                     if (dimensions.height > bestDimensions.height && fullRange == YES) {
                         best120fpsFormat = format;
-                        [self.fpsOptions setObject:best120fpsFormat forKey:@"120 FPS"];
+                        [self.fpsOptions setObject:best120fpsFormat forKey:@"120"];
                     }
                 }
                 else if (range.maxFrameRate == 240) {
@@ -199,7 +203,9 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
                     CMVideoDimensions bestDimensions = CMVideoFormatDescriptionGetDimensions(bestFDR);
                     if (dimensions.height > bestDimensions.height && fullRange == YES) {
                         best240fpsFormat = format;
-                        [self.fpsOptions setObject:best240fpsFormat forKey:@"240 FPS"];
+                        [self.fpsOptions setObject:best240fpsFormat forKey:@"240"];
+                        /// We want to also set this format at the 120 option because 240 fps capable devices don't have a dedicated 120 fps format. Per Apple: "If you wish to capture at 120 fps on the iPhone 6 or iPhone 6 Plus, find and choose the 240 fps-capable format, then set the AVCaptureDevice activeVideoMinFrameDuration and activeVideoMaxFrameDuration properties to CMTimeMake( 1, 120 )."
+                        [self.fpsOptions setObject:best240fpsFormat forKey:@"120"];
                     }
                 }
                 else {
@@ -208,13 +214,42 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
             }
         }
         
+        
+        /// We make an array that orders the saved video formats in order, making it easier to iterate through them in pertinent locations,
+        /// i.e. in the toggleSloMo method, where we want the button to cycle through the formats in ascending order.
+        NSMutableArray *presortedFormats = [[NSMutableArray alloc] init];
+        self.sortedFormatKeys = [[NSArray alloc] init];
+        
+        /// First, add just the dict's keys to an array for sorting.
+        for (NSString* key in self.fpsOptions) {
+            [presortedFormats addObject: key];
+        }
+        
+        /// Now sort those keys from lowest-highest (i.e. 30, 60, 120, 240...)
+        self.sortedFormatKeys = [presortedFormats sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            if ([obj1 intValue]==[obj2 intValue])
+                return (NSComparisonResult)NSOrderedSame;
+            
+            else if ([obj1 intValue]<[obj2 intValue])
+                return (NSComparisonResult)NSOrderedAscending;
+            else
+                return (NSComparisonResult)NSOrderedDescending;
+            
+        }];
+        
+        /// Now we add the formats for each of those keys, now in order, to self.orderedFormats, so we end up with an array of formats in ascending order of associated framerate.
+        self.orderedFormats = [[NSMutableArray alloc] init];
+        
+        for (NSString *s in self.sortedFormatKeys){
+            [self.orderedFormats addObject:[self.fpsOptions objectForKey:s]];
+        }
+        
+        
         /// Set the currentFPS and default active format to 30 FPS.
         if (best30fpsFormat) {
-            self.currentFPS = @"30 FPS";
+            self.currentFPS = @"30";
             if ([self.videoDevice lockForConfiguration:NULL] == YES) {
                 [self changeFPS];
-                /// Below not necessary? We'll see.
-                //videoDevice.activeVideoMinFrameDuration =
                 [self.videoDevice unlockForConfiguration];
             }
         }
@@ -406,77 +441,29 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 
 - (IBAction)toggleSloMo:(id)sender
 {
-    /// Create colors for each of the three FPS settings. Only making three for current purposes.
-    UIColor *blue = [UIColor colorWithRed:0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0];
-    UIColor *blueGreen = [UIColor colorWithRed:0/255.0 green:149.0/255.0 blue:139.0/255.0 alpha:1.0];
-    UIColor *green = [UIColor colorWithRed:0/255.0 green:179.0/255.0 blue:95.0/255.0 alpha:1.0];
+    /// Create button colors for each of the FPS settings and add them to a dictionary that uses the fps options as keys.
+    UIColor *blue = [UIColor colorWithRed:0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0];
+    UIColor *blueGreen = [UIColor colorWithRed:0 green:149.0/255.0 blue:139.0/255.0 alpha:1.0];
+    UIColor *green = [UIColor colorWithRed:0 green:179.0/255.0 blue:95.0/255.0 alpha:1.0];
+    UIColor *orange = [UIColor colorWithRed:255/255.0 green:153.0/255.0 blue:0 alpha:1.0];
     
-    /// Check how many fps options there are (this will be device-specific).
-    switch (self.fpsOptions.count) {
-        case 1:
-            self.sloMoToggle.enabled = NO;
-            break;
-            
-        case 2:
-            if ([self.currentFPS isEqualToString:@"30 FPS"]) {
-                self.currentFPS = @"60 FPS";
-                [self.sloMoToggle setTitle:self.currentFPS forState: UIControlStateNormal];
-                self.sloMoToggle.backgroundColor = green;
-            }
-            else {
-                self.currentFPS = @"30 FPS";
-                [self.sloMoToggle setTitle:self.currentFPS forState: UIControlStateNormal];
-                self.sloMoToggle.backgroundColor = blue;
-            }
-            break;
-            
-        case 3:
-            if ([self.currentFPS isEqualToString:@"30 FPS"]) {
-                self.currentFPS = @"60 FPS";
-                [self.sloMoToggle setTitle:self.currentFPS forState: UIControlStateNormal];
-                self.sloMoToggle.backgroundColor = blueGreen;
-            }
-            else if ([self.currentFPS isEqualToString:@"60 FPS"]) {
-                self.currentFPS = @"120 FPS";
-                [self.sloMoToggle setTitle:self.currentFPS forState: UIControlStateNormal];
-                self.sloMoToggle.backgroundColor = green;
-            }
-            else {
-                self.currentFPS = @"30 FPS";
-                [self.sloMoToggle setTitle:self.currentFPS forState: UIControlStateNormal];
-                self.sloMoToggle.backgroundColor = blue;
-            }
-            break;
-            
-        case 4:
-            if ([self.currentFPS isEqualToString:@"30 FPS"]) {
-                self.currentFPS = @"60 FPS";
-                [self.sloMoToggle setTitle:self.currentFPS forState: UIControlStateNormal];
-                self.sloMoToggle.backgroundColor = blueGreen;
-            }
-            else if ([self.currentFPS isEqualToString:@"60 FPS"]) {
-                self.currentFPS = @"120 FPS";
-                [self.sloMoToggle setTitle:self.currentFPS forState: UIControlStateNormal];
-                self.sloMoToggle.backgroundColor = green;
-            }
-            else if ([self.currentFPS isEqualToString:@"120 FPS"]) {
-                self.currentFPS = @"240 FPS";
-                [self.sloMoToggle setTitle:self.currentFPS forState: UIControlStateNormal];
-                self.sloMoToggle.backgroundColor = blue;
-            }
-            else {
-                self.currentFPS = @"30 FPS";
-                [self.sloMoToggle setTitle:self.currentFPS forState: UIControlStateNormal];
-                self.sloMoToggle.backgroundColor = blue;
-            }
-            break;
-            
-        default:
-            NSLog(@"There are either none or more than 4 fpsOptions");
-            break;
+    NSDictionary *buttonColors = @{@"30":blue, @"60":blueGreen, @"120":green, @"240":orange};
+    
+    /// Increment the button's tag, which is then used to iterate through the available framerates.
+    self.sloMoToggle.tag++;
+    if (self.sloMoToggle.tag == self.fpsOptions.count) {
+        self.sloMoToggle.tag = 0;
     }
     
-    /// Call method that actually changes the camera format
+    /// Get the NSString representing the desired framerate from self.sortedFormatKeys array.
+    self.currentFPS = self.sortedFormatKeys[self.sloMoToggle.tag];
+   
+    /// Change appearance of button to reflect format adjustment.
+    NSString *buttonTitle = [NSString stringWithFormat:@"%@ FPS", self.currentFPS];
+    [self.sloMoToggle setTitle:buttonTitle forState: UIControlStateNormal];
+    self.sloMoToggle.backgroundColor = [buttonColors objectForKey:self.currentFPS];
+    
+    /// Actually change the format.
     [self changeFPS];
 }
 
@@ -596,6 +583,9 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     if (selectedFormat) {
         if ([self.videoDevice lockForConfiguration:nil]) {
             self.videoDevice.activeFormat = selectedFormat;
+            /// The next two lines are really only necessary in the event that the device has a 240 fps format. See the initial format selection in viewDidLoad for an explanation.
+            self.videoDevice.activeVideoMinFrameDuration = CMTimeMake(1, self.currentFPS.intValue);
+            self.videoDevice.activeVideoMaxFrameDuration = CMTimeMake(1, self.currentFPS.intValue);
             [self.videoDevice unlockForConfiguration];
             NSLog(@"changed to format: %@", self.videoDevice.activeFormat);
         }

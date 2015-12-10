@@ -36,7 +36,7 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
     NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsPath error:NULL];
-    
+
     if (directoryContent.count > 0) {
         /// The following two for statements change the direction in which the iterate through the documents contents.
         /// Ultimately this changes whether thumbnails are listed in newest->oldest or vice versa.
@@ -50,19 +50,19 @@
             video.path = [NSURL fileURLWithPath:videoPath];
             video.asset = [AVURLAsset assetWithURL:video.path];
             
-            if ([video.stringPath hasSuffix:@"30 FPS.mov"]) {
+            if ([video.stringPath hasSuffix:@"30.mov"]) {
                 video.fps = @"@30";
             }
             
-            else if ([video.stringPath hasSuffix:@"60 FPS.mov"]) {
+            else if ([video.stringPath hasSuffix:@"60.mov"]) {
                 video.fps = @"@60";
             }
             
-            else if ([video.stringPath hasSuffix:@"120 FPS.mov"]) {
+            else if ([video.stringPath hasSuffix:@"120.mov"]) {
                 video.fps = @"@120";
             }
             
-            else if ([video.stringPath hasSuffix:@"240 FPS.mov"]) {
+            else if ([video.stringPath hasSuffix:@"240.mov"]) {
                 video.fps = @"@240";
             }
             
@@ -91,19 +91,19 @@
     video.path = [NSURL fileURLWithPath:videoPath];
     video.asset = [AVURLAsset assetWithURL:video.path];
     
-    if ([video.stringPath hasSuffix:@"30 FPS.mov"]) {
+    if ([video.stringPath hasSuffix:@"30.mov"]) {
         video.fps = @"@30";
     }
     
-    else if ([video.stringPath hasSuffix:@"60 FPS.mov"]) {
+    else if ([video.stringPath hasSuffix:@"60.mov"]) {
         video.fps = @"@60";
     }
     
-    else if ([video.stringPath hasSuffix:@"120 FPS.mov"]) {
+    else if ([video.stringPath hasSuffix:@"120.mov"]) {
         video.fps = @"@120";
     }
     
-    else if ([video.stringPath hasSuffix:@"240 FPS.mov"]) {
+    else if ([video.stringPath hasSuffix:@"240.mov"]) {
         video.fps = @"@240";
     }
     

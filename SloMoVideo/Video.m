@@ -36,10 +36,9 @@
     AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc]
                                              initWithAsset:self.asset];
     
-    //    Float64 durationSeconds = CMTimeGetSeconds(self.asset.duration);
-    
     /// Pass in either startpoint or midpoint depending on where you want the thumbnail to come from
     CMTime startpoint = CMTimeMakeWithSeconds(0.0, 600);
+    //    Float64 durationSeconds = CMTimeGetSeconds(self.asset.duration);
     //        CMTime midpoint = CMTimeMakeWithSeconds(durationSeconds/2.0, 600);
     
     AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef image, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
