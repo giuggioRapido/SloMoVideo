@@ -518,8 +518,6 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     [UIView animateWithDuration:0.3 animations:^() {
         self.doubleTapLabel.alpha = 0.0;
     }];
-    
-    UIView animatewith
 }
 
 #pragma mark Orientation
