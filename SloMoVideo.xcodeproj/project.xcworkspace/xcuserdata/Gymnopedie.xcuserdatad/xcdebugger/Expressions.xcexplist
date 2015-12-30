@@ -6,13 +6,24 @@
          contextName = "-[CameraViewController captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:]:CameraViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.previewView.layer.borderColor">
-            </PersistentString>
-            <PersistentString
                value = "self.previewView.layer.bounds">
             </PersistentString>
             <PersistentString
                value = "self.previewView.layer.borderWidth">
+            </PersistentString>
+            <PersistentString
+               value = "self.previewView.layer.borderColor">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CameraViewController toggleSloMo:]:CameraViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.videoDevice.activeFormat">
+            </PersistentString>
+            <PersistentString
+               value = "self.videoDevice">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -30,17 +41,6 @@
             </PersistentString>
             <PersistentString
                value = "self.previewView.layer.borderWidth">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[CameraViewController toggleSloMo:]:CameraViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.videoDevice.activeFormat">
-            </PersistentString>
-            <PersistentString
-               value = "self.videoDevice">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -94,6 +94,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[CameraViewController changeFPS]:CameraViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.videoDevice.activeVideoMinFrameDuration">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "__42-[CameraViewController displayRecordingUI]_block_invoke_2258:CameraViewController.m">
          <PersistentStrings>
             <PersistentString
@@ -142,13 +150,13 @@
          contextName = "-[CameraViewController displayRecordingUI]:CameraViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.previewView.layer">
+               value = "self.previewView.layer.bounds">
             </PersistentString>
             <PersistentString
                value = "self.previewView.layer.borderColor">
             </PersistentString>
             <PersistentString
-               value = "self.previewView.layer.bounds">
+               value = "self.previewView.layer">
             </PersistentString>
             <PersistentString
                value = "self.previewView.layer.borderWidth">

@@ -322,6 +322,5 @@ bool wasPlaying;
 
 #pragma mark TO DO
 
-/// preserve paused state when seeking while paused (it currently starts playing when seeking is finished)
 
 @end

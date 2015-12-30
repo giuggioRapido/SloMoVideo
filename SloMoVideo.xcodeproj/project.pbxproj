@@ -7,22 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DC1B126F1BBDC5CF00D5613F /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1B126E1BBDC5CF00D5613F /* Cell.m */; settings = {ASSET_TAGS = (); }; };
-		DC1B12791BBF109E00D5613F /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1B12781BBF109E00D5613F /* Video.m */; settings = {ASSET_TAGS = (); }; };
-		DC2251BD1BC8828300FC430F /* MediaLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2251BC1BC8828300FC430F /* MediaLibrary.m */; settings = {ASSET_TAGS = (); }; };
-		DC57B3F31BCEA823007EB94B /* PlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC57B3F21BCEA823007EB94B /* PlayerView.m */; settings = {ASSET_TAGS = (); }; };
-		DC6D03241BC5E92600CA6A5F /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6D03231BC5E92600CA6A5F /* UIImage+Resize.m */; settings = {ASSET_TAGS = (); }; };
-		DC89CCF31BBC6036007970F1 /* PlaybackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC89CCF21BBC6036007970F1 /* PlaybackViewController.m */; settings = {ASSET_TAGS = (); }; };
-		DC89CCF61BBC6E61007970F1 /* VideoLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC89CCF51BBC6E61007970F1 /* VideoLibraryViewController.m */; settings = {ASSET_TAGS = (); }; };
-		DCBF5EF51BCF05E5004B835E /* Universal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCBF5EF41BCF05E5004B835E /* Universal.storyboard */; settings = {ASSET_TAGS = (); }; };
+		DC1B126F1BBDC5CF00D5613F /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1B126E1BBDC5CF00D5613F /* Cell.m */; };
+		DC1B12791BBF109E00D5613F /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1B12781BBF109E00D5613F /* Video.m */; };
+		DC2251BD1BC8828300FC430F /* MediaLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2251BC1BC8828300FC430F /* MediaLibrary.m */; };
+		DC57B3F31BCEA823007EB94B /* PlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC57B3F21BCEA823007EB94B /* PlayerView.m */; };
+		DC6D03241BC5E92600CA6A5F /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6D03231BC5E92600CA6A5F /* UIImage+Resize.m */; };
+		DC89CCF31BBC6036007970F1 /* PlaybackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC89CCF21BBC6036007970F1 /* PlaybackViewController.m */; };
+		DC89CCF61BBC6E61007970F1 /* VideoLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC89CCF51BBC6E61007970F1 /* VideoLibraryViewController.m */; };
+		DCBF5EF51BCF05E5004B835E /* Universal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCBF5EF41BCF05E5004B835E /* Universal.storyboard */; };
 		DCF25C551BB3497800BC939B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C541BB3497800BC939B /* main.m */; };
 		DCF25C581BB3497800BC939B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C571BB3497800BC939B /* AppDelegate.m */; };
 		DCF25C601BB3497800BC939B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCF25C5F1BB3497800BC939B /* Assets.xcassets */; };
 		DCF25C631BB3497800BC939B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCF25C611BB3497800BC939B /* LaunchScreen.storyboard */; };
 		DCF25C6E1BB3497800BC939B /* SloMoVideoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C6D1BB3497800BC939B /* SloMoVideoTests.m */; };
 		DCF25C791BB3497900BC939B /* SloMoVideoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C781BB3497900BC939B /* SloMoVideoUITests.m */; };
-		DCF25C881BB34ACE00BC939B /* PreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C871BB34ACE00BC939B /* PreviewView.m */; settings = {ASSET_TAGS = (); }; };
-		DCF25C8B1BB352D900BC939B /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C8A1BB352D900BC939B /* CameraViewController.m */; settings = {ASSET_TAGS = (); }; };
+		DCF25C881BB34ACE00BC939B /* PreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C871BB34ACE00BC939B /* PreviewView.m */; };
+		DCF25C8B1BB352D900BC939B /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C8A1BB352D900BC939B /* CameraViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -494,6 +494,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = SloMoVideo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -507,6 +508,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = SloMoVideo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

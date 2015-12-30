@@ -38,7 +38,6 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 @property (strong, nonatomic) AVCaptureDevice *videoDevice;
 
 @property (strong, nonatomic) NSMutableDictionary <NSString*, AVCaptureDeviceFormat*> *fpsOptions;
-@property (strong, nonatomic) NSMutableArray <AVCaptureDeviceFormat*> *orderedFormats;
 @property (strong, nonatomic) NSArray <NSString*> *sortedFormatKeys;
 
 
@@ -119,7 +118,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     /// Why not do all of this on the main queue?
     /// Because -[AVCaptureSession startRunning] is a blocking call which can take a long time. We dispatch session setup to the sessionQueue so that the main queue isn't blocked, which keeps the UI responsive.
     dispatch_async (self.sessionQueue, ^{
-        if (self.setupResult != AVCamSetupResultSuccess) {
+        if (self.setupResult != AVCamSetupResultSuccess) { 
             return;
         }
         
@@ -236,13 +235,6 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
                 return (NSComparisonResult)NSOrderedDescending;
             
         }];
-        
-        /// Now we add the formats for each of those keys, now in order, to self.orderedFormats, so we end up with an array of formats in ascending order of associated framerate.
-        self.orderedFormats = [[NSMutableArray alloc] init];
-        
-        for (NSString *s in self.sortedFormatKeys){
-            [self.orderedFormats addObject:[self.fpsOptions objectForKey:s]];
-        }
         
         
         /// Set the currentFPS and default active format to 30 FPS.
@@ -526,6 +518,8 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     [UIView animateWithDuration:0.3 animations:^() {
         self.doubleTapLabel.alpha = 0.0;
     }];
+    
+    UIView animatewith
 }
 
 #pragma mark Orientation
@@ -588,6 +582,8 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
             self.videoDevice.activeVideoMaxFrameDuration = CMTimeMake(1, self.currentFPS.intValue);
             [self.videoDevice unlockForConfiguration];
             NSLog(@"changed to format: %@", self.videoDevice.activeFormat);
+            NSLog(@"min frame duration: %f, max frameduration: %f", CMTimeGetSeconds(self.videoDevice.activeVideoMinFrameDuration), CMTimeGetSeconds(self.videoDevice.activeVideoMaxFrameDuration));
+
         }
     }
     
@@ -654,10 +650,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 #pragma mark TO DO
 
 /// Fix the buggy-looking state switching for the slo mo toggle
-/// Fix iPad view scaling problem
-
-/// Add settings page that allows selection between all available formats
-/// Setting to disable double tap tip
+/// Make some views scale to be larger on iPad, not simply scale to fit screen (e.g. camera controls)
 
 
 /// INTERCEPT ERRORS THROUGHOUT APP ///
