@@ -10,6 +10,8 @@
 		DC1B126F1BBDC5CF00D5613F /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1B126E1BBDC5CF00D5613F /* Cell.m */; };
 		DC1B12791BBF109E00D5613F /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1B12781BBF109E00D5613F /* Video.m */; };
 		DC2251BD1BC8828300FC430F /* MediaLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2251BC1BC8828300FC430F /* MediaLibrary.m */; };
+		DC35E00E1C386C55004CE553 /* PasswordServices.m in Sources */ = {isa = PBXBuildFile; fileRef = DC35E00D1C386C55004CE553 /* PasswordServices.m */; };
+		DC35E0141C38FFC1004CE553 /* UIAlertController+UIAlertController_PasscodeAlerts.m in Sources */ = {isa = PBXBuildFile; fileRef = DC35E0131C38FFC1004CE553 /* UIAlertController+UIAlertController_PasscodeAlerts.m */; };
 		DC57B3F31BCEA823007EB94B /* PlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC57B3F21BCEA823007EB94B /* PlayerView.m */; };
 		DC6D03241BC5E92600CA6A5F /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6D03231BC5E92600CA6A5F /* UIImage+Resize.m */; };
 		DC89CCF31BBC6036007970F1 /* PlaybackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC89CCF21BBC6036007970F1 /* PlaybackViewController.m */; };
@@ -49,6 +51,10 @@
 		DC1B12781BBF109E00D5613F /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
 		DC2251BB1BC8828300FC430F /* MediaLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaLibrary.h; sourceTree = "<group>"; };
 		DC2251BC1BC8828300FC430F /* MediaLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaLibrary.m; sourceTree = "<group>"; };
+		DC35E00C1C386C55004CE553 /* PasswordServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordServices.h; sourceTree = "<group>"; };
+		DC35E00D1C386C55004CE553 /* PasswordServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordServices.m; sourceTree = "<group>"; };
+		DC35E0121C38FFC1004CE553 /* UIAlertController+UIAlertController_PasscodeAlerts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+UIAlertController_PasscodeAlerts.h"; sourceTree = "<group>"; };
+		DC35E0131C38FFC1004CE553 /* UIAlertController+UIAlertController_PasscodeAlerts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+UIAlertController_PasscodeAlerts.m"; sourceTree = "<group>"; };
 		DC57B3F11BCEA823007EB94B /* PlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerView.h; sourceTree = "<group>"; };
 		DC57B3F21BCEA823007EB94B /* PlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerView.m; sourceTree = "<group>"; };
 		DC6D03221BC5E92600CA6A5F /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
@@ -158,6 +164,8 @@
 		DCF25C471BB3497800BC939B = {
 			isa = PBXGroup;
 			children = (
+				DC35E0121C38FFC1004CE553 /* UIAlertController+UIAlertController_PasscodeAlerts.h */,
+				DC35E0131C38FFC1004CE553 /* UIAlertController+UIAlertController_PasscodeAlerts.m */,
 				DCF25C521BB3497800BC939B /* SloMoVideo */,
 				DCF25C6C1BB3497800BC939B /* SloMoVideoTests */,
 				DCF25C771BB3497900BC939B /* SloMoVideoUITests */,
@@ -180,6 +188,8 @@
 			children = (
 				DCF25C561BB3497800BC939B /* AppDelegate.h */,
 				DCF25C571BB3497800BC939B /* AppDelegate.m */,
+				DC35E00C1C386C55004CE553 /* PasswordServices.h */,
+				DC35E00D1C386C55004CE553 /* PasswordServices.m */,
 				DC57B3EA1BCDAE9A007EB94B /* Views */,
 				DC57B3EB1BCDAEA4007EB94B /* View Controllers */,
 				DC73537C1BD5C80A0081DA52 /* Models */,
@@ -357,6 +367,7 @@
 				DC89CCF61BBC6E61007970F1 /* VideoLibraryViewController.m in Sources */,
 				DCF25C581BB3497800BC939B /* AppDelegate.m in Sources */,
 				DC89CCF31BBC6036007970F1 /* PlaybackViewController.m in Sources */,
+				DC35E00E1C386C55004CE553 /* PasswordServices.m in Sources */,
 				DC1B12791BBF109E00D5613F /* Video.m in Sources */,
 				DCF25C8B1BB352D900BC939B /* CameraViewController.m in Sources */,
 				DCF25C881BB34ACE00BC939B /* PreviewView.m in Sources */,
@@ -364,6 +375,7 @@
 				DC1B126F1BBDC5CF00D5613F /* Cell.m in Sources */,
 				DC6D03241BC5E92600CA6A5F /* UIImage+Resize.m in Sources */,
 				DC2251BD1BC8828300FC430F /* MediaLibrary.m in Sources */,
+				DC35E0141C38FFC1004CE553 /* UIAlertController+UIAlertController_PasscodeAlerts.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
