@@ -9,7 +9,8 @@
 #import "AppDelegate.h"
 #import "MediaLibrary.h"
 @import LocalAuthentication;
-#import "PasswordServices.h"
+#import "PasscodeServices.h"
+#import "CameraViewController.h"
 
 @interface AppDelegate ()
 
@@ -39,6 +40,21 @@
     //            [[MediaLibrary sharedLibrary] initialPullFromDocuments];
     //         });
     
+    /// Check if this is the app's first launch. If so, set a BOOL in the first view controller that is checked in viewDidAppear and controls whether the user is prompted to enable a passcode for the app.
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
+        UINavigationController *rootVC = (UINavigationController*)self.window.rootViewController;
+        CameraViewController *visibleViewController = (CameraViewController*)rootVC.visibleViewController;
+        
+        visibleViewController.shouldPromptForPasscodeCreation = YES;
+        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    else {
+        
+    }
+
     return YES;
 }
 

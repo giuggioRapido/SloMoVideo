@@ -377,6 +377,15 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     });
 }
 
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    if (self.shouldPromptForPasscodeCreation) {
+        //[self promptPasswordCreation];
+        self.shouldPromptForPasscodeCreation = NO;
+    }
+}
+
 - (void)viewDidDisappear:(BOOL)animated
 {
     dispatch_async( self.sessionQueue, ^{
