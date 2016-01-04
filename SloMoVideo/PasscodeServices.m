@@ -11,4 +11,8 @@
 
 @implementation PasscodeServices
 
++ (BOOL)touchIDIsAvailable {
+    return YES;
+}
+
 @end

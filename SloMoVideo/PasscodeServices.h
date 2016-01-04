@@ -10,4 +10,6 @@
 
 @interface PasscodeServices : NSObject
 
++ (BOOL)touchIDIsAvailable;
+
 @end

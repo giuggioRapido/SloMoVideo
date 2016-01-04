@@ -11,8 +11,10 @@
 @import Photos;
 @import AVFoundation;
 #import "MediaLibrary.h"
+#import "UIAlertController+UIAlertController_PasscodeAlerts.h"
+#import "PasscodeServices.h"
 
-@interface CameraViewController : UIViewController <AVCaptureFileOutputRecordingDelegate>
+@interface CameraViewController : UIViewController <AVCaptureFileOutputRecordingDelegate, UITextFieldDelegate>
 
 @property BOOL shouldPromptForPasscodeCreation;
 

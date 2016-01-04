@@ -48,10 +48,13 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 @property (nonatomic, getter=isSessionRunning) BOOL sessionRunning;
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundRecordingID;
 
-
 @end
 
 @implementation CameraViewController
+
+NSString *firstPasscode;
+NSString *secondPasscode;
+
 
 #pragma mark View Cycle
 
@@ -118,7 +121,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     /// Why not do all of this on the main queue?
     /// Because -[AVCaptureSession startRunning] is a blocking call which can take a long time. We dispatch session setup to the sessionQueue so that the main queue isn't blocked, which keeps the UI responsive.
     dispatch_async (self.sessionQueue, ^{
-        if (self.setupResult != AVCamSetupResultSuccess) { 
+        if (self.setupResult != AVCamSetupResultSuccess) {
             return;
         }
         
@@ -458,7 +461,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     
     /// Get the NSString representing the desired framerate from self.sortedFormatKeys array.
     self.currentFPS = self.sortedFormatKeys[self.sloMoToggle.tag];
-   
+    
     /// Change appearance of button to reflect format adjustment.
     NSString *buttonTitle = [NSString stringWithFormat:@"%@ FPS", self.currentFPS];
     [self.sloMoToggle setTitle:buttonTitle forState: UIControlStateNormal];
@@ -590,7 +593,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
             [self.videoDevice unlockForConfiguration];
             NSLog(@"changed to format: %@", self.videoDevice.activeFormat);
             NSLog(@"min frame duration: %f, max frameduration: %f", CMTimeGetSeconds(self.videoDevice.activeVideoMinFrameDuration), CMTimeGetSeconds(self.videoDevice.activeVideoMaxFrameDuration));
-
+            
         }
     }
     
@@ -636,6 +639,144 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
         [self displayViewFinderUI];
     });
 }
+
+#pragma mark - Passcode handling
+
+- (void)presentEnablePasscodeAlert
+{
+    UIAlertController *alert = [UIAlertController enablePasscodeAlertWithNoBehavior:^{
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"PasscodeEnabled"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+    } andYesBehavior:^{
+        [self presentCreatePasscodeAlert];
+    }];
+    
+    if (alert.textFields) {
+        alert.textFields[0].delegate = self;
+    }
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)presentCreatePasscodeAlert
+{
+    UIAlertController *alert = [UIAlertController passcodeCreationAlertWithConfirmBehavior:^{
+        firstPasscode = alert.textFields[0].text;
+        [self presentConfirmPasscodeAlert];
+    } andCancelBehavior:^{
+        [self presentCreatePasscodeAlert];
+    }];
+    
+    if (alert.textFields) {
+        alert.textFields[0].delegate = self;
+    }
+    
+    [self presentViewController:alert
+                       animated:YES completion:nil];
+}
+
+- (void)presentConfirmPasscodeAlert
+{
+    UIAlertController *alert = [UIAlertController passcodeConfirmationAlertWithConfirmBehavior:^{
+        firstPasscode = alert.textFields[0].text;
+        if ([self passcodesMatch]) {
+            if ([PasscodeServices touchIDIsAvailable]) {
+                [self presentEnableTouchIDAlert];
+            }
+            else {
+                
+            }
+        }
+        else {
+            [self presentNonmatchingPasscodesAlert];
+        }
+    } andCancelBehavior:^{
+        [self presentCreatePasscodeAlert];
+    }];
+    
+    if (alert.textFields) {
+        alert.textFields[0].delegate = self;
+    }
+    
+    [self presentViewController:alert
+                       animated:YES completion:nil];
+}
+
+- (BOOL)passcodesMatch
+{
+    if (firstPasscode == secondPasscode) {
+        firstPasscode = nil;
+        secondPasscode = nil;
+        return YES;
+    }
+    else {
+        firstPasscode = nil;
+        secondPasscode = nil;
+        return NO;
+    }
+}
+
+- (void)presentNonmatchingPasscodesAlert
+{
+    UIAlertController *alert = [UIAlertController nonmatchingPasscodesAlertWithConfirmBehavior:^{
+        firstPasscode = alert.textFields[0].text;
+        [self presentConfirmPasscodeAlert];
+    } andCancelBehavior:^{
+        [self presentCreatePasscodeAlert];
+    }];
+    
+    if (alert.textFields) {
+        alert.textFields[0].delegate = self;
+    }
+    
+    [self presentViewController:alert
+                       animated:YES completion:nil];
+}
+
+- (void)presentEnableTouchIDAlert
+{
+    UIAlertController *alert = [UIAlertController enablePasscodeAlertWithNoBehavior:^{
+        
+    } andYesBehavior:^{
+        
+    }];
+    
+    if (alert.textFields) {
+        alert.textFields[0].delegate = self;
+    }
+    
+    [self presentViewController:alert
+                       animated:YES completion:nil];
+}
+
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    NSString *newString = [textField.text stringByReplacingCharactersInRange: range withString: string];
+    UIResponder *responder = textField;
+    Class uiacClass = [UIAlertController class];
+    while (![responder isKindOfClass: uiacClass])
+    {
+        responder = [responder nextResponder];
+    }
+    UIAlertController *alert = (UIAlertController*) responder;
+    UIAlertAction *setPassword  = [alert.actions objectAtIndex: 0];
+    
+    if (newString.length == 0) {
+        setPassword.enabled = NO;
+        return YES;
+    }
+    else {
+        setPassword.enabled = YES;
+        
+        return YES;
+    }
+}
+
+
 
 
 #pragma mark Other
