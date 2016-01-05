@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -12,28 +13,77 @@
                         <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                    <view key="view" contentMode="scaleToFill" id="lzJ-77-Aun">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SloMo Video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EJh-g6-DBP">
-                                <rect key="frame" x="181" y="273" width="238" height="54"/>
-                                <animations/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="heR-G9-0iN">
+                                <rect key="frame" x="0.0" y="522" width="600" height="78"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OaB-y6-1dT" userLabel="Record Button">
+                                        <rect key="frame" x="270" y="9" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="3hC-7l-xHy"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="PcW-Ri-r9z"/>
+                                            <constraint firstAttribute="height" constant="60" id="hQh-0q-1Nm"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="jXq-ua-3Cq"/>
+                                        </constraints>
+                                        <state key="normal" image="Record Button"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IyQ-s8-m8M">
+                                        <rect key="frame" x="17" y="16" width="60" height="45"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="GyQ-Uq-w0U"/>
+                                            <constraint firstAttribute="height" constant="45" id="IRZ-gv-150"/>
+                                        </constraints>
+                                        <state key="normal" title="Library Button" image="Lighter Library"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SM3-EH-Whg">
+                                        <rect key="frame" x="523" y="16" width="60" height="45"/>
+                                        <color key="backgroundColor" red="0.0" green="0.43656049460000002" blue="0.92019807450000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="45" id="7Mf-On-aHy"/>
+                                            <constraint firstAttribute="width" constant="60" id="Nhd-mD-1yg"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                        <state key="normal" title="30 FPS">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="selected">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="238" id="c6y-nm-zG9"/>
-                                    <constraint firstAttribute="height" constant="54" id="hsR-26-QlT"/>
+                                    <constraint firstItem="OaB-y6-1dT" firstAttribute="centerY" secondItem="heR-G9-0iN" secondAttribute="centerY" id="12K-Ph-XAs"/>
+                                    <constraint firstAttribute="bottom" secondItem="SM3-EH-Whg" secondAttribute="bottom" constant="17" id="ALo-2r-GhE"/>
+                                    <constraint firstAttribute="trailing" secondItem="SM3-EH-Whg" secondAttribute="trailing" constant="17" id="J5q-5g-ec6"/>
+                                    <constraint firstItem="IyQ-s8-m8M" firstAttribute="centerY" secondItem="heR-G9-0iN" secondAttribute="centerY" id="JEe-IF-jwe"/>
+                                    <constraint firstItem="SM3-EH-Whg" firstAttribute="centerY" secondItem="heR-G9-0iN" secondAttribute="centerY" id="ayX-be-sSB"/>
+                                    <constraint firstAttribute="height" constant="78" id="bvf-ZY-aFr"/>
+                                    <constraint firstItem="OaB-y6-1dT" firstAttribute="centerX" secondItem="heR-G9-0iN" secondAttribute="centerX" id="kXE-55-MDq"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </view>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                        <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="EJh-g6-DBP" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="UCK-RD-xsY"/>
-                            <constraint firstItem="EJh-g6-DBP" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="zYr-Re-TTn"/>
+                            <constraint firstItem="IyQ-s8-m8M" firstAttribute="leading" secondItem="lzJ-77-Aun" secondAttribute="leadingMargin" constant="-3" id="0KF-Sh-cu8"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="SM3-EH-Whg" secondAttribute="trailing" constant="-3" id="B5d-IB-7r3"/>
+                            <constraint firstItem="heR-G9-0iN" firstAttribute="width" secondItem="lzJ-77-Aun" secondAttribute="width" id="Fg3-0C-ZXF"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="heR-G9-0iN" secondAttribute="bottom" id="OXO-cX-SSm"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="IyQ-s8-m8M" secondAttribute="bottom" constant="17" id="Q0L-Lr-k1F"/>
+                            <constraint firstItem="IyQ-s8-m8M" firstAttribute="leading" secondItem="lzJ-77-Aun" secondAttribute="leadingMargin" constant="-3" id="Wcw-L8-9Lg"/>
+                            <constraint firstItem="heR-G9-0iN" firstAttribute="centerX" secondItem="lzJ-77-Aun" secondAttribute="centerX" id="slA-u7-DUG"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Wcw-L8-9Lg"/>
+                                <exclude reference="Q0L-Lr-k1F"/>
+                            </mask>
+                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -41,4 +91,8 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Lighter Library" width="162" height="123"/>
+        <image name="Record Button" width="76" height="76"/>
+    </resources>
 </document>

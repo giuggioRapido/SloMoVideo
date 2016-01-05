@@ -383,9 +383,15 @@ NSString *secondPasscode;
 -(void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
-    if (self.shouldPromptForPasscodeCreation) {
+    //    if (self.shouldPromptForPasscodeCreation) {
+    //        [self presentEnablePasscodeAlert];
+    //        self.shouldPromptForPasscodeCreation = NO;
+    //    }
+    
+    if (![[NSUserDefaults standardUserDefaults]boolForKey:@"HasLaunchedOnce"]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         [self presentEnablePasscodeAlert];
-        self.shouldPromptForPasscodeCreation = NO;
     }
 }
 
@@ -669,9 +675,8 @@ NSString *secondPasscode;
         [self presentEnablePasscodeAlert];
     }];
     
-   
     alert.textFields[0].delegate = self;
-    
+
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -682,11 +687,12 @@ NSString *secondPasscode;
     __block UIAlertController *alert = [UIAlertController passcodeConfirmationAlertWithConfirmBehavior:^{
         secondPasscode = alert.textFields[0].text;
         if ([self passcodesMatch]) {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"PasscodeEnabled"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [PasscodeServices storePasscodeInKeychain];
+            
             if ([PasscodeServices touchIDIsAvailable]) {
                 [self presentEnableTouchIDAlert];
-            }
-            else {
-                
             }
         }
         else {
@@ -789,8 +795,7 @@ NSString *secondPasscode;
 
 /// Fix the buggy-looking state switching for the slo mo toggle
 /// Make some views scale to be larger on iPad, not simply scale to fit screen (e.g. camera controls)
-
-
+/// Add focus, exposure, flash control.
 /// INTERCEPT ERRORS THROUGHOUT APP ///
 
 

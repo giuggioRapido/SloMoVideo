@@ -16,6 +16,7 @@
     return YES;
 }
 
+
 + (BOOL)shouldPromptForAuthorization
 {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PasscodeEnabled"]) {

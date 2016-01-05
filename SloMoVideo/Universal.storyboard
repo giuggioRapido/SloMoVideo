@@ -71,17 +71,9 @@
                                     <constraint firstItem="Ldi-GD-CcG" firstAttribute="centerY" secondItem="yom-P0-Sbf" secondAttribute="centerY" id="7la-xl-h88"/>
                                     <constraint firstAttribute="height" constant="78" id="CT8-MM-7vR"/>
                                     <constraint firstItem="pvD-S6-gJa" firstAttribute="centerY" secondItem="yom-P0-Sbf" secondAttribute="centerY" id="gc9-P7-TkL"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="78" id="h5p-Ws-WNZ"/>
                                     <constraint firstItem="aUt-KL-Cdz" firstAttribute="centerY" secondItem="yom-P0-Sbf" secondAttribute="centerY" id="nLB-xw-Knn"/>
                                     <constraint firstItem="pvD-S6-gJa" firstAttribute="centerX" secondItem="yom-P0-Sbf" secondAttribute="centerX" id="sRv-Zb-SxX"/>
-                                    <constraint firstAttribute="height" constant="78" id="yJ2-DF-ZVL"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="h5p-Ws-WNZ"/>
-                                        <exclude reference="yJ2-DF-ZVL"/>
-                                    </mask>
-                                </variation>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="double-tap to stop recording" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pPY-mf-83X">
                                 <rect key="frame" x="0.0" y="521" width="600" height="35"/>
@@ -99,10 +91,10 @@
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="Ldi-GD-CcG" secondAttribute="trailing" constant="-3" id="4Ss-KB-0ws"/>
                             <constraint firstItem="pPY-mf-83X" firstAttribute="centerX" secondItem="aEM-hg-0pc" secondAttribute="centerX" id="9cq-77-ek6"/>
-                            <constraint firstItem="q7T-WZ-It2" firstAttribute="top" secondItem="pPY-mf-83X" secondAttribute="bottom" id="Q7V-mQ-ipw"/>
+                            <constraint firstItem="q7T-WZ-It2" firstAttribute="top" secondItem="yom-P0-Sbf" secondAttribute="bottom" id="NNO-ld-XHT"/>
+                            <constraint firstItem="q7T-WZ-It2" firstAttribute="top" secondItem="pPY-mf-83X" secondAttribute="bottom" id="OH7-g5-GNL"/>
                             <constraint firstItem="yom-P0-Sbf" firstAttribute="centerX" secondItem="aEM-hg-0pc" secondAttribute="centerX" id="SlE-wf-kQM"/>
                             <constraint firstItem="aUt-KL-Cdz" firstAttribute="leading" secondItem="aEM-hg-0pc" secondAttribute="leadingMargin" constant="-3" id="TL6-Qc-DA5"/>
-                            <constraint firstItem="q7T-WZ-It2" firstAttribute="top" secondItem="yom-P0-Sbf" secondAttribute="bottom" id="VcM-e5-qsr"/>
                             <constraint firstItem="yom-P0-Sbf" firstAttribute="width" secondItem="aEM-hg-0pc" secondAttribute="width" id="ehN-DR-Xgm"/>
                             <constraint firstItem="pPY-mf-83X" firstAttribute="width" secondItem="aEM-hg-0pc" secondAttribute="width" id="q0X-Gw-Nc4"/>
                         </constraints>

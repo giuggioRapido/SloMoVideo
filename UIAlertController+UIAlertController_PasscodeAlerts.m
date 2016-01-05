@@ -32,9 +32,7 @@
                                                           if (yesBlock) {
                                                               yesBlock();
                                                           }
-                                                          //[self createPassword];
                                                       }];
-    
     
     [passcodePreferenceAlert addAction:noAction];
     [passcodePreferenceAlert addAction:yesAction];
@@ -49,15 +47,16 @@
     UIAlertController *passcodeCreationAlert = [UIAlertController alertControllerWithTitle:@"Enter a passcode"
                                                                                    message:nil
                                                                             preferredStyle:UIAlertControllerStyleAlert];
-        
+    
     [passcodeCreationAlert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.keyboardType = UIKeyboardTypeNumberPad;
+        textField.textAlignment = NSTextAlignmentCenter;
+        textField.secureTextEntry = YES;
     }];
     
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
                                                            style:UIAlertActionStyleCancel
                                                          handler:^(UIAlertAction * action) {
-                                                             //[self promptPasswordCreation];
                                                              if (cancelBlock) {
                                                                  cancelBlock();
                                                              }
@@ -66,8 +65,6 @@
     UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm"
                                                             style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
-                                                              //self.password = passCodeCreationAlert.textFields[0].text;
-                                                              //[self confirmPassword];
                                                               if (confirmBlock) {
                                                                   confirmBlock();
                                                               }
@@ -90,6 +87,8 @@
     
     [passcodeConfirmationAlert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.keyboardType = UIKeyboardTypeNumberPad;
+        textField.textAlignment = NSTextAlignmentCenter;
+        textField.secureTextEntry = YES;
     }];
     
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
@@ -106,27 +105,6 @@
                                                               if (confirmBlock) {
                                                                   confirmBlock();
                                                               }
-                                                              
-                                                              //                                                              if (passcodeConfirmationAlert.textFields[0].text == self.password) {
-                                                              //                                                                  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"PasscodeEnabled"];
-                                                              //                                                                  [[NSUserDefaults standardUserDefaults] synchronize];
-                                                              //
-                                                              //                                                                  BOOL hasTouchID = NO;
-                                                              //                                                                  // if the LAContext class is available
-                                                              //                                                                  if ([LAContext class]) {
-                                                              //                                                                      LAContext *context = [LAContext new];
-                                                              //                                                                      NSError *error = nil;
-                                                              //                                                                      hasTouchID = [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error];
-                                                              //                                                                  }
-                                                              //
-                                                              //                                                                  if (hasTouchID) {
-                                                              //                                                                      //[self promptForTouchID];
-                                                              //                                                                  }
-                                                              //                                                              }
-                                                              //
-                                                              //                                                              else {
-                                                              //                                                                  //[self presentUnequalPasswordsAlert];
-                                                              //                                                              }
                                                               
                                                           }];
     
@@ -147,12 +125,13 @@
     
     [nonmatchingPasscodesAlert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.keyboardType = UIKeyboardTypeNumberPad;
+        textField.textAlignment = NSTextAlignmentCenter;
+        textField.secureTextEntry = YES;
     }];
     
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
                                                            style:UIAlertActionStyleCancel
                                                          handler:^(UIAlertAction * action) {
-                                                             //[self promptPasswordCreation];
                                                              if(cancelBlock){
                                                                  cancelBlock();
                                                              }
@@ -161,8 +140,6 @@
     UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm"
                                                             style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
-                                                              //self.password = passCodeCreationAlert.textFields[0].text;
-                                                              //[self confirmPassword];
                                                               if(confirmBlock){
                                                                   confirmBlock();
                                                               }
@@ -179,8 +156,8 @@
 + (UIAlertController*)enableTouchIDAlertWithNoBehavior:(void(^)())noBlock andYesBehavior:(void(^)())yesBlock;
 {
     UIAlertController *enableTouchIDAlert = [UIAlertController alertControllerWithTitle:@"Enable TouchID?"
-                                                                           message:nil
-                                                                    preferredStyle:UIAlertControllerStyleAlert];
+                                                                                message:nil
+                                                                         preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction* noAction = [UIAlertAction actionWithTitle:@"No"
                                                        style:UIAlertActionStyleCancel
@@ -188,16 +165,14 @@
                                                          if (noBlock) {
                                                              noBlock();
                                                          }
-                                                         //[[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"TouchIDEnabled"];
                                                      }];
-
+    
     UIAlertAction* yesAction = [UIAlertAction actionWithTitle:@"Yes"
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction * action) {
                                                           if (yesBlock) {
                                                               yesBlock();
                                                           }
-                                                          //[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"TouchIDEnabled"];
                                                       }];
     
     [enableTouchIDAlert addAction:noAction];

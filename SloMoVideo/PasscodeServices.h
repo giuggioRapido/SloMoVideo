@@ -10,6 +10,9 @@
 
 @interface PasscodeServices : NSObject
 
+@property BOOL shouldPromptForPasscodeCreation;
+
 + (BOOL)touchIDIsAvailable;
++ (void)storePasscodeInKeychain;
 
 @end
