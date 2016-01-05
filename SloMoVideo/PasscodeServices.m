@@ -11,8 +11,35 @@
 
 @implementation PasscodeServices
 
-+ (BOOL)touchIDIsAvailable {
++ (BOOL)touchIDIsAvailable
+{
     return YES;
+}
+
++ (BOOL)shouldPromptForAuthorization
+{
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PasscodeEnabled"]) {
+        return YES;
+    }
+    
+    else {
+        return NO;
+    }
+}
+
++ (void)storePasscodeInKeychain
+{
+    
+}
+
++ (void)promptForTouchID
+{
+    
+}
+
++ (void)promptForPasscode
+{
+    
 }
 
 @end

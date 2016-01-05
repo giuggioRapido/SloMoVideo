@@ -384,7 +384,7 @@ NSString *secondPasscode;
 {
     [super viewDidAppear:YES];
     if (self.shouldPromptForPasscodeCreation) {
-        //[self promptPasswordCreation];
+        [self presentEnablePasscodeAlert];
         self.shouldPromptForPasscodeCreation = NO;
     }
 }
@@ -642,6 +642,8 @@ NSString *secondPasscode;
 
 #pragma mark - Passcode handling
 
+/// Ask the user if they want to enable a passcode for the app. If not, we set a bool in defaults that passcode isn't enabled.
+/// If yes, we call presentCreatePasscodeAlert.
 - (void)presentEnablePasscodeAlert
 {
     UIAlertController *alert = [UIAlertController enablePasscodeAlertWithNoBehavior:^{
@@ -652,34 +654,33 @@ NSString *secondPasscode;
         [self presentCreatePasscodeAlert];
     }];
     
-    if (alert.textFields) {
-        alert.textFields[0].delegate = self;
-    }
     
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+/// Ask the user to type in desired passcode. If user selects Cancel, bring them back to the first alert. When they enter a passcode and
+/// select Confirm, call presentConfirmPasscodeAlert.
 - (void)presentCreatePasscodeAlert
 {
-    UIAlertController *alert = [UIAlertController passcodeCreationAlertWithConfirmBehavior:^{
+    __block UIAlertController *alert = [UIAlertController passcodeCreationAlertWithConfirmBehavior:^{
         firstPasscode = alert.textFields[0].text;
         [self presentConfirmPasscodeAlert];
     } andCancelBehavior:^{
-        [self presentCreatePasscodeAlert];
+        [self presentEnablePasscodeAlert];
     }];
     
-    if (alert.textFields) {
-        alert.textFields[0].delegate = self;
-    }
+   
+    alert.textFields[0].delegate = self;
     
-    [self presentViewController:alert
-                       animated:YES completion:nil];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
+/// Prompt the user to type the passcode again to confirm. If the passcodes do not match, call presentNonmatchingPasscodesAlert.
+/// If they do match, handle in Passcode Services and call presentEnableTouchIDAlert.
 - (void)presentConfirmPasscodeAlert
 {
-    UIAlertController *alert = [UIAlertController passcodeConfirmationAlertWithConfirmBehavior:^{
-        firstPasscode = alert.textFields[0].text;
+    __block UIAlertController *alert = [UIAlertController passcodeConfirmationAlertWithConfirmBehavior:^{
+        secondPasscode = alert.textFields[0].text;
         if ([self passcodesMatch]) {
             if ([PasscodeServices touchIDIsAvailable]) {
                 [self presentEnableTouchIDAlert];
@@ -692,15 +693,12 @@ NSString *secondPasscode;
             [self presentNonmatchingPasscodesAlert];
         }
     } andCancelBehavior:^{
-        [self presentCreatePasscodeAlert];
+        [self presentEnablePasscodeAlert];
     }];
     
-    if (alert.textFields) {
-        alert.textFields[0].delegate = self;
-    }
+    alert.textFields[0].delegate = self;
     
-    [self presentViewController:alert
-                       animated:YES completion:nil];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (BOOL)passcodesMatch
@@ -719,40 +717,33 @@ NSString *secondPasscode;
 
 - (void)presentNonmatchingPasscodesAlert
 {
-    UIAlertController *alert = [UIAlertController nonmatchingPasscodesAlertWithConfirmBehavior:^{
+    __block UIAlertController *alert = [UIAlertController nonmatchingPasscodesAlertWithConfirmBehavior:^{
         firstPasscode = alert.textFields[0].text;
         [self presentConfirmPasscodeAlert];
     } andCancelBehavior:^{
-        [self presentCreatePasscodeAlert];
+        [self presentEnablePasscodeAlert];
     }];
     
-    if (alert.textFields) {
-        alert.textFields[0].delegate = self;
-    }
+    alert.textFields[0].delegate = self;
     
-    [self presentViewController:alert
-                       animated:YES completion:nil];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)presentEnableTouchIDAlert
 {
-    UIAlertController *alert = [UIAlertController enablePasscodeAlertWithNoBehavior:^{
-        
+    UIAlertController *alert = [UIAlertController enableTouchIDAlertWithNoBehavior:^{
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"TouchIDEnabled"];
     } andYesBehavior:^{
-        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"TouchIDEnabled"];
     }];
     
-    if (alert.textFields) {
-        alert.textFields[0].delegate = self;
-    }
-    
-    [self presentViewController:alert
-                       animated:YES completion:nil];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 
 #pragma mark - UITextFieldDelegate
 
+/// In this method, we keep track of the content of the texfield at any given moment so that we can enable/disable buttons (i.e. only enable Confirm if the textfield count is >0)
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
     NSString *newString = [textField.text stringByReplacingCharactersInRange: range withString: string];
@@ -763,7 +754,7 @@ NSString *secondPasscode;
         responder = [responder nextResponder];
     }
     UIAlertController *alert = (UIAlertController*) responder;
-    UIAlertAction *setPassword  = [alert.actions objectAtIndex: 0];
+    UIAlertAction *setPassword  = [alert.actions objectAtIndex: 1];
     
     if (newString.length == 0) {
         setPassword.enabled = NO;
@@ -771,7 +762,6 @@ NSString *secondPasscode;
     }
     else {
         setPassword.enabled = YES;
-        
         return YES;
     }
 }

@@ -27,9 +27,9 @@
     
     /// Get video files without GCD
     //[[MediaLibrary sharedLibrary] initialPullFromDocuments];
-
+    
     /// Using async serial queue. At the moment, this seems to offer fastest launch time. Speed differences
-    /// start becoming apparent around the 70 video mark. 
+    /// start becoming apparent around the 70 video mark.
     dispatch_queue_t mediaLibraryQueue = dispatch_queue_create("media library queue", DISPATCH_QUEUE_SERIAL);
     dispatch_async(mediaLibraryQueue, ^{
         [[MediaLibrary sharedLibrary] initialPullFromDocuments];
@@ -54,7 +54,7 @@
     else {
         
     }
-
+    
     return YES;
 }
 
@@ -70,24 +70,27 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    LAContext *myContext = [[LAContext alloc] init];
-    NSError *authError = nil;
-    NSString *myLocalizedReasonString = @"String explaining why app needs authentication";
     
-    if ([myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError]) {
-        [myContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
-                  localizedReason:myLocalizedReasonString
-                            reply:^(BOOL success, NSError *error) {
-                                if (success) {
-                                    NSLog(@"success");
-                                } else {
-                                    NSLog(@"something went wrong");
-                                }
-                            }];
-    } else {
-        // Could not evaluate policy; look at authError and present an appropriate message to user
-    }
-
+    
+    
+    //    LAContext *myContext = [[LAContext alloc] init];
+    //    NSError *authError = nil;
+    //    NSString *myLocalizedReasonString = @"String explaining why app needs authentication";
+    //
+    //    if ([myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError]) {
+    //        [myContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+    //                  localizedReason:myLocalizedReasonString
+    //                            reply:^(BOOL success, NSError *error) {
+    //                                if (success) {
+    //                                    NSLog(@"success");
+    //                                } else {
+    //                                    NSLog(@"something went wrong");
+    //                                }
+    //                            }];
+    //    } else {
+    //        // Could not evaluate policy; look at authError and present an appropriate message to user
+    //    }
+    //
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

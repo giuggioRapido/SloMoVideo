@@ -38,6 +38,7 @@
     
     [passcodePreferenceAlert addAction:noAction];
     [passcodePreferenceAlert addAction:yesAction];
+    passcodePreferenceAlert.preferredAction = yesAction;
     
     return passcodePreferenceAlert;
 }
@@ -48,11 +49,8 @@
     UIAlertController *passcodeCreationAlert = [UIAlertController alertControllerWithTitle:@"Enter a passcode"
                                                                                    message:nil
                                                                             preferredStyle:UIAlertControllerStyleAlert];
-    
-    //    __weak id<UITextFieldDelegate> weakDelegate = aDelegate;
-    
+        
     [passcodeCreationAlert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        //textField.delegate = weakDelegate;
         textField.keyboardType = UIKeyboardTypeNumberPad;
     }];
     
@@ -77,7 +75,7 @@
     
     [passcodeCreationAlert addAction:cancelAction];
     [passcodeCreationAlert addAction:confirmAction];
-    
+    passcodeCreationAlert.preferredAction = confirmAction;
     confirmAction.enabled = NO;
     
     return passcodeCreationAlert;
@@ -90,10 +88,7 @@
                                                                                        message:nil
                                                                                 preferredStyle:UIAlertControllerStyleAlert];
     
-    //    __weak id<UITextFieldDelegate> weakSelf = aDelegate;
-    
     [passcodeConfirmationAlert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        //        textField.delegate = weakSelf;
         textField.keyboardType = UIKeyboardTypeNumberPad;
     }];
     
@@ -138,7 +133,7 @@
     
     [passcodeConfirmationAlert addAction:cancelAction];
     [passcodeConfirmationAlert addAction:confirmAction];
-    
+    passcodeConfirmationAlert.preferredAction = confirmAction;
     confirmAction.enabled = NO;
     
     return passcodeConfirmationAlert;
@@ -150,10 +145,7 @@
                                                                                        message:@"Enter a passcode"
                                                                                 preferredStyle:UIAlertControllerStyleAlert];
     
-    //    __weak id<UITextFieldDelegate> weakDelegate = aDelegate;
-    
     [nonmatchingPasscodesAlert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        //textField.delegate = weakDelegate;
         textField.keyboardType = UIKeyboardTypeNumberPad;
     }];
     
@@ -178,7 +170,7 @@
     
     [nonmatchingPasscodesAlert addAction:cancelAction];
     [nonmatchingPasscodesAlert addAction:confirmAction];
-    
+    nonmatchingPasscodesAlert.preferredAction = confirmAction;
     confirmAction.enabled = NO;
     
     return nonmatchingPasscodesAlert;
@@ -210,7 +202,7 @@
     
     [enableTouchIDAlert addAction:noAction];
     [enableTouchIDAlert addAction:yesAction];
-    
+    enableTouchIDAlert.preferredAction = yesAction;
     return enableTouchIDAlert;
 }
 @end
