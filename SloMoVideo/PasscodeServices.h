@@ -12,7 +12,9 @@
 
 @property BOOL shouldPromptForPasscodeCreation;
 
++ (BOOL)passcodeEnabled;
 + (BOOL)touchIDIsAvailable;
-+ (void)storePasscodeInKeychain;
++ (void)storePasscodeInKeychain:(NSString*)passcode;
++ (BOOL)passcodeValid:(NSString*)passcodeToCheck;
 
 @end

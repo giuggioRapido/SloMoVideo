@@ -8,9 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MediaLibrary.h"
-@import LocalAuthentication;
 #import "PasscodeServices.h"
-#import "CameraViewController.h"
 
 @interface AppDelegate ()
 
@@ -59,6 +57,11 @@
     //}
     //
     
+    
+    if ([PasscodeServices passcodeEnabled]) {
+        
+    }
+        
     return YES;
 }
 
@@ -75,7 +78,9 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     
-    
+    if ([PasscodeServices passcodeEnabled]) {
+        
+    }
     
     //    LAContext *myContext = [[LAContext alloc] init];
     //    NSError *authError = nil;

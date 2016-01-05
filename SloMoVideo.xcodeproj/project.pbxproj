@@ -17,6 +17,7 @@
 		DC89CCF31BBC6036007970F1 /* PlaybackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC89CCF21BBC6036007970F1 /* PlaybackViewController.m */; };
 		DC89CCF61BBC6E61007970F1 /* VideoLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC89CCF51BBC6E61007970F1 /* VideoLibraryViewController.m */; };
 		DCBF5EF51BCF05E5004B835E /* Universal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCBF5EF41BCF05E5004B835E /* Universal.storyboard */; };
+		DCC9C00D1C3B7FC3005504C8 /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC9C00C1C3B7FC3005504C8 /* KeychainWrapper.m */; };
 		DCF25C551BB3497800BC939B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C541BB3497800BC939B /* main.m */; };
 		DCF25C581BB3497800BC939B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C571BB3497800BC939B /* AppDelegate.m */; };
 		DCF25C601BB3497800BC939B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCF25C5F1BB3497800BC939B /* Assets.xcassets */; };
@@ -64,6 +65,8 @@
 		DC89CCF41BBC6E61007970F1 /* VideoLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoLibraryViewController.h; sourceTree = "<group>"; };
 		DC89CCF51BBC6E61007970F1 /* VideoLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoLibraryViewController.m; sourceTree = "<group>"; };
 		DCBF5EF41BCF05E5004B835E /* Universal.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Universal.storyboard; sourceTree = "<group>"; };
+		DCC9C00B1C3B7FC3005504C8 /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
+		DCC9C00C1C3B7FC3005504C8 /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
 		DCF25C501BB3497800BC939B /* SloMoVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SloMoVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCF25C541BB3497800BC939B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DCF25C561BB3497800BC939B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -152,6 +155,8 @@
 				DCF25C571BB3497800BC939B /* AppDelegate.m */,
 				DC35E01D1C39EBD8004CE553 /* PasscodeServices.h */,
 				DC35E01E1C39EBD8004CE553 /* PasscodeServices.m */,
+				DCC9C00B1C3B7FC3005504C8 /* KeychainWrapper.h */,
+				DCC9C00C1C3B7FC3005504C8 /* KeychainWrapper.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -374,6 +379,7 @@
 				DCF25C551BB3497800BC939B /* main.m in Sources */,
 				DC1B126F1BBDC5CF00D5613F /* Cell.m in Sources */,
 				DC6D03241BC5E92600CA6A5F /* UIImage+Resize.m in Sources */,
+				DCC9C00D1C3B7FC3005504C8 /* KeychainWrapper.m in Sources */,
 				DC2251BD1BC8828300FC430F /* MediaLibrary.m in Sources */,
 				DC35E0141C38FFC1004CE553 /* UIAlertController+UIAlertController_PasscodeAlerts.m in Sources */,
 			);

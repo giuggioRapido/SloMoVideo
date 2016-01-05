@@ -12,16 +12,14 @@
 
 + (UIAlertController*)enablePasscodeAlertWithNoBehavior:(void(^)())noBlock andYesBehavior:(void(^)())yesBlock;
 
-
 + (UIAlertController*)passcodeCreationAlertWithConfirmBehavior:(void(^)())confirmBlock andCancelBehavior:(void(^)())cancelBlock;
-
 
 + (UIAlertController*)passcodeConfirmationAlertWithConfirmBehavior:(void(^)())confirmBlock andCancelBehavior:(void(^)())cancelBlock;
 
-
 + (UIAlertController*)nonmatchingPasscodesAlertWithConfirmBehavior:(void(^)())confirmBlock andCancelBehavior:(void(^)())cancelBlock;
 
-
 + (UIAlertController*)enableTouchIDAlertWithNoBehavior:(void(^)())noBlock andYesBehavior:(void(^)())yesBlock;
+
++ (UIAlertController*)enterPasscodeAlertWithEnterBehavior:(void(^)())enterBlock;
 
 @end

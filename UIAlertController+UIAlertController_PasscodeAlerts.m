@@ -62,7 +62,7 @@
                                                              }
                                                          }];
     
-    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm"
+    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Continue"
                                                             style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
                                                               if (confirmBlock) {
@@ -81,7 +81,7 @@
 
 + (UIAlertController*)passcodeConfirmationAlertWithConfirmBehavior:(void(^)())confirmBlock andCancelBehavior:(void(^)())cancelBlock
 {
-    UIAlertController *passcodeConfirmationAlert = [UIAlertController alertControllerWithTitle:@"Type passcode again to confirm"
+    UIAlertController *passcodeConfirmationAlert = [UIAlertController alertControllerWithTitle:@"Re-enter passcode to confirm"
                                                                                        message:nil
                                                                                 preferredStyle:UIAlertControllerStyleAlert];
     
@@ -137,7 +137,7 @@
                                                              }
                                                          }];
     
-    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm"
+    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Continue"
                                                             style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
                                                               if(confirmBlock){
@@ -180,4 +180,23 @@
     enableTouchIDAlert.preferredAction = yesAction;
     return enableTouchIDAlert;
 }
+
++ (UIAlertController*)enterPasscodeAlertWithEnterBehavior:(void(^)())enterBlock
+{
+    UIAlertController *enterPasscodeAlert = [UIAlertController alertControllerWithTitle:@"Enter passcode"
+                                                                                message:nil
+                                                                         preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *enterAction = [UIAlertAction actionWithTitle:@"Enter"
+                                                          style:UIAlertActionStyleDefault
+                                                        handler:^(UIAlertAction * action) {
+                                                            if (enterBlock) {
+                                                                enterBlock();
+                                                            }
+                                                        }];
+    [enterPasscodeAlert addAction:enterAction];
+   
+    return enterPasscodeAlert;
+}
+
 @end

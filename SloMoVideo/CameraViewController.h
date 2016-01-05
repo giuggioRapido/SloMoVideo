@@ -16,6 +16,5 @@
 
 @interface CameraViewController : UIViewController <AVCaptureFileOutputRecordingDelegate, UITextFieldDelegate>
 
-@property BOOL shouldPromptForPasscodeCreation;
 
 @end

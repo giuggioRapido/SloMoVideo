@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SloMoVideo/CameraViewController.m"
-            timestampString = "473659221.691878"
+            timestampString = "473660944.533985"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "724"
-            endingLineNumber = "724"
+            startingLineNumber = "721"
+            endingLineNumber = "721"
             landmarkName = "-presentNonmatchingPasscodesAlert"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,7 +26,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SloMoVideo/CameraViewController.m"
-            timestampString = "473659221.691878"
+            timestampString = "473660944.533985"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "682"
+            endingLineNumber = "682"
+            landmarkName = "-presentConfirmPasscodeAlert"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SloMoVideo/CameraViewController.m"
+            timestampString = "473660944.533985"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "685"
@@ -42,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SloMoVideo/CameraViewController.m"
-            timestampString = "473659221.691878"
+            timestampString = "473660944.533985"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "688"
-            endingLineNumber = "688"
+            startingLineNumber = "699"
+            endingLineNumber = "699"
             landmarkName = "-presentConfirmPasscodeAlert"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,27 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SloMoVideo/CameraViewController.m"
-            timestampString = "473659221.691878"
+            timestampString = "473660944.533985"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "702"
-            endingLineNumber = "702"
-            landmarkName = "-presentConfirmPasscodeAlert"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SloMoVideo/CameraViewController.m"
-            timestampString = "473659221.691878"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "710"
-            endingLineNumber = "710"
+            startingLineNumber = "707"
+            endingLineNumber = "707"
             landmarkName = "-passcodesMatch"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SloMoVideo/CameraViewController.m"
-            timestampString = "473648779.051562"
+            timestampString = "473660944.533985"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "671"
-            endingLineNumber = "671"
+            startingLineNumber = "668"
+            endingLineNumber = "668"
             landmarkName = "-presentCreatePasscodeAlert"
             landmarkType = "5">
             <Locations>
@@ -168,11 +168,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SloMoVideo/CameraViewController.m"
-            timestampString = "473648779.051562"
+            timestampString = "473660944.533985"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "672"
-            endingLineNumber = "672"
+            startingLineNumber = "669"
+            endingLineNumber = "669"
             landmarkName = "-presentCreatePasscodeAlert"
             landmarkType = "5">
          </BreakpointContent>

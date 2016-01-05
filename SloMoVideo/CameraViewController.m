@@ -383,11 +383,8 @@ NSString *secondPasscode;
 -(void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
-    //    if (self.shouldPromptForPasscodeCreation) {
-    //        [self presentEnablePasscodeAlert];
-    //        self.shouldPromptForPasscodeCreation = NO;
-    //    }
-    
+   
+    /// If this is first app launch, present series of alert controllers for passcode creation.
     if (![[NSUserDefaults standardUserDefaults]boolForKey:@"HasLaunchedOnce"]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -689,7 +686,7 @@ NSString *secondPasscode;
         if ([self passcodesMatch]) {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"PasscodeEnabled"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            [PasscodeServices storePasscodeInKeychain];
+            [PasscodeServices storePasscodeInKeychain:secondPasscode];
             
             if ([PasscodeServices touchIDIsAvailable]) {
                 [self presentEnableTouchIDAlert];
@@ -711,7 +708,7 @@ NSString *secondPasscode;
 {
     if (firstPasscode == secondPasscode) {
         firstPasscode = nil;
-        secondPasscode = nil;
+        //secondPasscode = nil;
         return YES;
     }
     else {
@@ -744,6 +741,13 @@ NSString *secondPasscode;
     }];
     
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)presentEnterPasscodeAlert
+{
+    [UIAlertController enterPasscodeAlertWithEnterBehavior:^ {
+        
+    }];
 }
 
 

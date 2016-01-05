@@ -17,7 +17,7 @@
 }
 
 
-+ (BOOL)shouldPromptForAuthorization
++ (BOOL)passcodeEnabled
 {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PasscodeEnabled"]) {
         return YES;
@@ -28,9 +28,19 @@
     }
 }
 
-+ (void)storePasscodeInKeychain
++ (void)storePasscodeInKeychain:(NSString*)passcode
 {
-    
+    [[NSUserDefaults standardUserDefaults] setObject:passcode forKey:@"passcode"];
+}
+
++ (BOOL)passcodeValid:(NSString*)passcodeToCheck
+{
+    if (passcodeToCheck == [[NSUserDefaults standardUserDefaults] objectForKey:@"passcode"]) {
+        return YES;
+    }
+    else {
+        return NO;
+    }
 }
 
 + (void)promptForTouchID
