@@ -162,6 +162,46 @@
     vc.videoToPlay = self.videoToPlay;
 }
 
+#pragma mark – PasscodeAlertHanding
+- (void)presentEnterPasscodeAlert
+{
+    __block UIAlertController *alert = [UIAlertController enterPasscodeAlertWithEnterBehavior:^{
+        
+        if (![PasscodeServices isPasscodeValid:alert.textFields[0].text]) {
+            [self presentEnterPasscodeAlert];
+        }
+    }];
+    
+    alert.textFields[0].delegate = self;
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark - UITextFieldDelegate
+
+/// In this method, we keep track of the content of the texfield at any given moment so that we can enable/disable buttons (i.e. only enable Confirm if the textfield count is >0)
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    NSString *newString = [textField.text stringByReplacingCharactersInRange: range withString: string];
+    UIResponder *responder = textField;
+    Class uiacClass = [UIAlertController class];
+    while (![responder isKindOfClass: uiacClass])
+    {
+        responder = [responder nextResponder];
+    }
+    UIAlertController *alert = (UIAlertController*) responder;
+    UIAlertAction *setPassword  = [alert.actions objectAtIndex: 1];
+    
+    if (newString.length == 0) {
+        setPassword.enabled = NO;
+        return YES;
+    }
+    else {
+        setPassword.enabled = YES;
+        return YES;
+    }
+}
+
 #pragma mark To Do
 
 @end

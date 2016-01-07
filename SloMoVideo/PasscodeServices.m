@@ -8,6 +8,7 @@
 
 #import "PasscodeServices.h"
 @import LocalAuthentication;
+#import "<#header#>"
 
 @implementation PasscodeServices
 
@@ -28,12 +29,23 @@
     }
 }
 
++ (BOOL)touchIDEnabled
+{
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TouchIDEnabled"]) {
+        return YES;
+    }
+    
+    else {
+        return NO;
+    }
+}
+
 + (void)storePasscodeInKeychain:(NSString*)passcode
 {
     [[NSUserDefaults standardUserDefaults] setObject:passcode forKey:@"passcode"];
 }
 
-+ (BOOL)passcodeValid:(NSString*)passcodeToCheck
++ (BOOL)isPasscodeValid:(NSString*)passcodeToCheck
 {
     if (passcodeToCheck == [[NSUserDefaults standardUserDefaults] objectForKey:@"passcode"]) {
         return YES;
@@ -45,12 +57,31 @@
 
 + (void)promptForTouchID
 {
+    LAContext *myContext = [[LAContext alloc] init];
+    NSError *authError = nil;
+    NSString *myLocalizedReasonString = @"String explaining why app needs authentication";
+    
+    if ([myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError]) {
+        [myContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                  localizedReason:myLocalizedReasonString
+                            reply:^(BOOL success, NSError *error) {
+                                if (success) {
+                                    NSLog(@"success");
+                                } else {
+                                    NSLog(@"something went wrong");
+                                }
+                            }];
+    } else {
+        // Could not evaluate policy; look at authError and present an appropriate message to user
+    }
+    
     
 }
 
-+ (void)promptForPasscode
++ (void)promptForPasscodeInViewController:(id<PasscodeAlertControllerHandling>)viewController
 {
     
+    [viewController presentEnterPasscodeAlert];
 }
 
 @end

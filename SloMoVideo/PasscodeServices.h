@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PasscodeAlertControllerHandling.h"
+@import UIKit;
 
 @interface PasscodeServices : NSObject
 
@@ -15,6 +17,10 @@
 + (BOOL)passcodeEnabled;
 + (BOOL)touchIDIsAvailable;
 + (void)storePasscodeInKeychain:(NSString*)passcode;
-+ (BOOL)passcodeValid:(NSString*)passcodeToCheck;
++ (BOOL)isPasscodeValid:(NSString*)passcodeToCheck;
++ (BOOL)touchIDEnabled;
++ (void)promptForPasscodeInViewController:(id<PasscodeAlertControllerHandling>)viewController;
++ (void)promptForTouchID;
+
 
 @end

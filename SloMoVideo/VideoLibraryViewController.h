@@ -12,8 +12,11 @@
 #import "PlaybackViewController.h"
 #import "UIImage+Resize.h"
 #import "MediaLibrary.h"
+#import "PasscodeAlertControllerHandling.h"
+#import "UIAlertController+UIAlertController_PasscodeAlerts.h"
+#import "PasscodeServices.h"
 
-@interface VideoLibraryViewController : UICollectionViewController
+@interface VideoLibraryViewController : UICollectionViewController <UITextFieldDelegate, PasscodeAlertControllerHandling>
 
 
 @end

@@ -1,20 +1,21 @@
 //
-//  UIAlertController+UIAlertController_PasscodeAlerts.m
+//  UIAlertController+PasscodeAlertControllers.m
 //  SloMoVideo
 //
-//  Created by Chris on 1/3/16.
+//  Created by Chris on 1/6/16.
 //  Copyright © 2016 Prince Fungus. All rights reserved.
 //
 
-#import "UIAlertController+UIAlertController_PasscodeAlerts.h"
+#import "UIAlertController+PasscodeAlertControllers.h"
 
-@implementation UIAlertController (UIAlertController_PasscodeAlerts)
+@implementation UIAlertController (PasscodeAlertControllers)
 
-+ (UIAlertController*)enablePasscodeAlertWithNoBehavior:(void(^)())noBlock andYesBehavior:(void(^)())yesBlock
++ (instancetype)enablePasscodeAlertWithNoBehavior:(void(^)())noBlock andYesBehavior:(void(^)())yesBlock
 {
-    UIAlertController *passcodePreferenceAlert = [UIAlertController alertControllerWithTitle:@"Would you like to create a passcode?"
-                                                                                     message:@"This can be changed in Settings later."
-                                                                              preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *passcodePreferenceAlert = [self alertControllerWithTitle:@"Would you like to create a passcode?"
+                                                     message:@"This can be changed in Settings later."
+                                              preferredStyle:UIAlertControllerStyleAlert];
+    
     
     UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No"
                                                        style:UIAlertActionStyleCancel
@@ -42,9 +43,11 @@
 }
 
 
-+ (UIAlertController*)passcodeCreationAlertWithConfirmBehavior:(void(^)())confirmBlock andCancelBehavior:(void(^)())cancelBlock
++ (instancetype)passcodeCreationAlertWithConfirmBehavior:(void(^)())confirmBlock andCancelBehavior:(void(^)())cancelBlock
 {
-    UIAlertController *passcodeCreationAlert = [UIAlertController alertControllerWithTitle:@"Enter a passcode"
+    
+    
+    UIAlertController *passcodeCreationAlert = [self alertControllerWithTitle:@"Enter a passcode"
                                                                                    message:nil
                                                                             preferredStyle:UIAlertControllerStyleAlert];
     
@@ -79,9 +82,9 @@
 }
 
 
-+ (UIAlertController*)passcodeConfirmationAlertWithConfirmBehavior:(void(^)())confirmBlock andCancelBehavior:(void(^)())cancelBlock
++ (instancetype)passcodeConfirmationAlertWithConfirmBehavior:(void(^)())confirmBlock andCancelBehavior:(void(^)())cancelBlock
 {
-    UIAlertController *passcodeConfirmationAlert = [UIAlertController alertControllerWithTitle:@"Re-enter passcode to confirm"
+    UIAlertController *passcodeConfirmationAlert = [self alertControllerWithTitle:@"Re-enter passcode to confirm"
                                                                                        message:nil
                                                                                 preferredStyle:UIAlertControllerStyleAlert];
     
@@ -117,9 +120,9 @@
     return passcodeConfirmationAlert;
 }
 
-+ (UIAlertController*)nonmatchingPasscodesAlertWithConfirmBehavior:(void(^)())confirmBlock andCancelBehavior:(void(^)())cancelBlock
++ (instancetype)nonmatchingPasscodesAlertWithConfirmBehavior:(void(^)())confirmBlock andCancelBehavior:(void(^)())cancelBlock
 {
-    UIAlertController *nonmatchingPasscodesAlert = [UIAlertController alertControllerWithTitle:@"Passcodes do not match"
+    UIAlertController *nonmatchingPasscodesAlert = [self alertControllerWithTitle:@"Passcodes do not match"
                                                                                        message:@"Enter a passcode"
                                                                                 preferredStyle:UIAlertControllerStyleAlert];
     
@@ -153,9 +156,9 @@
     return nonmatchingPasscodesAlert;
 }
 
-+ (UIAlertController*)enableTouchIDAlertWithNoBehavior:(void(^)())noBlock andYesBehavior:(void(^)())yesBlock;
++ (instancetype)enableTouchIDAlertWithNoBehavior:(void(^)())noBlock andYesBehavior:(void(^)())yesBlock;
 {
-    UIAlertController *enableTouchIDAlert = [UIAlertController alertControllerWithTitle:@"Enable TouchID?"
+    UIAlertController *enableTouchIDAlert = [self alertControllerWithTitle:@"Enable TouchID?"
                                                                                 message:nil
                                                                          preferredStyle:UIAlertControllerStyleAlert];
     
@@ -178,14 +181,22 @@
     [enableTouchIDAlert addAction:noAction];
     [enableTouchIDAlert addAction:yesAction];
     enableTouchIDAlert.preferredAction = yesAction;
+    
     return enableTouchIDAlert;
 }
 
-+ (UIAlertController*)enterPasscodeAlertWithEnterBehavior:(void(^)())enterBlock
++ (instancetype)enterPasscodeAlertWithEnterBehavior:(void(^)())enterBlock
 {
-    UIAlertController *enterPasscodeAlert = [UIAlertController alertControllerWithTitle:@"Enter passcode"
+    UIAlertController *enterPasscodeAlert = [self alertControllerWithTitle:@"Enter passcode"
                                                                                 message:nil
                                                                          preferredStyle:UIAlertControllerStyleAlert];
+    
+    [enterPasscodeAlert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+        textField.textAlignment = NSTextAlignmentCenter;
+        textField.secureTextEntry = YES;
+    }];
+    
     
     UIAlertAction *enterAction = [UIAlertAction actionWithTitle:@"Enter"
                                                           style:UIAlertActionStyleDefault
@@ -195,7 +206,7 @@
                                                             }
                                                         }];
     [enterPasscodeAlert addAction:enterAction];
-   
+    
     return enterPasscodeAlert;
 }
 

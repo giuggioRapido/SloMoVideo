@@ -57,10 +57,21 @@
     //}
     //
     
+    UINavigationController *rootVC = (UINavigationController*)self.window.rootViewController;
     
-    if ([PasscodeServices passcodeEnabled]) {
-        
+    UIViewController *visibleVC = (UIViewController<PasscodeAlertControllerHandling>*)rootVC.visibleViewController;
+    
+    if ([PasscodeServices touchIDEnabled]) {
+        //[PasscodeServices promptForTouchID];
+        [PasscodeServices promptForPasscodeInViewController:visibleVC];
+
     }
+    
+    else if ([PasscodeServices passcodeEnabled]) {
+        [PasscodeServices promptForPasscodeInViewController:visibleVC];
+    }
+    
+
         
     return YES;
 }
@@ -77,29 +88,40 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    UINavigationController *rootVC = (UINavigationController*)self.window.rootViewController;
     
-    if ([PasscodeServices passcodeEnabled]) {
-        
+    UIViewController *visibleVC = (UIViewController<PasscodeAlertControllerHandling>*)rootVC.visibleViewController;
+   
+    if ([PasscodeServices touchIDEnabled]) {
+        //    LAContext *myContext = [[LAContext alloc] init];
+        //    NSError *authError = nil;
+        //    NSString *myLocalizedReasonString = @"String explaining why app needs authentication";
+        //
+        //    if ([myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError]) {
+        //        [myContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+        //                  localizedReason:myLocalizedReasonString
+        //                            reply:^(BOOL success, NSError *error) {
+        //                                if (success) {
+        //                                    NSLog(@"success");
+        //                                } else {
+        //                                    NSLog(@"something went wrong");
+        //                                }
+        //                            }];
+        //    } else {
+        //        // Could not evaluate policy; look at authError and present an appropriate message to user
+        //    }
+        //
+
+        //[PasscodeServices promptForTouchID];
+        [PasscodeServices promptForPasscodeInViewController:visibleVC];
+
     }
     
-    //    LAContext *myContext = [[LAContext alloc] init];
-    //    NSError *authError = nil;
-    //    NSString *myLocalizedReasonString = @"String explaining why app needs authentication";
-    //
-    //    if ([myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError]) {
-    //        [myContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
-    //                  localizedReason:myLocalizedReasonString
-    //                            reply:^(BOOL success, NSError *error) {
-    //                                if (success) {
-    //                                    NSLog(@"success");
-    //                                } else {
-    //                                    NSLog(@"something went wrong");
-    //                                }
-    //                            }];
-    //    } else {
-    //        // Could not evaluate policy; look at authError and present an appropriate message to user
-    //    }
-    //
+    else if ([PasscodeServices passcodeEnabled]) {
+        [PasscodeServices promptForPasscodeInViewController:visibleVC];
+    }
+    
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
