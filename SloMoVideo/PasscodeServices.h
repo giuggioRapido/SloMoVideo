@@ -7,20 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PasscodeAlertControllerHandling.h"
-@import UIKit;
 
-@interface PasscodeServices : NSObject
+@interface PasscodeServices : NSObject <UITextFieldDelegate>
 
 @property BOOL shouldPromptForPasscodeCreation;
 
 + (BOOL)passcodeEnabled;
++ (BOOL)touchIDEnabled;
 + (BOOL)touchIDIsAvailable;
 + (void)storePasscodeInKeychain:(NSString*)passcode;
 + (BOOL)isPasscodeValid:(NSString*)passcodeToCheck;
-+ (BOOL)touchIDEnabled;
-+ (void)promptForPasscodeInViewController:(id<PasscodeAlertControllerHandling>)viewController;
 + (void)promptForTouchID;
++ (void)promptForPasscode;
++ (void)presentCreatePasscodeAlert;
++ (void)presentConfirmPasscodeAlert;
++ (void)presentNonmatchingPasscodesAlert;
++ (void)presentEnableTouchIDAlert;
 
 
 @end

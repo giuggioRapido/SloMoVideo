@@ -10,7 +10,7 @@
 
 @implementation UIAlertController (PasscodeAlertControllers)
 
-+ (instancetype)enablePasscodeAlertWithNoBehavior:(void(^)())noBlock andYesBehavior:(void(^)())yesBlock
++ (instancetype)alertToEnablePasscodeWithCancelBehavior:(void(^)())noBlock andYesBehavior:(void(^)())yesBlock
 {
     UIAlertController *passcodePreferenceAlert = [self alertControllerWithTitle:@"Would you like to create a passcode?"
                                                      message:@"This can be changed in Settings later."
@@ -43,7 +43,7 @@
 }
 
 
-+ (instancetype)passcodeCreationAlertWithConfirmBehavior:(void(^)())confirmBlock andCancelBehavior:(void(^)())cancelBlock
++ (instancetype)alertToCreatePasscodeWithCancelBehavior:(void(^)())cancelBlock andConfirmBehavior:(void(^)())confirmBlock
 {
     
     
@@ -82,7 +82,7 @@
 }
 
 
-+ (instancetype)passcodeConfirmationAlertWithConfirmBehavior:(void(^)())confirmBlock andCancelBehavior:(void(^)())cancelBlock
++ (instancetype)alertToConfirmPasscodeWithCancelBehavior:(void(^)())cancelBlock andConfirmBehavior:(void(^)())confirmBlock
 {
     UIAlertController *passcodeConfirmationAlert = [self alertControllerWithTitle:@"Re-enter passcode to confirm"
                                                                                        message:nil
@@ -120,7 +120,7 @@
     return passcodeConfirmationAlert;
 }
 
-+ (instancetype)nonmatchingPasscodesAlertWithConfirmBehavior:(void(^)())confirmBlock andCancelBehavior:(void(^)())cancelBlock
++ (instancetype)alertThatPasscodesDoNotMatchWithCancelBehavior:(void(^)())cancelBlock andConfirmBehavior:(void(^)())confirmBlock
 {
     UIAlertController *nonmatchingPasscodesAlert = [self alertControllerWithTitle:@"Passcodes do not match"
                                                                                        message:@"Enter a passcode"
@@ -156,7 +156,7 @@
     return nonmatchingPasscodesAlert;
 }
 
-+ (instancetype)enableTouchIDAlertWithNoBehavior:(void(^)())noBlock andYesBehavior:(void(^)())yesBlock;
++ (instancetype)alertToEnableTouchIDWithCancelBehavior:(void(^)())noBlock andYesBehavior:(void(^)())yesBlock;
 {
     UIAlertController *enableTouchIDAlert = [self alertControllerWithTitle:@"Enable TouchID?"
                                                                                 message:nil
@@ -185,7 +185,7 @@
     return enableTouchIDAlert;
 }
 
-+ (instancetype)enterPasscodeAlertWithEnterBehavior:(void(^)())enterBlock
++ (instancetype)alertToEnterPasscodeWithBehavior:(void(^)())actionBlock
 {
     UIAlertController *enterPasscodeAlert = [self alertControllerWithTitle:@"Enter passcode"
                                                                                 message:nil
@@ -201,8 +201,8 @@
     UIAlertAction *enterAction = [UIAlertAction actionWithTitle:@"Enter"
                                                           style:UIAlertActionStyleDefault
                                                         handler:^(UIAlertAction * action) {
-                                                            if (enterBlock) {
-                                                                enterBlock();
+                                                            if (actionBlock) {
+                                                                actionBlock();
                                                             }
                                                         }];
     [enterPasscodeAlert addAction:enterAction];

@@ -11,11 +11,9 @@
 @import Photos;
 @import AVFoundation;
 #import "MediaLibrary.h"
-#import "UIAlertController+UIAlertController_PasscodeAlerts.h"
 #import "PasscodeServices.h"
-#import "PasscodeAlertControllerHandling.h"
 
-@interface CameraViewController : UIViewController <AVCaptureFileOutputRecordingDelegate, UITextFieldDelegate, PasscodeAlertControllerHandling>
+@interface CameraViewController : UIViewController <AVCaptureFileOutputRecordingDelegate>
 
 
 @end

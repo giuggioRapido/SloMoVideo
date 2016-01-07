@@ -52,10 +52,6 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 
 @implementation CameraViewController
 
-NSString *firstPasscode;
-NSString *secondPasscode;
-
-
 #pragma mark View Cycle
 
 - (void)viewDidLoad
@@ -380,17 +376,6 @@ NSString *secondPasscode;
     });
 }
 
--(void) viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:YES];
-    
-    /// If this is first app launch, present series of alert controllers for passcode creation.
-    if (![[NSUserDefaults standardUserDefaults]boolForKey:@"HasLaunchedOnce"]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        [self presentEnablePasscodeAlert];
-    }
-}
 
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -641,122 +626,6 @@ NSString *secondPasscode;
     dispatch_async (dispatch_get_main_queue(), ^{
         [self displayViewFinderUI];
     });
-}
-
-#pragma mark - Passcode handling
-
-/// Ask the user if they want to enable a passcode for the app. If not, we set a bool in defaults that passcode isn't enabled.
-/// If yes, we call presentCreatePasscodeAlert.
-- (void)presentEnablePasscodeAlert
-{
-    UIAlertController *alert = [UIAlertController enablePasscodeAlertWithNoBehavior:^{
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"PasscodeEnabled"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-    } andYesBehavior:^{
-        [self presentCreatePasscodeAlert];
-    }];
-    
-    
-    [self presentViewController:alert animated:YES completion:nil];
-}
-
-/// Ask the user to type in desired passcode. If user selects Cancel, bring them back to the first alert. When they enter a passcode and
-/// select Confirm, call presentConfirmPasscodeAlert.
-- (void)presentCreatePasscodeAlert
-{
-    __block UIAlertController *alert = [UIAlertController passcodeCreationAlertWithConfirmBehavior:^{
-        firstPasscode = alert.textFields[0].text;
-        [self presentConfirmPasscodeAlert];
-    } andCancelBehavior:^{
-        [self presentEnablePasscodeAlert];
-    }];
-    
-    alert.textFields[0].delegate = self;
-    
-    [self presentViewController:alert animated:YES completion:nil];
-}
-
-/// Prompt the user to type the passcode again to confirm. If the passcodes do not match, call presentNonmatchingPasscodesAlert.
-/// If they do match, handle in Passcode Services and call presentEnableTouchIDAlert.
-- (void)presentConfirmPasscodeAlert
-{
-    __block UIAlertController *alert = [UIAlertController passcodeConfirmationAlertWithConfirmBehavior:^{
-        secondPasscode = alert.textFields[0].text;
-        if ([self passcodesMatch]) {
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"PasscodeEnabled"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            
-            if ([PasscodeServices touchIDIsAvailable]) {
-                [self presentEnableTouchIDAlert];
-            }
-        }
-        else {
-            [self presentNonmatchingPasscodesAlert];
-        }
-    } andCancelBehavior:^{
-        [self presentEnablePasscodeAlert];
-    }];
-    
-    alert.textFields[0].delegate = self;
-    
-    [self presentViewController:alert animated:YES completion:nil];
-}
-
-- (BOOL)passcodesMatch
-{
-    if (firstPasscode == secondPasscode) {
-        
-        [PasscodeServices storePasscodeInKeychain:secondPasscode];
-
-        firstPasscode = nil;
-        secondPasscode = nil;
-        return YES;
-    }
-    else {
-        firstPasscode = nil;
-        secondPasscode = nil;
-        return NO;
-    }
-}
-
-- (void)presentNonmatchingPasscodesAlert
-{
-    __block UIAlertController *alert = [UIAlertController nonmatchingPasscodesAlertWithConfirmBehavior:^{
-        firstPasscode = alert.textFields[0].text;
-        [self presentConfirmPasscodeAlert];
-    } andCancelBehavior:^{
-        [self presentEnablePasscodeAlert];
-    }];
-    
-    alert.textFields[0].delegate = self;
-    
-    [self presentViewController:alert animated:YES completion:nil];
-}
-
-- (void)presentEnableTouchIDAlert
-{
-    UIAlertController *alert = [UIAlertController enableTouchIDAlertWithNoBehavior:^{
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"TouchIDEnabled"];
-    } andYesBehavior:^{
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"TouchIDEnabled"];
-    }];
-    
-    [self presentViewController:alert animated:YES completion:nil];
-}
-
-- (void)presentEnterPasscodeAlert
-{
-    __block UIAlertController *alert = [UIAlertController enterPasscodeAlertWithEnterBehavior:^{
-        
-        if (![PasscodeServices isPasscodeValid:alert.textFields[0].text]) {
-            [self presentEnterPasscodeAlert];
-        }
-    }];
-        
-    alert.textFields[0].delegate = self;
-
-    [self presentViewController:alert animated:YES completion:nil];
 }
 
 

@@ -40,39 +40,23 @@
     
     
     /// Check if this is the app's first launch. If so, set a BOOL in the first view controller that is checked in viewDidAppear and controls whether the user is prompted to enable a passcode for the app.
-    //    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
-    //        UINavigationController *rootVC = (UINavigationController*)self.window.rootViewController;
-    //        CameraViewController *visibleViewController = (CameraViewController*)rootVC.visibleViewController;
-    //
-    //        visibleViewController.shouldPromptForPasscodeCreation = YES;
-    //
-    //
-    //
-    //        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
-    //        [[NSUserDefaults standardUserDefaults] synchronize];
-    //}
-    
-    //else {
-    //
-    //}
-    //
-    
-    UINavigationController *rootVC = (UINavigationController*)self.window.rootViewController;
-    
-    UIViewController *visibleVC = (UIViewController<PasscodeAlertControllerHandling>*)rootVC.visibleViewController;
-    
-    if ([PasscodeServices touchIDEnabled]) {
-        //[PasscodeServices promptForTouchID];
-        [PasscodeServices promptForPasscodeInViewController:visibleVC];
-
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
+        [PasscodeServices presentCreatePasscodeAlert];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
-    else if ([PasscodeServices passcodeEnabled]) {
-        [PasscodeServices promptForPasscodeInViewController:visibleVC];
-    }
-    
-
+    else {
+        if ([PasscodeServices touchIDEnabled]) {
+            [PasscodeServices promptForTouchID];
+        }
         
+        else if ([PasscodeServices passcodeEnabled]) {
+            [PasscodeServices promptForPasscode];
+        }
+        
+    }
+    
     return YES;
 }
 
@@ -88,37 +72,13 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    UINavigationController *rootVC = (UINavigationController*)self.window.rootViewController;
     
-    UIViewController *visibleVC = (UIViewController<PasscodeAlertControllerHandling>*)rootVC.visibleViewController;
-   
     if ([PasscodeServices touchIDEnabled]) {
-        //    LAContext *myContext = [[LAContext alloc] init];
-        //    NSError *authError = nil;
-        //    NSString *myLocalizedReasonString = @"String explaining why app needs authentication";
-        //
-        //    if ([myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError]) {
-        //        [myContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
-        //                  localizedReason:myLocalizedReasonString
-        //                            reply:^(BOOL success, NSError *error) {
-        //                                if (success) {
-        //                                    NSLog(@"success");
-        //                                } else {
-        //                                    NSLog(@"something went wrong");
-        //                                }
-        //                            }];
-        //    } else {
-        //        // Could not evaluate policy; look at authError and present an appropriate message to user
-        //    }
-        //
-
-        //[PasscodeServices promptForTouchID];
-        [PasscodeServices promptForPasscodeInViewController:visibleVC];
-
+        [PasscodeServices promptForTouchID];
     }
     
     else if ([PasscodeServices passcodeEnabled]) {
-        [PasscodeServices promptForPasscodeInViewController:visibleVC];
+        [PasscodeServices promptForPasscode];
     }
     
     

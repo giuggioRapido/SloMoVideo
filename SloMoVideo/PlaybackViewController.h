@@ -10,11 +10,9 @@
 @import AVFoundation;
 #import "Video.h"
 #import "MediaLibrary.h"
-#import "PasscodeAlertControllerHandling.h"
-#import "UIAlertController+UIAlertController_PasscodeAlerts.h"
 #import "PasscodeServices.h"
 
-@interface PlaybackViewController : UIViewController <UITextFieldDelegate, PasscodeAlertControllerHandling>
+@interface PlaybackViewController : UIViewController 
 
 @property (nonatomic) Video *videoToPlay;
 
