@@ -6,6 +6,8 @@
 //  Copyright © 2016 Prince Fungus. All rights reserved.
 //
 
+/// This class handles passcode validation and passcode-related alert presentation
+
 #import <Foundation/Foundation.h>
 @import UIKit;
 

@@ -19,7 +19,10 @@ NSString *secondPasscode;
 
 + (BOOL)touchIDIsAvailable
 {
-    return YES;
+    LAContext *myContext = [[LAContext alloc] init];
+    NSError *authError = nil;
+    
+    return ([myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError]);
 }
 
 
@@ -36,13 +39,7 @@ NSString *secondPasscode;
 
 + (BOOL)touchIDEnabled
 {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TouchIDEnabled"]) {
-        return YES;
-    }
-    
-    else {
-        return NO;
-    }
+    return ([[NSUserDefaults standardUserDefaults] boolForKey:@"TouchIDEnabled"]);
 }
 
 + (void)storePasscodeInKeychain:(NSString*)passcode
@@ -53,13 +50,6 @@ NSString *secondPasscode;
 
 + (BOOL)isValidPasscode:(NSString*)passcodeToCheck
 {
-//    if (passcodeToCheck == [[NSUserDefaults standardUserDefaults] objectForKey:@"passcode"]) {
-//        return YES;
-//    }
-//    else {
-//        return NO;
-//    }
-    
     return (passcodeToCheck == [[NSUserDefaults standardUserDefaults] objectForKey:@"passcode"]);
 }
 
@@ -83,7 +73,7 @@ NSString *secondPasscode;
 {
     LAContext *myContext = [[LAContext alloc] init];
     NSError *authError = nil;
-    NSString *myLocalizedReasonString = @"String explaining why app needs authentication";
+    NSString *myLocalizedReasonString = @"FrameVault requires authentication to use.";
     
     if ([myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError]) {
         [myContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
@@ -92,7 +82,10 @@ NSString *secondPasscode;
                                 if (success) {
                                     NSLog(@"success");
                                 } else {
-                                    NSLog(@"something went wrong");
+                                    NSLog(@"Error: %@", error.localizedDescription);
+                                    dispatch_sync(dispatch_get_main_queue(), ^{
+                                        [self promptForPasscode];
+                                    });
                                 }
                             }];
     } else {
@@ -152,6 +145,10 @@ NSString *secondPasscode;
             if ([PasscodeServices touchIDIsAvailable]) {
                 [self presentEnableTouchIDAlert];
             }
+            else {
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"TouchIDEnabled"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
         }
         else {
             [self presentNonmatchingPasscodesAlert];
@@ -202,9 +199,11 @@ NSString *secondPasscode;
 {
     WindowedAlertController *alert = [WindowedAlertController alertToEnableTouchIDWithCancelBehavior:^{
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"TouchIDEnabled"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         
     } andYesBehavior:^{
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"TouchIDEnabled"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         
     }];
     

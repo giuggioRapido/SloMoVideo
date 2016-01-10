@@ -39,15 +39,19 @@
     //         });
     
     
+    /// Users have the chice to enable passcode/TouchID to make the app more private/secure. If the user has enabled these features, the app requires validation any time it launches or is brought to foreground. 
+    
     /// Check if this is the app's first launch. If so, set a BOOL in the first view controller that is checked in viewDidAppear and controls whether the user is prompted to enable a passcode for the app.
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
-        [PasscodeServices presentEnablePasscodeAlert];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        [PasscodeServices presentEnablePasscodeAlert];
     }
     
+    /// Else, call appropriate security method.
+    /// We check that touchID is both enabled AND available (despite seeming redundancy) in case the user has disabled passcode/TouchID in their system settings. Otherwise, the user could initially set up the app while their phone passcode is on, create app-specific pascode, enable touchID, then disable phone passcode and thereby give direct access to app since it will bypass passcode entry since it thinks touch ID is enabled. 
     else {
-        if ([PasscodeServices touchIDEnabled]) {
+        if ([PasscodeServices touchIDEnabled] && [PasscodeServices touchIDIsAvailable]) {
             [PasscodeServices promptForTouchID];
         }
         
@@ -73,7 +77,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     
-    if ([PasscodeServices touchIDEnabled]) {
+    if ([PasscodeServices touchIDEnabled] && [PasscodeServices touchIDIsAvailable]) {
         [PasscodeServices promptForTouchID];
     }
     
