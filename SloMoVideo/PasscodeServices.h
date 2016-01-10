@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@import UIKit;
 
 @interface PasscodeServices : NSObject <UITextFieldDelegate>
 
@@ -16,13 +17,14 @@
 + (BOOL)touchIDEnabled;
 + (BOOL)touchIDIsAvailable;
 + (void)storePasscodeInKeychain:(NSString*)passcode;
-+ (BOOL)isPasscodeValid:(NSString*)passcodeToCheck;
++ (BOOL)isValidPasscode:(NSString*)passcodeToCheck;
 + (void)promptForTouchID;
 + (void)promptForPasscode;
 + (void)presentCreatePasscodeAlert;
 + (void)presentConfirmPasscodeAlert;
 + (void)presentNonmatchingPasscodesAlert;
 + (void)presentEnableTouchIDAlert;
++ (void)presentEnablePasscodeAlert;
 
 
 @end

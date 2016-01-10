@@ -41,7 +41,7 @@
     
     /// Check if this is the app's first launch. If so, set a BOOL in the first view controller that is checked in viewDidAppear and controls whether the user is prompted to enable a passcode for the app.
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
-        [PasscodeServices presentCreatePasscodeAlert];
+        [PasscodeServices presentEnablePasscodeAlert];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }

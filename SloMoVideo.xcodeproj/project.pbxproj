@@ -17,6 +17,7 @@
 		DC89CCF61BBC6E61007970F1 /* VideoLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC89CCF51BBC6E61007970F1 /* VideoLibraryViewController.m */; };
 		DC8F60A31C3DD287009A1D1A /* WindowedAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8F60A21C3DD287009A1D1A /* WindowedAlertController.m */; };
 		DC8F60AF1C3DF01B009A1D1A /* UIAlertController+PasscodeAlertControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8F60AE1C3DF01B009A1D1A /* UIAlertController+PasscodeAlertControllers.m */; };
+		DC8F60B21C3E2325009A1D1A /* AlertWindowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8F60B11C3E2325009A1D1A /* AlertWindowViewController.m */; };
 		DCBF5EF51BCF05E5004B835E /* Universal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCBF5EF41BCF05E5004B835E /* Universal.storyboard */; };
 		DCC9C00D1C3B7FC3005504C8 /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC9C00C1C3B7FC3005504C8 /* KeychainWrapper.m */; };
 		DCF25C551BB3497800BC939B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF25C541BB3497800BC939B /* main.m */; };
@@ -67,6 +68,8 @@
 		DC8F60A21C3DD287009A1D1A /* WindowedAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowedAlertController.m; sourceTree = "<group>"; };
 		DC8F60AD1C3DF01B009A1D1A /* UIAlertController+PasscodeAlertControllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+PasscodeAlertControllers.h"; sourceTree = "<group>"; };
 		DC8F60AE1C3DF01B009A1D1A /* UIAlertController+PasscodeAlertControllers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+PasscodeAlertControllers.m"; sourceTree = "<group>"; };
+		DC8F60B01C3E2325009A1D1A /* AlertWindowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertWindowViewController.h; sourceTree = "<group>"; };
+		DC8F60B11C3E2325009A1D1A /* AlertWindowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertWindowViewController.m; sourceTree = "<group>"; };
 		DCBF5EF41BCF05E5004B835E /* Universal.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Universal.storyboard; sourceTree = "<group>"; };
 		DCC9C00B1C3B7FC3005504C8 /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
 		DCC9C00C1C3B7FC3005504C8 /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
@@ -149,6 +152,8 @@
 				DC8F60AE1C3DF01B009A1D1A /* UIAlertController+PasscodeAlertControllers.m */,
 				DC8F60A11C3DD287009A1D1A /* WindowedAlertController.h */,
 				DC8F60A21C3DD287009A1D1A /* WindowedAlertController.m */,
+				DC8F60B01C3E2325009A1D1A /* AlertWindowViewController.h */,
+				DC8F60B11C3E2325009A1D1A /* AlertWindowViewController.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -386,6 +391,7 @@
 				DC89CCF61BBC6E61007970F1 /* VideoLibraryViewController.m in Sources */,
 				DCF25C581BB3497800BC939B /* AppDelegate.m in Sources */,
 				DC89CCF31BBC6036007970F1 /* PlaybackViewController.m in Sources */,
+				DC8F60B21C3E2325009A1D1A /* AlertWindowViewController.m in Sources */,
 				DC1B12791BBF109E00D5613F /* Video.m in Sources */,
 				DCF25C8B1BB352D900BC939B /* CameraViewController.m in Sources */,
 				DCF25C881BB34ACE00BC939B /* PreviewView.m in Sources */,

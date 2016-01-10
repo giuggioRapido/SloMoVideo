@@ -6,15 +6,18 @@
 //  Copyright © 2016 Prince Fungus. All rights reserved.
 //
 
+/// Note: Passing methods to self ensures compatibility with subclasses of UIAlertController, which is important because our passcode-related alerts will be WindowedAlertControllers. So when passcodePreferenceAlert is created below, the object returned will be of type WindowedAlertController (and would return the proper type for any other UIAlertController subclasses.
+
 #import "UIAlertController+PasscodeAlertControllers.h"
 
 @implementation UIAlertController (PasscodeAlertControllers)
 
 + (instancetype)alertToEnablePasscodeWithCancelBehavior:(void(^)())noBlock andYesBehavior:(void(^)())yesBlock
 {
+    
     UIAlertController *passcodePreferenceAlert = [self alertControllerWithTitle:@"Would you like to create a passcode?"
-                                                     message:@"This can be changed in Settings later."
-                                              preferredStyle:UIAlertControllerStyleAlert];
+                                                                        message:@"This can be changed in Settings later."
+                                                                 preferredStyle:UIAlertControllerStyleAlert];
     
     
     UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No"
@@ -48,8 +51,8 @@
     
     
     UIAlertController *passcodeCreationAlert = [self alertControllerWithTitle:@"Enter a passcode"
-                                                                                   message:nil
-                                                                            preferredStyle:UIAlertControllerStyleAlert];
+                                                                      message:nil
+                                                               preferredStyle:UIAlertControllerStyleAlert];
     
     [passcodeCreationAlert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.keyboardType = UIKeyboardTypeNumberPad;
@@ -76,6 +79,8 @@
     [passcodeCreationAlert addAction:cancelAction];
     [passcodeCreationAlert addAction:confirmAction];
     passcodeCreationAlert.preferredAction = confirmAction;
+    
+    /// By default, we disable the confirm buttons in any alert that contains a text field. The button is then enabled/disabled in reaction to the text field's content (if textfield is empty, disable, else enable). This behavior is controlled by AlertWindowViewController<UITextFieldDelegate>. 
     confirmAction.enabled = NO;
     
     return passcodeCreationAlert;
@@ -85,8 +90,8 @@
 + (instancetype)alertToConfirmPasscodeWithCancelBehavior:(void(^)())cancelBlock andConfirmBehavior:(void(^)())confirmBlock
 {
     UIAlertController *passcodeConfirmationAlert = [self alertControllerWithTitle:@"Re-enter passcode to confirm"
-                                                                                       message:nil
-                                                                                preferredStyle:UIAlertControllerStyleAlert];
+                                                                          message:nil
+                                                                   preferredStyle:UIAlertControllerStyleAlert];
     
     [passcodeConfirmationAlert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.keyboardType = UIKeyboardTypeNumberPad;
@@ -123,8 +128,8 @@
 + (instancetype)alertThatPasscodesDoNotMatchWithCancelBehavior:(void(^)())cancelBlock andConfirmBehavior:(void(^)())confirmBlock
 {
     UIAlertController *nonmatchingPasscodesAlert = [self alertControllerWithTitle:@"Passcodes do not match"
-                                                                                       message:@"Enter a passcode"
-                                                                                preferredStyle:UIAlertControllerStyleAlert];
+                                                                          message:@"Enter a passcode"
+                                                                   preferredStyle:UIAlertControllerStyleAlert];
     
     [nonmatchingPasscodesAlert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.keyboardType = UIKeyboardTypeNumberPad;
@@ -159,8 +164,8 @@
 + (instancetype)alertToEnableTouchIDWithCancelBehavior:(void(^)())noBlock andYesBehavior:(void(^)())yesBlock;
 {
     UIAlertController *enableTouchIDAlert = [self alertControllerWithTitle:@"Enable TouchID?"
-                                                                                message:nil
-                                                                         preferredStyle:UIAlertControllerStyleAlert];
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction* noAction = [UIAlertAction actionWithTitle:@"No"
                                                        style:UIAlertActionStyleCancel
@@ -188,8 +193,8 @@
 + (instancetype)alertToEnterPasscodeWithBehavior:(void(^)())actionBlock
 {
     UIAlertController *enterPasscodeAlert = [self alertControllerWithTitle:@"Enter passcode"
-                                                                                message:nil
-                                                                         preferredStyle:UIAlertControllerStyleAlert];
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleAlert];
     
     [enterPasscodeAlert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.keyboardType = UIKeyboardTypeNumberPad;

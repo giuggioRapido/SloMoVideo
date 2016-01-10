@@ -10,6 +10,7 @@
 @import LocalAuthentication;
 #import "UIAlertController+PasscodeAlertControllers.h"
 #import "WindowedAlertController.h"
+#import "AlertWindowViewController.h"
 
 @implementation PasscodeServices
 
@@ -47,16 +48,35 @@ NSString *secondPasscode;
 + (void)storePasscodeInKeychain:(NSString*)passcode
 {
     [[NSUserDefaults standardUserDefaults] setObject:passcode forKey:@"passcode"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+ (BOOL)isPasscodeValid:(NSString*)passcodeToCheck
++ (BOOL)isValidPasscode:(NSString*)passcodeToCheck
 {
-    if (passcodeToCheck == [[NSUserDefaults standardUserDefaults] objectForKey:@"passcode"]) {
-        return YES;
-    }
-    else {
-        return NO;
-    }
+//    if (passcodeToCheck == [[NSUserDefaults standardUserDefaults] objectForKey:@"passcode"]) {
+//        return YES;
+//    }
+//    else {
+//        return NO;
+//    }
+    
+    return (passcodeToCheck == [[NSUserDefaults standardUserDefaults] objectForKey:@"passcode"]);
+}
+
++ (void)promptForPasscode
+{
+    __block WindowedAlertController *alert = [WindowedAlertController alertToEnterPasscodeWithBehavior:^{
+        if ([PasscodeServices isValidPasscode:alert.textFields[0].text]) {
+            
+        }
+        else {
+            [PasscodeServices promptForPasscode];
+        }
+    }];
+    
+    [alert show:YES completionHandler:^{
+        alert.textFields[0].delegate = (AlertWindowViewController*)alert.alertWindow.rootViewController;
+    }];
 }
 
 + (void)promptForTouchID
@@ -85,7 +105,7 @@ NSString *secondPasscode;
 
 /// Ask the user if they want to enable a passcode for the app. If not, we set a bool in defaults that passcode isn't enabled.
 /// If yes, we call presentCreatePasscodeAlert.
-+ (void)promptForPasscode
++ (void)presentEnablePasscodeAlert
 {
     WindowedAlertController *alert = [WindowedAlertController alertToEnablePasscodeWithCancelBehavior:^{
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"PasscodeEnabled"];
@@ -95,7 +115,7 @@ NSString *secondPasscode;
         
     }];
     
-    [alert show];
+    [alert show: YES];
 }
 
 /// Ask the user to type in desired passcode. If user selects Cancel, bring them back to the first alert. When they enter a passcode and select Confirm, call presentConfirmPasscodeAlert.
@@ -104,16 +124,16 @@ NSString *secondPasscode;
     
     __block WindowedAlertController *alert = [WindowedAlertController alertToCreatePasscodeWithCancelBehavior:^{
         [self presentEnablePasscodeAlert];
-        
     } andConfirmBehavior:^{
         firstPasscode = alert.textFields[0].text;
         [self presentConfirmPasscodeAlert];
         
     }];
     
-    alert.textFields[0].delegate = self;
-    
-    [alert show];
+    /// Text field delegation needs to be assigned after the window and its rootVC are created, so we do this in a completion handler.
+    [alert show:YES completionHandler:^{
+        alert.textFields[0].delegate = (AlertWindowViewController*)alert.alertWindow.rootViewController;
+    }];
 }
 
 /// Prompt the user to type the passcode again to confirm. If the passcodes do not match, call presentNonmatchingPasscodesAlert.
@@ -139,16 +159,16 @@ NSString *secondPasscode;
         
     }];
     
+    [alert show:YES completionHandler:^{
+        alert.textFields[0].delegate = (AlertWindowViewController*)alert.alertWindow.rootViewController;
+    }];
     
-    alert.textFields[0].delegate = self;
-    
-    [alert show];
 }
 
 + (BOOL)passcodesMatch
 {
     if (firstPasscode == secondPasscode) {
-        [PasscodeServices storePasscodeInKeychain:secondPasscode];
+        [self storePasscodeInKeychain:secondPasscode];
         firstPasscode = nil;
         secondPasscode = nil;
         
@@ -167,16 +187,15 @@ NSString *secondPasscode;
     
     __block WindowedAlertController *alert = [WindowedAlertController alertThatPasscodesDoNotMatchWithCancelBehavior:^{
         [self presentEnablePasscodeAlert];
-        
     } andConfirmBehavior:^{
         firstPasscode = alert.textFields[0].text;
         [self presentConfirmPasscodeAlert];
         
     }];
     
-    alert.textFields[0].delegate = self;
-    
-    [alert show];
+    [alert show:YES completionHandler:^{
+        alert.textFields[0].delegate = (AlertWindowViewController*)alert.alertWindow.rootViewController;
+    }];
 }
 
 + (void)presentEnableTouchIDAlert
@@ -188,36 +207,9 @@ NSString *secondPasscode;
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"TouchIDEnabled"];
         
     }];
-    [alert show];
-}
-
-#pragma mark - UITextFieldDelegate
-
-/// In this method, we keep track of the content of the texfield at any given moment so that we can enable/disable buttons (i.e. only enable Confirm if the textfield count is >0)
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
-    NSString *newString = [textField.text stringByReplacingCharactersInRange: range withString: string];
-    UIResponder *responder = textField;
-    Class uiacClass = [UIAlertController class];
-    while (![responder isKindOfClass: uiacClass])
-    {
-        responder = [responder nextResponder];
-    }
-    UIAlertController *alert = (UIAlertController*) responder;
-    UIAlertAction *setPassword  = [alert.actions objectAtIndex: 1];
-    
-    if (newString.length == 0) {
-        setPassword.enabled = NO;
-        return YES;
-    }
-    else {
-        setPassword.enabled = YES;
-        return YES;
-    }
+    [alert show: YES];
 }
-
-
-
 
 
 @end

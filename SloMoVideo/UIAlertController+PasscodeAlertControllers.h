@@ -6,6 +6,9 @@
 //  Copyright © 2016 Prince Fungus. All rights reserved.
 //
 
+/// This catgory provides factory methods for all alert controllers designed for the passcode and TouchID feature.
+/// The methods take as arguments blocks that provide the functionalty for an alert's buttons. 
+
 #import <UIKit/UIKit.h>
 
 @interface UIAlertController (PasscodeAlertControllers)
