@@ -8,6 +8,7 @@
 
 #import "PasscodeServices.h"
 @import LocalAuthentication;
+#import "KeychainWrapper.h"
 #import "UIAlertController+PasscodeAlertControllers.h"
 #import "WindowedAlertController.h"
 #import "AlertWindowViewController.h"
@@ -16,13 +17,17 @@
 
 NSString *firstPasscode;
 NSString *secondPasscode;
+KeychainWrapper *keychainWrapper;
 
 + (BOOL)touchIDIsAvailable
 {
-    LAContext *myContext = [[LAContext alloc] init];
-    NSError *authError = nil;
-    
-    return ([myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError]);
+    if ([LAContext class]) {
+        LAContext *myContext = [[LAContext alloc] init];
+        NSError *authError = nil;
+        return ([myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError]);
+    } else {
+        return NO;
+    }
 }
 
 
@@ -44,13 +49,20 @@ NSString *secondPasscode;
 
 + (void)storePasscodeInKeychain:(NSString*)passcode
 {
-    [[NSUserDefaults standardUserDefaults] setObject:passcode forKey:@"passcode"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    keychainWrapper = [[KeychainWrapper alloc] init];
+    [keychainWrapper mySetObject:passcode forKey:kSecValueData];
+    [keychainWrapper writeToKeychain];
+    
 }
 
 + (BOOL)isValidPasscode:(NSString*)passcodeToCheck
 {
-    return (passcodeToCheck == [[NSUserDefaults standardUserDefaults] objectForKey:@"passcode"]);
+    keychainWrapper = [[KeychainWrapper alloc] init];
+    if (passcodeToCheck == [keychainWrapper myObjectForKey:@"v_Data"]) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 + (void)promptForPasscode

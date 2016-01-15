@@ -92,6 +92,7 @@
     
     cell.durationLabel.text = currentVideo.duration;
     cell.fpsLabel.text = currentVideo.fps;
+    
     cell.imageView.image = currentVideo.thumbnail;
     
     return cell;
