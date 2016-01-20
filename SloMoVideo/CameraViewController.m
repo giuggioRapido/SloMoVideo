@@ -180,6 +180,10 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
                     if (dimensions.height > bestDimensions.height && dimensions.height <= 1080 && fullRange == YES) {
                         bestFormatForCurrentFrameRate = format;
                         [self.fpsOptions setObject:bestFormatForCurrentFrameRate forKey:maxFrameRateAsString];
+                        /// The following lines are necessary because in 240 fps capable devices, there isn't a dedicated 120 fps format. Per Apple's documentation, to record at 120, use a 240 fps format and manually set the frame duration (this is done in the changeFPS method).
+                        if (maxFrameRate == 240) {
+                            [self.fpsOptions setObject:bestFormatForCurrentFrameRate forKey:@"120"];
+                        }
                     }
                 }
             }
