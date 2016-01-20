@@ -146,6 +146,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
         /// In our case, "best" means that each selected format has the highest
         /// resolution for that framerate and has full range.
         /// The chosen formats are saved in a dictionary for use elsewhere.
+        int i = 0;
         for (AVCaptureDeviceFormat *format in self.videoDevice.formats) {
             CMFormatDescriptionRef formatDescription = format.formatDescription;
             CMVideoDimensions dimensions = CMVideoFormatDescriptionGetDimensions(formatDescription);
@@ -176,7 +177,9 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
                     AVCaptureDeviceFormat *bestFormatForCurrentFrameRate = [self.fpsOptions objectForKey:maxFrameRateAsString];
                     CMFormatDescriptionRef bestFDR = bestFormatForCurrentFrameRate.formatDescription;
                     CMVideoDimensions bestDimensions = CMVideoFormatDescriptionGetDimensions(bestFDR);
-                    
+                    /// We need to stop the 30 FPS setting from going above 1080 or app crashes when trying to save
+                    /// the video. Despite indications to the contrary, 2k+ resolutions are not valid video formats
+                    /// at least on an iPhone 5s.
                     if (dimensions.height > bestDimensions.height && dimensions.height <= 1080 && fullRange == YES) {
                         bestFormatForCurrentFrameRate = format;
                         [self.fpsOptions setObject:bestFormatForCurrentFrameRate forKey:maxFrameRateAsString];
@@ -187,7 +190,11 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
                     }
                 }
             }
+            /// This is just for debugging purposes (list all formats with their respective indexes).
+            NSLog(@"%d: %@", i, format);
+            ++i;
         }
+        
         
         /// We make an array that orders the saved video formats in order, making it easier to iterate through them in pertinent locations,
         /// i.e. in the toggleSloMo method, where we want the button to cycle through the formats in ascending order.
@@ -657,6 +664,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
 /// Make some views scale to be larger on iPad, not simply scale to fit screen (e.g. camera controls)
 /// Add focus, exposure, flash control.
 /// INTERCEPT ERRORS THROUGHOUT APP ///
+/// Figure out way to not have to cap resolution a 1080 (i.e. find a way to exempt formats intended for still photos)
 
 
 @end

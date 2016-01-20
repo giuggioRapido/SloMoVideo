@@ -3,27 +3,47 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[CameraViewController captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:]:CameraViewController.m">
+         contextName = "__42-[CameraViewController displayRecordingUI]_block_invoke_2258:CameraViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.previewView.layer.borderWidth">
+               value = "self.previewView">
             </PersistentString>
+            <PersistentString
+               value = "self.preview">
+            </PersistentString>
+            <PersistentString
+               value = "self.previewView.layer">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CameraViewController captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:]:CameraViewController.m">
+         <PersistentStrings>
             <PersistentString
                value = "self.previewView.layer.borderColor">
             </PersistentString>
             <PersistentString
                value = "self.previewView.layer.bounds">
             </PersistentString>
+            <PersistentString
+               value = "self.previewView.layer.borderWidth">
+            </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[CameraViewController toggleSloMo:]:CameraViewController.m">
+         contextName = "-[CameraViewController displayRecordingUI]:CameraViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.videoDevice.activeFormat">
+               value = "self.previewView.layer.bounds">
             </PersistentString>
             <PersistentString
-               value = "self.videoDevice">
+               value = "self.previewView.layer.borderColor">
+            </PersistentString>
+            <PersistentString
+               value = "self.previewView.layer">
+            </PersistentString>
+            <PersistentString
+               value = "self.previewView.layer.borderWidth">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -45,51 +65,19 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[PlaybackViewController viewDidLayoutSubviews]:PlaybackViewController.m">
+         contextName = "-[VideoLibraryViewController setEditing:animated:]:VideoLibraryViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.navigationController.navigationBar.alpha">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "__39-[CameraViewController startRecording:]_block_invoke:CameraViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.videoDevice.activeFormat">
+               value = "self.collectionView indexPathsForSelectedItems.count">
             </PersistentString>
             <PersistentString
-               value = "self.session.sessionPreset">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[CameraViewController changeFPS]:CameraViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.videoDevice.activeVideoMinFrameDuration">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "__42-[CameraViewController displayRecordingUI]_block_invoke244:CameraViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.previewView.layer.bounds">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[videoPlayerViewController viewWillAppear:]:videoPlayerViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.view.layer.player">
+               value = "self.edting">
             </PersistentString>
             <PersistentString
-               value = "self.playerView.playerLayer.player">
+               value = "self.editing">
             </PersistentString>
             <PersistentString
-               value = "self.view.playerLayer.player">
+               value = "self.collectionView.indexPathsForSelectedItems.count">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -102,16 +90,18 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "__42-[CameraViewController displayRecordingUI]_block_invoke_2258:CameraViewController.m">
+         contextName = "-[PlaybackViewController viewDidLayoutSubviews]:PlaybackViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.previewView">
+               value = "self.navigationController.navigationBar.alpha">
             </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CameraViewController changeFPS]:CameraViewController.m">
+         <PersistentStrings>
             <PersistentString
-               value = "self.preview">
-            </PersistentString>
-            <PersistentString
-               value = "self.previewView.layer">
+               value = "self.videoDevice.activeVideoMinFrameDuration">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -136,53 +126,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "+[PasscodeServices presentCreatePasscodeAlert]:PasscodeServices.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "[UIApplication sharedApplication]">
-            </PersistentString>
-            <PersistentString
-               value = "[UIApplication sharedApplication]keyWindow]">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[CameraViewController startRecording:]:CameraViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.videoDevice.activeFormat">
-            </PersistentString>
-            <PersistentString
-               value = "self.session.sessionPreset">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "-[CameraViewController displayRecordingUI]:CameraViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.previewView.layer">
-            </PersistentString>
-            <PersistentString
-               value = "self.previewView.layer.borderColor">
-            </PersistentString>
-            <PersistentString
-               value = "self.previewView.layer.bounds">
-            </PersistentString>
-            <PersistentString
-               value = "self.previewView.layer.borderWidth">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "__32-[PlaybackViewController hideUI]_block_invoke:PlaybackViewController.m">
-         <PersistentStrings>
-            <PersistentString
-               value = " self.navigationController.navigationBar.alpha">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "-[PlaybackViewController viewWillTransitionToSize:withTransitionCoordinator:]:PlaybackViewController.m">
          <PersistentStrings>
             <PersistentString
@@ -203,22 +146,57 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "__32-[PlaybackViewController hideUI]_block_invoke:PlaybackViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = " self.navigationController.navigationBar.alpha">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CameraViewController toggleSloMo:]:CameraViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.videoDevice.activeFormat">
+            </PersistentString>
+            <PersistentString
+               value = "self.videoDevice">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__35-[CameraViewController viewDidLoad]_block_invoke36:CameraViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.videoDevice.formats">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "__42-[CameraViewController displayRecordingUI]_block_invoke250:CameraViewController.m">
       </ContextState>
       <ContextState
-         contextName = "-[VideoLibraryViewController setEditing:animated:]:VideoLibraryViewController.m">
+         contextName = "-[videoPlayerViewController viewWillAppear:]:videoPlayerViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.collectionView indexPathsForSelectedItems.count">
+               value = "self.view.layer.player">
             </PersistentString>
             <PersistentString
-               value = "self.edting">
+               value = "self.playerView.playerLayer.player">
             </PersistentString>
             <PersistentString
-               value = "self.editing">
+               value = "self.view.playerLayer.player">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "+[PasscodeServices presentCreatePasscodeAlert]:PasscodeServices.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[UIApplication sharedApplication]">
             </PersistentString>
             <PersistentString
-               value = "self.collectionView.indexPathsForSelectedItems.count">
+               value = "[UIApplication sharedApplication]keyWindow]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -230,6 +208,36 @@
             </PersistentString>
             <PersistentString
                value = "best30fpsFormat.formatDescription">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__39-[CameraViewController startRecording:]_block_invoke:CameraViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.videoDevice.activeFormat">
+            </PersistentString>
+            <PersistentString
+               value = "self.session.sessionPreset">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__42-[CameraViewController displayRecordingUI]_block_invoke244:CameraViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.previewView.layer.bounds">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CameraViewController startRecording:]:CameraViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.videoDevice.activeFormat">
+            </PersistentString>
+            <PersistentString
+               value = "self.session.sessionPreset">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
