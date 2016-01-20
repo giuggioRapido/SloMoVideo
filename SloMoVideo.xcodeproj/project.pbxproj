@@ -139,6 +139,10 @@
 				DC89CCF51BBC6E61007970F1 /* VideoLibraryViewController.m */,
 				DC89CCF11BBC6036007970F1 /* PlaybackViewController.h */,
 				DC89CCF21BBC6036007970F1 /* PlaybackViewController.m */,
+				DC8F60A11C3DD287009A1D1A /* WindowedAlertController.h */,
+				DC8F60A21C3DD287009A1D1A /* WindowedAlertController.m */,
+				DC8F60B01C3E2325009A1D1A /* AlertWindowViewController.h */,
+				DC8F60B11C3E2325009A1D1A /* AlertWindowViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -150,10 +154,6 @@
 				DC6D03231BC5E92600CA6A5F /* UIImage+Resize.m */,
 				DC8F60AD1C3DF01B009A1D1A /* UIAlertController+PasscodeAlertControllers.h */,
 				DC8F60AE1C3DF01B009A1D1A /* UIAlertController+PasscodeAlertControllers.m */,
-				DC8F60A11C3DD287009A1D1A /* WindowedAlertController.h */,
-				DC8F60A21C3DD287009A1D1A /* WindowedAlertController.m */,
-				DC8F60B01C3E2325009A1D1A /* AlertWindowViewController.h */,
-				DC8F60B11C3E2325009A1D1A /* AlertWindowViewController.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -182,13 +182,6 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		DCC9C00F1C3B8E0F005504C8 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Protocols;
-			sourceTree = "<group>";
-		};
 		DCF25C471BB3497800BC939B = {
 			isa = PBXGroup;
 			children = (
@@ -212,7 +205,6 @@
 		DCF25C521BB3497800BC939B /* SloMoVideo */ = {
 			isa = PBXGroup;
 			children = (
-				DCC9C00F1C3B8E0F005504C8 /* Protocols */,
 				DC57B3ED1BCDAF91007EB94B /* Other */,
 				DC57B3EA1BCDAE9A007EB94B /* Views */,
 				DC57B3EB1BCDAEA4007EB94B /* View Controllers */,

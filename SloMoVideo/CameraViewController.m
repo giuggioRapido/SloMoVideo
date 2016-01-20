@@ -60,7 +60,6 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     
     self.navigationItem.title = @"Camera";
     
-    self.fpsOptions = [[NSMutableDictionary alloc] init];
     
     self.defaultToolbarColor = self.toolbar.backgroundColor;
     
@@ -133,85 +132,58 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
             NSLog(@"There was a problem creating the video device");
         }
         
-        /// The next section concerns AVCaptureDeviceFormats.
-        /// Set up variables to store formats for each framerate.
-        AVCaptureDeviceFormat *best30fpsFormat = nil;
-        AVCaptureDeviceFormat *best60fpsFormat = nil;
-        AVCaptureDeviceFormat *best120fpsFormat = nil;
-        AVCaptureDeviceFormat *best240fpsFormat = nil;
+        
+        /// Create dictionary to store the desired formats
+        self.fpsOptions = [[NSMutableDictionary alloc] init];
         
         /// Look through available formats for current device
+        /// Set up variables to store pertinent information about each format.
+        /// Look through framerates in each format.
+        /// Multiple formats will have the same framerate ranges, so we evaluate
+        /// in groups of similar formats and by checking each format against the
+        /// previous format, we finally select for the "best" format for each
+        /// desired framerate.
+        /// In our case, "best" means that each selected format has the highest
+        /// resolution for that framerate and has full range.
+        /// The chosen formats are saved in a dictionary for use elsewhere.
         for (AVCaptureDeviceFormat *format in self.videoDevice.formats) {
-            /// Set up variables to store pertinent information about each format.
             CMFormatDescriptionRef formatDescription = format.formatDescription;
             CMVideoDimensions dimensions = CMVideoFormatDescriptionGetDimensions(formatDescription);
             FourCharCode mediaSubType = CMFormatDescriptionGetMediaSubType(formatDescription);
             BOOL fullRange = NO;
             
             /// We want only the formats with full range, so we use a bool to select for those.
-            if (mediaSubType==kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange) {
-                fullRange = NO;
+            switch (mediaSubType) {
+                case kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange:
+                    fullRange = NO;
+                    break;
+                case kCVPixelFormatType_420YpCbCr8BiPlanarFullRange:
+                    fullRange = YES;
+                    break;
+                default:
+                    NSLog(@"Unknown media subtype encountered in format: %@", format);
+                    break;
             }
-            else if (mediaSubType==kCVPixelFormatType_420YpCbCr8BiPlanarFullRange) {
-                fullRange = YES;
-            }
-            else {
-                NSLog(@"Unknown media subtype encountered in format: %@", format);
-            }
-            /// Look through framerates in each format.
-            /// Multiple formats will have the same framerate ranges, so we evaluate
-            /// in groups of similar formats and by checking each format against the
-            /// previous format, we finally select for the "best" format for each
-            /// desired framerate.
-            /// In our case, "best" means that each selected format has the highest
-            /// resolution for that framerate and has full range.
-            /// The chosen formats are saved in a dictionary for use elsewhere.
+            
             for (AVFrameRateRange *range in format.videoSupportedFrameRateRanges) {
-                if (range.maxFrameRate == 30) {
-                    CMFormatDescriptionRef bestFDR = best30fpsFormat.formatDescription;
+                NSUInteger maxFrameRate = (NSUInteger)range.maxFrameRate;
+                NSString *maxFrameRateAsString = [NSString stringWithFormat:@"%lu", (unsigned long)maxFrameRate];
+                
+                if (![self.fpsOptions objectForKey:maxFrameRateAsString]) {
+                    [self.fpsOptions setObject:format forKey: maxFrameRateAsString];
+                    
+                } else {
+                    AVCaptureDeviceFormat *bestFormatForCurrentFrameRate = [self.fpsOptions objectForKey:maxFrameRateAsString];
+                    CMFormatDescriptionRef bestFDR = bestFormatForCurrentFrameRate.formatDescription;
                     CMVideoDimensions bestDimensions = CMVideoFormatDescriptionGetDimensions(bestFDR);
-                    /// We need to stop the 30 FPS setting from going above 1080 or app crashes when trying to save
-                    /// the video. Despite indications to the contrary, 2k+ resolutions are not valid video formats
-                    /// (at least on an iPhone 5s).
+                    
                     if (dimensions.height > bestDimensions.height && dimensions.height <= 1080 && fullRange == YES) {
-                        best30fpsFormat = format;
-                        [self.fpsOptions setObject:best30fpsFormat forKey:@"30"];
+                        bestFormatForCurrentFrameRate = format;
+                        [self.fpsOptions setObject:bestFormatForCurrentFrameRate forKey:maxFrameRateAsString];
                     }
-                }
-                else if (range.maxFrameRate == 60) {
-                    CMFormatDescriptionRef bestFDR = best60fpsFormat.formatDescription;
-                    CMVideoDimensions bestDimensions = CMVideoFormatDescriptionGetDimensions(bestFDR);
-                    /// Note that on an iPhone 5s, the max resolution for 60fps is 480, hence why the viewfinder
-                    /// is not full screen when 60 fps is selected.
-                    if (dimensions.height > bestDimensions.height && fullRange == NO) {
-                        best60fpsFormat = format;
-                        [self.fpsOptions setObject:best60fpsFormat forKey:@"60"];
-                    }
-                }
-                else if (range.maxFrameRate == 120) {
-                    CMFormatDescriptionRef bestFDR = best120fpsFormat.formatDescription;
-                    CMVideoDimensions bestDimensions = CMVideoFormatDescriptionGetDimensions(bestFDR);
-                    if (dimensions.height > bestDimensions.height && fullRange == YES) {
-                        best120fpsFormat = format;
-                        [self.fpsOptions setObject:best120fpsFormat forKey:@"120"];
-                    }
-                }
-                else if (range.maxFrameRate == 240) {
-                    CMFormatDescriptionRef bestFDR = best240fpsFormat.formatDescription;
-                    CMVideoDimensions bestDimensions = CMVideoFormatDescriptionGetDimensions(bestFDR);
-                    if (dimensions.height > bestDimensions.height && fullRange == YES) {
-                        best240fpsFormat = format;
-                        [self.fpsOptions setObject:best240fpsFormat forKey:@"240"];
-                        /// We want to also set this format at the 120 option because 240 fps capable devices don't have a dedicated 120 fps format. Per Apple: "If you wish to capture at 120 fps on the iPhone 6 or iPhone 6 Plus, find and choose the 240 fps-capable format, then set the AVCaptureDevice activeVideoMinFrameDuration and activeVideoMaxFrameDuration properties to CMTimeMake( 1, 120 )."
-                        [self.fpsOptions setObject:best240fpsFormat forKey:@"120"];
-                    }
-                }
-                else {
-                    NSLog(@"Framerate not recognized in range: %@", range);
                 }
             }
         }
-        
         
         /// We make an array that orders the saved video formats in order, making it easier to iterate through them in pertinent locations,
         /// i.e. in the toggleSloMo method, where we want the button to cycle through the formats in ascending order.
@@ -235,14 +207,16 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
             
         }];
         
-        
-        /// Set the currentFPS and default active format to 30 FPS.
-        if (best30fpsFormat) {
-            self.currentFPS = @"30";
+        /// Set the currentFPS and default active format to the lowest fps format.
+        if ([self.fpsOptions objectForKey:self.sortedFormatKeys.firstObject]) {
+            self.currentFPS = self.sortedFormatKeys.firstObject;
             if ([self.videoDevice lockForConfiguration:NULL] == YES) {
                 [self changeFPS];
                 [self.videoDevice unlockForConfiguration];
             }
+            /// Change appearance of button to reflect format adjustment.
+            NSString *buttonTitle = [NSString stringWithFormat:@"%@ FPS", self.currentFPS];
+            [self.sloMoToggle setTitle:buttonTitle forState: UIControlStateNormal];
         }
         else {
             NSLog(@"There was a problem creating the fpsOptions dictionary");
@@ -453,7 +427,7 @@ typedef NS_ENUM(NSInteger, AVCamSetupResult)
     /// Change appearance of button to reflect format adjustment.
     NSString *buttonTitle = [NSString stringWithFormat:@"%@ FPS", self.currentFPS];
     [self.sloMoToggle setTitle:buttonTitle forState: UIControlStateNormal];
-    self.sloMoToggle.backgroundColor = [buttonColors objectForKey:self.currentFPS];
+    //self.sloMoToggle.backgroundColor = [buttonColors objectForKey:self.currentFPS];
     
     /// Actually change the format.
     [self changeFPS];
