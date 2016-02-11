@@ -93,28 +93,6 @@ bool wasPlaying;
                           ^(CMTime time) {
                               weakSelf.timeSlider.value = CMTimeGetSeconds(time);
                           }];
-    
-    
-    /// Programmatic layer:
-    //    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
-    //    self.playerLayer.frame = self.view.frame;
-    //    self.playerLayer.videoGravity = AVLayerVideoGravityResize;
-    //    [self.view.layer addSublayer:self.playerLayer];
-    
-    /// Useful detritus?
-    //     NSLog(@"%i", self.playerItem.canPlaySlowForward);
-    //     [self.player seekToTime:kCMTimeZero];
-    //
-    //     NSLog (@"%@", NSStringFromCGRect(self.playerLayer.videoRect));
-    
-    //    _timeObserverToken = [self.player addPeriodicTimeObserverForInterval:CMTimeMake(1, 2) queue:dispatch_get_main_queue() usingBlock:
-    //                          ^(CMTime time) {
-    //                              float currentTimeInSeconds = CMTimeGetSeconds(weakSelf.player.currentTime);
-    //                              float durationInSeconds = CMTimeGetSeconds(weakSelf.playerItem.duration);
-    //                              float progress = currentTimeInSeconds / durationInSeconds;
-    //                              weakSelf.timeSlider.value = progress;
-    //                          }];
-    
 }
 
 
