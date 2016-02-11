@@ -41,7 +41,7 @@
     //    Float64 durationSeconds = CMTimeGetSeconds(self.asset.duration);
     //        CMTime midpoint = CMTimeMakeWithSeconds(durationSeconds/2.0, 600);
     
-    AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef image, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
+    AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef image, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error) {
         if (result != AVAssetImageGeneratorSucceeded) {
             NSLog(@"couldn't generate thumbnail, error:%@", error);
         }
