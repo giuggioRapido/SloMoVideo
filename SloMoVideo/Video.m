@@ -12,6 +12,18 @@
 
 @synthesize duration = _duration;
 
+
+
+-(instancetype) init {
+    self = [super init];
+    if (!self) return nil;
+    
+    self.thumbnail = [UIImage imageNamed:@"DefaultThumbnail"];
+    self.hasCustomThumbnail = NO;
+    
+    return self;
+}
+
 - (NSString*)duration
 {
     CMTime durationV = self.asset.duration;
@@ -53,9 +65,18 @@
         
         /// Resize the image and assign to video thumbnail
         self.thumbnail = [unresizedImage resizedImageWithScaleFactor:0.1];
+        self.hasCustomThumbnail = YES;
+        
+        if (self.delegate) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate thumbnailWasGeneratedForVideo:self];
+            });
+        }
+        
     };
     
     [imageGenerator generateCGImagesAsynchronouslyForTimes:[NSArray arrayWithObject:[NSValue valueWithCMTime:startpoint]] completionHandler:handler];
+    
     
 }
 

@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSMutableArray <Video*> *videos;
 @property (nonatomic, strong) NSMutableArray <Video*> *videosToDelete;
 @property (nonatomic, strong) Video *videoToPlay;
+@property (nonatomic, strong) NSMutableArray *cellsToUpdate;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteVideosButton;
 
@@ -89,11 +90,17 @@
     Cell *cell = (Cell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     
     Video *currentVideo = [self.videos objectAtIndex:indexPath.row];
-    
+    currentVideo.delegate = self;
     cell.durationLabel.text = currentVideo.duration;
     cell.fpsLabel.text = currentVideo.fps;
     
     cell.imageView.image = currentVideo.thumbnail;
+    if (currentVideo.hasCustomThumbnail == NO) {
+        if (!self.cellsToUpdate) {
+            self.cellsToUpdate = [[NSMutableArray alloc] init];
+        }
+        [self.cellsToUpdate addObject:indexPath];
+    }
     
     return cell;
 }
@@ -161,6 +168,14 @@
     /// Pass selected video to Playback VC.
     PlaybackViewController *vc = segue.destinationViewController;
     vc.videoToPlay = self.videoToPlay;
+}
+
+#pragma mark VideoThumbnailGeneratorDelegate
+- (void)thumbnailWasGeneratedForVideo: (Video*)video {
+    NSLog(@"%lu", (unsigned long)[[[MediaLibrary sharedLibrary] videos] indexOfObject:video]);
+    long index = [[[MediaLibrary sharedLibrary] videos] indexOfObject:video];
+    NSIndexPath *ip = [NSIndexPath indexPathForItem:index inSection:0];
+    [self.collectionView reloadItemsAtIndexPaths:@[ip]];
 }
 
 #pragma mark To Do

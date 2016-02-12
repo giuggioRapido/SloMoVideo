@@ -3,6 +3,9 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "-[Video init]:Video.m">
+      </ContextState>
+      <ContextState
          contextName = "__42-[CameraViewController displayRecordingUI]_block_invoke_2258:CameraViewController.m">
          <PersistentStrings>
             <PersistentString
@@ -20,13 +23,13 @@
          contextName = "-[CameraViewController captureOutput:didFinishRecordingToOutputFileAtURL:fromConnections:error:]:CameraViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.previewView.layer.borderColor">
-            </PersistentString>
-            <PersistentString
                value = "self.previewView.layer.bounds">
             </PersistentString>
             <PersistentString
                value = "self.previewView.layer.borderWidth">
+            </PersistentString>
+            <PersistentString
+               value = "self.previewView.layer.borderColor">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -34,13 +37,13 @@
          contextName = "-[CameraViewController displayRecordingUI]:CameraViewController.m">
          <PersistentStrings>
             <PersistentString
-               value = "self.previewView.layer.bounds">
+               value = "self.previewView.layer">
             </PersistentString>
             <PersistentString
                value = "self.previewView.layer.borderColor">
             </PersistentString>
             <PersistentString
-               value = "self.previewView.layer">
+               value = "self.previewView.layer.bounds">
             </PersistentString>
             <PersistentString
                value = "self.previewView.layer.borderWidth">
@@ -173,6 +176,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[VideoLibraryViewController thumbnailWasGeneratedForVideo:]:VideoLibraryViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[[[MediaLibrary sharedLibrary] videos] indexOfObject:video]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "__42-[CameraViewController displayRecordingUI]_block_invoke250:CameraViewController.m">
       </ContextState>
       <ContextState
@@ -199,6 +210,9 @@
                value = "[UIApplication sharedApplication]keyWindow]">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[VideoLibraryViewController thumbnailWasGenerateForVideo:]:VideoLibraryViewController.m">
       </ContextState>
       <ContextState
          contextName = "__35-[CameraViewController viewDidLoad]_block_invoke33:CameraViewController.m">

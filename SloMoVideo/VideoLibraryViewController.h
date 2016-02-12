@@ -13,8 +13,9 @@
 #import "UIImage+Resize.h"
 #import "MediaLibrary.h"
 #import "PasscodeServices.h"
+#import "VideoThumbnailGeneratorDelegate.h"
 
-@interface VideoLibraryViewController : UICollectionViewController 
+@interface VideoLibraryViewController : UICollectionViewController <VideoThumbnailGeneratorDelegate>
 
 
 @end

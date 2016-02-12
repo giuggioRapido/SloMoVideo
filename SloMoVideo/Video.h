@@ -10,6 +10,7 @@
 @import AVFoundation;
 @import UIKit;
 #import "UIImage+Resize.h"
+#import "VideoThumbnailGeneratorDelegate.h"
 
 @interface Video : NSObject
 
@@ -19,6 +20,8 @@
 @property (nonatomic) NSString *duration;
 @property (nonatomic) NSString *stringPath;
 @property (nonatomic) NSString *fps;
+@property (nonatomic) BOOL hasCustomThumbnail;
+@property (nonatomic, weak) id<VideoThumbnailGeneratorDelegate> delegate;
 
 - (void)createThumbnail;
 

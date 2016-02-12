@@ -56,6 +56,7 @@
 		DC2251BC1BC8828300FC430F /* MediaLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaLibrary.m; sourceTree = "<group>"; };
 		DC35E01D1C39EBD8004CE553 /* PasscodeServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasscodeServices.h; sourceTree = "<group>"; };
 		DC35E01E1C39EBD8004CE553 /* PasscodeServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasscodeServices.m; sourceTree = "<group>"; };
+		DC4F50AF1C6D948100C26AD4 /* VideoThumbnailGeneratorDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoThumbnailGeneratorDelegate.h; sourceTree = "<group>"; };
 		DC57B3F11BCEA823007EB94B /* PlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerView.h; sourceTree = "<group>"; };
 		DC57B3F21BCEA823007EB94B /* PlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerView.m; sourceTree = "<group>"; };
 		DC6D03221BC5E92600CA6A5F /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
@@ -167,6 +168,7 @@
 				DC35E01E1C39EBD8004CE553 /* PasscodeServices.m */,
 				DCC9C00B1C3B7FC3005504C8 /* KeychainWrapper.h */,
 				DCC9C00C1C3B7FC3005504C8 /* KeychainWrapper.m */,
+				DC4F50AF1C6D948100C26AD4 /* VideoThumbnailGeneratorDelegate.h */,
 			);
 			name = Other;
 			sourceTree = "<group>";
